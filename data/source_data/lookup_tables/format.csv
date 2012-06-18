@@ -1,20 +1,20 @@
-0,No Data
-1,ATX
-2,CSV
-3,DBF
-4,Excel
-5,File folder
-6,HTML link
-7,IND
-8,MS Access
-9,PDF document
-10,PDF map
-11,PDF report
-12,PDF spreadsheet
-13,SAV
-14,Shapefile
-15,SPS
-16,TAB
-17,TXT
-18,Word
-19,Zip
+0,No Data,No Data
+1,ATX,atx
+2,CSV,csv
+3,DBF,dbf
+4,Excel,xls
+5,File folder,dir
+6,HTML link,htm;html
+7,IND,IND
+8,MS Access,mdb;accdb
+9,PDF document,pdf
+10,PDF map,pdf
+11,PDF report,pdf
+12,PDF spreadsheet,pdf
+13,SAV,sav
+14,Shapefile,shp
+15,SPS,SPS
+16,TAB,TAB
+17,TXT,txt
+18,Word,doc
+19,Zip,zip

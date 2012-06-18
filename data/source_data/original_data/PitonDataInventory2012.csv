@@ -227,8 +227,6 @@
 227,01-02 8th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
 228,01-02 8th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
 229,01-02 8th Grade Science,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
-230,,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
-231,,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
 232,01-02 8th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
 233,01-02 9th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
 234,01-02 9th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
@@ -380,7 +378,7 @@
 380,2008_CSAP_MIGRANT_READING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
 381,2008_CSAP_MIGRANT_WRITING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
 382,2008_CSAP_piton_frlun,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
-383,CSAP_Datarequest_2008,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+383,CSAP_Datarequest_2008,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Word,G:\Source Data\CDE\CSAP\2008
 384,2009_CSAP_DS_escritura,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
 385,2009_CSAP_DS_lectura,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
 386,2009_CSAP_DS_math,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
@@ -842,8 +840,8 @@
 842,2000_Ed_and_income_Arapahoe,Education & income,Demographics,Education & income,2000,Tract,Arapahoe,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\ArapahoeCounty
 843,2000_Ed_and_Income_Boulder,Education & income,Demographics,Education & income,2000,Tract,Boulder,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\BoulderCounty
 844,2000_Ed_and_Income_Denver,Education & income,Demographics,Education & income,2000,Tract,Denver,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty
-845,dc_dec_2000_sf1_u_data1,Population characteristics,Demographics,Population characteristics,2000,Tract,Denver,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty
-846,dc_dec_2000_sf1_u_data1,Population characteristics,Demographics,Population characteristics,2000,Block,Denver,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty\Population_byBlock
+845,dc_dec_2000_sf1_u_data1,Population characteristics,Demographics,Population characteristics,2000,Tract,Denver,Census,TXT,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty
+846,dc_dec_2000_sf1_u_data1,Population characteristics,Demographics,Population characteristics,2000,Block,Denver,Census,TXT,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty\Population_byBlock
 847,2000_Ed_and_Income_Douglas,Education & income,Demographics,Education & income,2000,Tract,Douglas,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DouglasCounty
 848,dc_dec_2000_sf3_u_data1,Education & income,Demographics,Education & income,2000,Tract,Denver,Census,TXT,G:\Source Data\CensusBureau\2000\RegionalCensusData\DouglasCounty
 849,2000_Ed_and_Income_Jefferson,Education & income,Demographics,Education & income,2000,Tract,Jefferson,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\JeffersonCounty
@@ -861,10 +859,10 @@
 861,Census_Bureau_raw_download,Folder of all raw text files,Demographics,Population characteristics,2010,Block,State,Census,File folder,G:\Source Data\CensusBureau\2010\SF1 Data
 862,Data_from_IRE,Folder of all raw CSV files,Demographics,Population characteristics,2010,Tract,State,Census,File folder,G:\Source Data\CensusBureau\2010\SF1 Data
 863,Metro_Tracts_youth_1yr_age,Population characteristics,Demographics,Population characteristics,2010,Tract,State,Census,Excel,G:\Source Data\CensusBureau\2010\SF1 Data
-864,1_3yr_Estimates_Explained,,,,,,,,,G:\Source Data\CensusBureau\ACS
-865,ACS_10_1YR_DP02_MetroCounties,,,,,,,,,G:\Source Data\CensusBureau\ACS
-866,ACS_10_3YR_DP02_MetroCounties,,,,,,,,,G:\Source Data\CensusBureau\ACS
-867,ACS_2005_Questionnaire,,,,,,,,,G:\Source Data\CensusBureau\ACS
-868,ACS_Notes,,,,,,,,,G:\Source Data\CensusBureau\ACS
-869,ACS_Summary,,,,,,,,,G:\Source Data\CensusBureau\ACS
-870,DenverMSA2004_HousingReport,,,,,,,,,G:\Source Data\CensusBureau\ACS
+864,1_3yr_Estimates_Explained,,,,,,,,Word,G:\Source Data\CensusBureau\ACS
+865,ACS_10_1YR_DP02_MetroCounties,,,,,,,,Excel,G:\Source Data\CensusBureau\ACS
+866,ACS_10_3YR_DP02_MetroCounties,,,,,,,,Excel,G:\Source Data\CensusBureau\ACS
+867,ACS_2005_Questionnaire,,,,,,,,PDF document,G:\Source Data\CensusBureau\ACS
+868,ACS_Notes,,,,,,,,Word,G:\Source Data\CensusBureau\ACS
+869,ACS_Summary,,,,,,,,Word,G:\Source Data\CensusBureau\ACS
+870,DenverMSA2004_HousingReport,,,,,,,,PDF report,G:\Source Data\CensusBureau\ACS

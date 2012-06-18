@@ -8,8 +8,6 @@ from util import *
 
 from dcmetadata.models import *
 
-import os
-import csv
 
 # Source Data Inventory CSV file path
 SOURCE_DATA_INVENTORY_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/original_data/PitonDataInventory2012.csv'
@@ -22,13 +20,16 @@ SOURCE_DATA_ROOT_PATH_LOCAL = 'O:\\Data\\'
 
 # Test
 def test(request):
-    with open('c:/tmp/testfile.csv') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            print row[1]
-            size = os.path.getsize(row[1])
-            print size
-            print HumanReadableSize(size,0)
+    file_location = "O:\Data\Source Data\CensusBureau\2010\SF1 Data"
+    file_name = "Census_Bureau_raw_download"
+    file_path = os.path.join(file_location,file_name)
+
+    total_size = 0
+    for root, dirs, files in os.walk(file_path):
+        for fname in files:
+            fpath = os.path.join(root,fname)
+            if os.path.exists(fpath):
+                total_size += os.path.getsize(fpath)
     return HttpResponse("test done!")
 
 # Upload source data inventory CSV file into PostgreSQL database
@@ -40,10 +41,6 @@ def upload_sourcedata(request):
         with open(SOURCE_DATA_INVENTORY_PATH,'rb') as f:
             reader = csv.reader(f)
             for row in reader:
-                # get file location
-                file_location = row[10].replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)
-                # get file size
-                file_size = os.path.getsize(file_location)
                 # get begin year, end year
                 str_year = row[5]
                 list_year = str_year.split('-')
@@ -53,20 +50,43 @@ def upload_sourcedata(request):
                 else:
                     begin_year = None
                     end_year = None
-                
+                # get file location
+                file_location = row[10].replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)                
+                # get file size
+                file_name = row[1]
+                file_path = os.path.join(file_location,file_name)
+                str_format = row[9]
+                file_format = Format.objects.get(name=CleanNullValue(str_format))
+                extensions = file_format.extension.split(';') #get all possible extensions for the file format
+                ##calculate file size for directory
+                if str_format == "File folder":
+                    file_size = GetDirSize(file_path)
+                ##calculate file size for HTML files
+                elif str_format == "HTML link":
+                    file_size = GetFileSize(file_path,extensions)
+                    html_files_path = file_path + "_files"
+                    if os.path.exists(html_files_path):#if HTML file has a file folder accociated with it
+                        file_size += GetDirSize(html_files_path)
+                ##calculate file size for shapefiles
+                elif str_format == "Shapefile":
+                    file_size = GetShapefileSize(file_path)
+                ##calculate file size for other formats
+                else:
+                    file_size = GetFileSize(file_path,extensions)
+                    
                 # load inventory file into model instance    
                 source_data = SourceDataInventory(
                     inventory_id=row[0],
-                    file_name=row[1],
+                    file_name=file_name,
                     description=row[2],
-                    macro_domain=MacroDomain.objects.get(name=Clean_Null_Value(row[3])),
-                    subject_matter=SubjectMatter.objects.get(name=Clean_Null_Value(row[4])),
+                    macro_domain=MacroDomain.objects.get(name=CleanNullValue(row[3])),
+                    subject_matter=SubjectMatter.objects.get(name=CleanNullValue(row[4])),
                     begin_year=begin_year,
                     end_year=end_year,
-                    geography=Geography.objects.get(name=Clean_Null_Value(row[6])),
-                    coverage=Coverage.objects.get(name=Clean_Null_Value(row[7])),
-                    source=Source.objects.get(name=Clean_Null_Value(row[8])),
-                    format=Format.objects.get(name=Clean_Null_Value(row[9])),
+                    geography=Geography.objects.get(name=CleanNullValue(row[6])),
+                    coverage=Coverage.objects.get(name=CleanNullValue(row[7])),
+                    source=Source.objects.get(name=CleanNullValue(row[8])),
+                    format=file_format,
                     location=file_location,
                     file_size=file_size)
                 source_data.save()

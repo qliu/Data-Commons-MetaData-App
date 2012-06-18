@@ -10,6 +10,9 @@ from django.utils import simplejson
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+import os
+import csv
+
 
 # GLOBAL VARIABLES
 ## File size precision for human readable presentation of file size in bytes
@@ -17,6 +20,9 @@ FILE_SIZE_PRECISION = 0
 
 ## No data value for NULL value strings in table
 NO_DATA_VALUE = "No Data"
+
+## File extensions accociated with shaplefile
+SHAPEFILE_EXTENSION = ["shp","dbf","prj","sbn","sbx","shp.xml","shx"]
 
 # Decorator to save time returning templates
 def render_to(template):
@@ -54,5 +60,33 @@ def HumanReadableSize(size,precision):
     return "%.*f %s" % (precision,size,suffixes[suffix_index])
 
 # Clean NULL value for strings in table when uploading from CSV file
-def Clean_Null_Value(value):
+def CleanNullValue(value):
     return NO_DATA_VALUE if value=="" else value
+
+# Get total file size for directory
+def GetDirSize(start_path):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            if os.path.exists(fp):
+                total_size += os.path.getsize(fp)
+    return total_size
+
+# Get file size for all possible extensions
+def GetFileSize(file_path,extensions):
+    file_size = 0
+    for extension in extensions:
+        file_full_path = file_path+".%s" % extension
+        if os.path.exists(file_full_path):
+            file_size = os.path.getsize(file_full_path)
+    return file_size
+
+# Get total file size for shapefile and accociated files (.shp,.dbf,.prj,.sbn,.sbx,.shp.xml,.shx)
+def GetShapefileSize(file_path):
+    file_size = 0
+    for extension in SHAPEFILE_EXTENSION:
+        file_full_path = file_path+".%s" % extension
+        if os.path.exists(file_full_path):
+            file_size += os.path.getsize(file_full_path)
+    return file_size
