@@ -1,0 +1,870 @@
+1,AECase_KidsCount_StateCityData1990_2004,State and city birth data,Health,Vulnerable births data,1990-2004,City/State,US,Annie E Casey,Excel,G:\Source Data\AnnieECaseyFoundation
+2,All55Cities_90-04,City birth profiles,Health,Vulnerable births data,1990-2004,City/State,US,Annie E Casey,Excel,G:\Source Data\AnnieECaseyFoundation
+3,COChildrensCampaign_CORawData,Raw data zip file,,,,,,,Zip,G:\Source Data\AnnieECaseyFoundation
+4,COKidscountProfile_2000-04,Colorado Kids Count profile,Profile,"Health, Education, Demographics",2000-2004,State,State,Annie E Casey,Excel,G:\Source Data\AnnieECaseyFoundation
+5,COProfile_Kidscount,Full indicator list for Kids Count profile,Profile,"Health, Education, Demographics",1992-2005,State,State,Annie E Casey,Excel,G:\Source Data\AnnieECaseyFoundation
+6,kidscount2007,Colorado Kids Count Report,Profile,"Health, Education, Demographics",2007,State,State,Colorado Children's Campaign,PDF report,G:\Source Data\AnnieECaseyFoundation
+7,APS_DataRequest_Apr10,Form request for data,Data request,,,,,,Word,G:\Source Data\AuroraPublicSchools
+8,APS_DataRequest_Jan09,Form request for data,Data request,,,,,,Word,G:\Source Data\AuroraPublicSchools
+9,APS_DataRequest_March11,Form request for data,Data request,,,,,,Word,G:\Source Data\AuroraPublicSchools
+10,APS_DataRequest_March11,Form request for data,Data request,,,,,,PDF document,G:\Source Data\AuroraPublicSchools
+11,Piton_Approval Letter,Form request for data,Data request,,,,,,Word,G:\Source Data\AuroraPublicSchools
+12,APS2004_Final,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\APS_Students_2004-06\APS 2004-2006 Student Data_Piton
+13,APS2004Other_Final,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\APS_Students_2004-06\APS 2004-2006 Student Data_Piton
+14,APS2005_Final,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\APS_Students_2004-06\APS 2004-2006 Student Data_Piton
+15,APS2005Other_Final,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\APS_Students_2004-06\APS 2004-2006 Student Data_Piton
+16,APS2006_Final,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\APS_Students_2004-06\APS 2004-2006 Student Data_Piton
+17,APS2006Other_Final,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\APS_Students_2004-06\APS 2004-2006 Student Data_Piton
+18,PitonStuFileFinal,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\APS_Students_Oct08
+19,Oct2010-11_Piton,,,,,,,,Shapefile,G:\Source Data\AuroraPublicSchools\Oct 2010_Piton
+20,APS 2004-2006 Student Data_Piton,,,,,,,,Zip,G:\Source Data\AuroraPublicSchools\OriginalFiles
+21,Piton,,,,,,,,Zip,G:\Source Data\AuroraPublicSchools\OriginalFiles
+22,LaborForceDataByCounty_05,Labor force data by county,Employment,Employment,2005,County,US,BLS,Excel,G:\Source Data\BLS
+23,LaborForceDataByCounty_06,Labor force data by county,Employment,Employment,2006,County,US,BLS,Excel,G:\Source Data\BLS
+24,2003_EITC_CO_ZIP,Earned income tax credit return summaries by zip code,EITC,EITC,2003,Zip/City/County,State,Brookings,Excel,G:\Source Data\BrookingsInstitution
+25,2004_COzipcode_Brookings,Map of EITC filings as a percentage of total returns,EITC,EITC,2004,Zip/City/County,State,Brookings,PDF map,G:\Source Data\BrookingsInstitution
+26,2004_EITC_CO_ZIP,Earned income tax credit return summaries by zip code,EITC,EITC,2004,Zip/City/County,State,Brookings,Excel,G:\Source Data\BrookingsInstitution
+27,2005_EITC_CO_ZIP,Earned income tax credit return summaries by zip code,EITC,EITC,2005,Zip/City/County,State,Brookings,Excel,G:\Source Data\BrookingsInstitution
+28,2006_EITC_PartYear,Earned income tax credit return summaries by zip code,EITC,EITC,2006,Zip/City/County,State,Brookings,Excel,G:\Source Data\BrookingsInstitution
+29,colorado_return_data_2008,Earned income tax credit return summaries by zip code,EITC,EITC,2008,Zip/City/County,State,Brookings,Excel,G:\Source Data\BrookingsInstitution
+30,EITC_AdditionalNotes_email,Additional information on using the EITC data,EITC,EITC,NA,NA,NA,Brookings,Word,G:\Source Data\BrookingsInstitution
+31,EITC_DataNotes,Earned income tax credit return data dictionary,EITC,EITC,NA,NA,NA,Brookings,Word,G:\Source Data\BrookingsInstitution
+32,EITC_Participation_KnownIssues,Document describing known issues with using the EITC data,EITC,EITC,NA,NA,NA,Brookings,PDF document,G:\Source Data\BrookingsInstitution
+33,TY2006 PartYear,Earned income tax credit return summaries by zip code,EITC,EITC,2006,Zip/City/County,State,Brookings,Excel,G:\Source Data\BrookingsInstitution
+34,1997_IRS,Tax returns by zip code,Tax,Tax,1997,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+35,1998_IRS,Tax returns by zip code,Tax,Tax,1998,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+36,1999_IRS,Tax returns by zip code,Tax,Tax,1999,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+37,2000_IRS,Tax returns by zip code,Tax,Tax,2000,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+38,2001_IRS,Tax returns by zip code,Tax,Tax,2001,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+39,2002_IRS,Tax returns by zip code,Tax,Tax,2002,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+40,2003_IRS,Tax returns by zip code,Tax,Tax,2003,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+41,2004_IRS,Tax returns by zip code,Tax,Tax,2004,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+42,2005_IRS,Tax returns by zip code,Tax,Tax,2005,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+43,2006_IRS,Tax returns by zip code,Tax,Tax,2006,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+44,2007_IRS,Tax returns by zip code,Tax,Tax,2007,Zip/City/County,State,IRS,Excel,G:\Source Data\BrookingsInstitution\IRS_1997to2005
+45,20062007bilingualschool,List of bilingual schools,Education,School type,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE
+46,CDE Data Request Form 2011,Form request for data,Data request,,2011,School,State,CDE,Word,G:\Source Data\CDE
+47,CDE Data Request Form 2011_CSAPforGrowthModel,Filled out data request form,Data request,,2011,School,State,CDE,Word,G:\Source Data\CDE
+48,3-Year Point Change Syntax,,Education,School performance,,School,State,CDE,SPS,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+49,2004-2005 3rd Grade CSAP Escritura,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+50,2004-2005 3rd Grade CSAP Lectura,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+51,2004-2005 3rd Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+52,2004-2005 3rd Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+53,2004-2005 3rd Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+54,2004-2005 4th Grade CSAP Escritura,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+55,2004-2005 4th Grade CSAP Lectura,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+56,2004-2005 4th Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+57,2004-2005 4th Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+58,2004-2005 4th Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+59,2004-2005 5th Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+60,2004-2005 5th Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+61,2004-2005 5th Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+62,2004-2005 6th Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+63,2004-2005 6th Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+64,2004-2005 6th Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+65,2004-2005 7th Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+66,2004-2005 7th Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+67,2004-2005 7th Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+68,2004-2005 8th Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+69,2004-2005 8th Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+70,2004-2005 8th Grade CSAP Science,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+71,2004-2005 8th Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+72,2004-2005 9th Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+73,2004-2005 9th Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+74,2004-2005 9th Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+75,2004-2005 10th Grade CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+76,2004-2005 10th Grade CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+77,2004-2005 10th Grade CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+78,2004-2005 ACT,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+79,2004-2005 CSAP and ACT - 2 Elementary,,Education,School performance,2004-2005,School,State,CDE,DBF,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+80,2004-2005 CSAP and ACT - 2 Elementary,,Education,School performance,2004-2005,School,State,CDE,IND,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+81,2004-2005 CSAP and ACT - 2 Elementary,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+82,2004-2005 CSAP and ACT - 2 Elementary,,Education,School performance,2004-2005,School,State,CDE,TAB,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+83,2004-2005 CSAP and ACT - 2 High,,Education,School performance,2004-2005,School,State,CDE,DBF,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+84,2004-2005 CSAP and ACT - 2 High,,Education,School performance,2004-2005,School,State,CDE,IND,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+85,2004-2005 CSAP and ACT - 2 High,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+86,2004-2005 CSAP and ACT - 2 High,,Education,School performance,2004-2005,School,State,CDE,TAB,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+87,2004-2005 CSAP and ACT - 2 Middle,,Education,School performance,2004-2005,School,State,CDE,DBF,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+88,2004-2005 CSAP and ACT - 2 Middle,,Education,School performance,2004-2005,School,State,CDE,IND,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+89,2004-2005 CSAP and ACT - 2 Middle,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+90,2004-2005 CSAP and ACT - 2 Middle,,Education,School performance,2004-2005,School,State,CDE,TAB,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+91,2004-2005 CSAP and ACT - 2,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+92,2004-2005 CSAP and ACT for Web - 2,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+93,2004-2005 CSAP and ACT for Web - 2,,Education,School performance,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+94,2004-2005 CSAP and ACT for Web - 2-1,,Education,School performance,2004-2005,School,State,CDE,TXT,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+95,2004-2005 CSAP and ACT for Web - 2-1,,Education,School performance,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+96,2004-2005 CSAP and ACT for Web - 2-2,,Education,School performance,2004-2005,School,State,CDE,TXT,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+97,2004-2005 CSAP and ACT for Web - 2-2,,Education,School performance,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+98,2004-2005 CSAP and ACT for Web - 2-3,,Education,School performance,2004-2005,School,State,CDE,TXT,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+99,2004-2005 CSAP and ACT for Web - 2-3,,Education,School performance,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+100,2004-2005 CSAP and ACT for Web,,Education,School performance,2004-2005,School,State,CDE,DBF,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+101,2004-2005 CSAP and ACT for Web,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+102,2004-2005 CSAP and ACT for Web,,Education,School performance,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+103,2004-2005 CSAP and ACT,,Education,School performance,2004-2005,School,State,CDE,DBF,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+104,2004-2005 CSAP and ACT,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+105,2004-2005 CSAP Escritura,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+106,2004-2005 CSAP Lectura,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+107,2004-2005 CSAP Math,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+108,2004-2005 CSAP Reading,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+109,2004-2005 CSAP Science,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+110,2004-2005 CSAP Writing,,Education,School performance,2004-2005,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+111,COACT05_EDboard_072605 - Denver,,Education,School performance,2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+112,COACT05_EDboard_072605,,Education,School performance,2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+113,CSAP 02-03 Proficient and Advanced,,Education,School performance,2002-2003,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+114,CSAP05_EDboard_072605 - Denver,,Education,School performance,2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+115,CSAP05_EDboard_072605,,Education,School performance,2005,School,State,CDE,Excel,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+116,Re-Calculate Percentages,,Education,School performance,,School,State,CDE,SPS,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+117,School Key,,Education,School performance,,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+118,School_080105,,Education,School performance,,School,State,CDE,SAV,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+119,Select Cases Escritura,,Education,School performance,,School,State,CDE,SPS,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+120,Select Cases,,Education,School performance,,School,State,CDE,SPS,G:\Source Data\CDE\04-05 CSAP from CDE\Pre-Release
+121,CSAP0405_5G_Read,,Education,School performance,2004-2005,School,State,CDE,DBF,G:\Source Data\CDE\04-05 CSAP from CDE
+122,CSAP0405_5G_Read.SCH_NUM,,Education,School performance,2004-2005,School,State,CDE,ATX,G:\Source Data\CDE\04-05 CSAP from CDE
+123,2008_DS_COACT,,Education,School performance,2008,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\ACT
+124,2008_ST_COACT,State ACT report,Education,School performance,2008,State,State,CDE,PDF spreadsheet,G:\Source Data\CDE\ACT
+125,2009_COACT_DS,School ACT report,Education,School performance,2009,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+126,2010_COACT_DS,School ACT report,Education,School performance,2010,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+127,ACT_SDSum,School ACT report,Education,School performance,,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\ACT
+128,ACT_SDSum,School ACT report,Education,School performance,,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+129,COACT05_EDboard_072605,School ACT report,Education,School performance,2005,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\ACT
+130,COACT05_EDboard_072605,School ACT report,Education,School performance,2005,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+131,COACT06_Sch_Dist,School ACT report,Education,School performance,2006,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\ACT
+132,COACT06_Sch_Dist,School ACT report,Education,School performance,2006,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+133,COACT07_DS,School ACT report,Education,School performance,2007,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\ACT
+134,COACT07_DS,School ACT report,Education,School performance,2007,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+135,COACT08_DS,School ACT report,Education,School performance,2008,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+136,Colorado ACT 2004,School ACT report,Education,School performance,2004,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+137,Colorado_ACT_Schdist_2004,School ACT report,Education,School performance,2004,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\ACT
+138,Colorado_ACT_Schdist_2004,School ACT report,Education,School performance,2004,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+139,data02,School ACT report,Education,School performance,2001-2002,School,State,CDE,Excel,G:\Source Data\CDE\ACT
+140,Denver ACT 03-04 - 2 for Maps,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,DBF,G:\Source Data\CDE\ACT\Not Source
+141,Denver ACT 03-04 - 2 for Maps,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,IND,G:\Source Data\CDE\ACT\Not Source
+142,Denver ACT 03-04 - 2 for Maps,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\ACT\Not Source
+143,Denver ACT 03-04 - 2 for Maps,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,TAB,G:\Source Data\CDE\ACT\Not Source
+144,Denver ACT 03-04 - 2,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\ACT\Not Source
+145,Denver ACT 03-04 - 2,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,TXT,G:\Source Data\CDE\ACT\Not Source
+146,Denver ACT 03-04 - 2,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\ACT\Not Source
+147,Denver ACT 03-04,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\ACT\Not Source
+148,Denver ACT 03-04,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\ACT\Not Source
+149,Master File 04-05,School ACT report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\ACT\Not Source
+150,AYP2003-04,School accountability report,Education,School performance,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\AYP
+151,AYP2004-05,School accountability report,Education,School performance,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\AYP
+152,AYP2005-06,School accountability report,Education,School performance,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\AYP
+153,ImprovementRatingDef,Program improvement dictionary,Education,School performance,NA,School,State,CDE,PDF document,G:\Source Data\CDE\AYP
+154,ProgramImprovement_2006,Program improvement report,Education,School performance,2006,School,State,CDE,Excel,G:\Source Data\CDE\AYP
+155,2007_CELA_K-12_PerformLevels_Dist_Sch,English language assessment report,Education,School performance,2007,School,State,CDE,Excel,G:\Source Data\CDE\CELA
+156,1996-1999 4th Grade CSAP Reading Complete,School CSAP report,Education,School performance,1996-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+157,1996-1999 4th Grade CSAP Writing Complete,School CSAP report,Education,School performance,1996-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+158,1997-1999 3rd Grade CSAP Reading Complete,School CSAP report,Education,School performance,1997-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+159,1998-1999 3rd Grade CSAP Reading,School CSAP report,Education,School performance,1998-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+160,1998-1999 4th Grade CSAP Reading,School CSAP report,Education,School performance,1998-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+161,1998-1999 4th Grade CSAP Writing,School CSAP report,Education,School performance,1998-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+162,1998-1999 5th Grade CSAP Math,School CSAP report,Education,School performance,1998-1999,School,Denver,CDE,PDF report,G:\Source Data\CDE\CSAP\1999
+163,1998-1999 5th Grade CSAP Math,School CSAP report,Education,School performance,1998-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+164,1998-1999 7th Grade CSAP Reading Complete,School CSAP report,Education,School performance,1998-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+165,1998-1999 7th Grade CSAP Reading,School CSAP report,Education,School performance,1998-1999,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+166,1998-1999 7th Grade CSAP Writing Complete,School CSAP report,Education,School performance,1998-1999,School,State,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+167,1998-1999 7th Grade CSAP Writing,School CSAP report,Education,School performance,1998-1999,School,State,CDE,Excel,G:\Source Data\CDE\CSAP\1999
+168,96-97 to 99-00 4th Reading Not Scaled,School CSAP report,Education,School performance,1996-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+169,96-97 to 99-00 4th Reading Scaled,School CSAP report,Education,School performance,1996-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+170,96-97 to 99-00 4th Writing Complete,School CSAP report,Education,School performance,1996-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+171,97-98 to 99-00 3rd Reading Complete,School CSAP report,Education,School performance,1997-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+172,98-99 to 99-00 7th Reading Not Scaled,School CSAP report,Education,School performance,1998-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+173,98-99 to 99-00 7th Reading Scaled,School CSAP report,Education,School performance,1998-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+174,98-99 to 99-00 7th Writing Complete,School CSAP report,Education,School performance,1998-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+175,99-00 5th Math Complete,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+176,99-00 8th Grade Math Complete,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+177,99-00 8th Grade Science Complete,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+178,1999-2000 3rd Grade CSAP Reading,School CSAP report,Education,School performance,1999-2000,School,State,CDE,PDF report,G:\Source Data\CDE\CSAP\2000
+179,1999-2000 3rd Grade CSAP Reading,School CSAP report,Education,School performance,1999-2000,School,State,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+180,1999-2000 4th Grade CSAP Reading,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,PDF report,G:\Source Data\CDE\CSAP\2000
+181,1999-2000 4th Grade CSAP Reading,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+182,1999-2000 4th Grade CSAP Writing,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,PDF report,G:\Source Data\CDE\CSAP\2000
+183,1999-2000 4th Grade CSAP Writing,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+184,1999-2000 7th Grade CSAP Reading,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,PDF report,G:\Source Data\CDE\CSAP\2000
+185,1999-2000 7th Grade CSAP Reading,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+186,1999-2000 7th Grade CSAP Writing,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,PDF report,G:\Source Data\CDE\CSAP\2000
+187,1999-2000 7th Grade CSAP Writing,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+188,1999-2000 8th Grade CSAP Math,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,PDF report,G:\Source Data\CDE\CSAP\2000
+189,1999-2000 8th Grade CSAP Math,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+190,1999-2000 8th Grade CSAP Science,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,PDF report,G:\Source Data\CDE\CSAP\2000
+191,1999-2000 8th Grade CSAP Science,School CSAP report,Education,School performance,1999-2000,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2000
+192,2000-2001 3rd Grade CSAP Lectura,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+193,2000-2001 3rd Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+194,2000-2001 4th Grade CSAP Escritura,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+195,2000-2001 4th Grade CSAP Lectura,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+196,2000-2001 4th Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+197,2000-2001 4th Grade CSAP Writing,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+198,2000-2001 5th Grade CSAP Math,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+199,2000-2001 5th Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+200,2000-2001 6th Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+201,2000-2001 7th Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+202,2000-2001 7th Grade CSAP Writing,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+203,2000-2001 8th Grade CSAP Math,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+204,2000-2001 8th Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+205,2000-2001 8th Grade CSAP Science,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+206,2000-2001 9th Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+207,2000-2001 10th Grade CSAP Math,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+208,2000-2001 10th Grade CSAP Reading,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+209,2000-2001 10th Grade CSAP Writing,School CSAP report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+210,2000-2001 11th Grade ACT,School ACT report,Education,School performance,2000-2001,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2001
+211,01-02 3rd Grade Lectura,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+212,01-02 3rd Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+213,01-02 3rd Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+214,01-02 4th Grade Escritura,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+215,01-02 4th Grade Lectura,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+216,01-02 4th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+217,01-02 4th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+218,01-02 5th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+219,01-02 5th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+220,01-02 5th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+221,01-02 6th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+222,01-02 6th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+223,01-02 6th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+224,01-02 7th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+225,01-02 7th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+226,01-02 7th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+227,01-02 8th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+228,01-02 8th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+229,01-02 8th Grade Science,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+230,,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+231,,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+232,01-02 8th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+233,01-02 9th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+234,01-02 9th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+235,01-02 9th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+236,01-02 10th Grade Math,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+237,01-02 10th Grade Reading,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+238,01-02 10th Grade Writing,School CSAP report,Education,School performance,2001-2002,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2002
+239,02-03 3rd Grade Lectura,School CSAP report,Education,School performance,2002-2003,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2003
+240,02-03 3rd Grade Reading,School CSAP report,Education,School performance,2002-2003,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2003
+241,02-03 4th Grade Lectura,School CSAP report,Education,School performance,2002-2003,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2003
+242,2003-2004 Escritura g3-4 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+243,2003-2004 Escritura g3-4,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+244,2003-2004 Lectura g4 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+245,2003-2004 Lectura g4,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+246,2003-2004 Math g5-10 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+247,2003-2004 Math g5-10,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+248,2003-2004 Reading g4-10 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+249,2003-2004 Reading g4-10,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+250,2003-2004 Science g8 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+251,2003-2004 Science g8,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+252,2003-2004 Writing g3-10 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+253,2003-2004 Writing g3-10,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+254,CSAP_2003-2004Rdg3update - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+255,CSAP_2003-2004Rdg3update,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release
+256,01-02 CSAP,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+257,3-Year Point Change Syntax,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SPS,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+258,2003-2004 Math g5-10 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+259,2003-2004 Reading g4-10 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+260,2003-2004 Science g8 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+261,2003-2004 Writing g3-10 - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+262,All Schools - 0304 CSAP Scores,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+263,All Schools - Complete,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,DBF,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+264,All Schools - Complete,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,IND,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+265,All Schools - Complete,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+266,All Schools - Complete,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,TAB,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+267,All Schools - Percentage Point Change,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+268,All Schools,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+269,CSAP Complete 0304,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+270,CSAP Complete 0304_1,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,TXT,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+271,CSAP Complete 0304_1,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+272,CSAP Complete 0304_2,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,TXT,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+273,CSAP Complete 0304_2,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+274,CSAP Percentage Point Change 0304,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+275,CSAP Percentage Point Change 0304_1,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,TXT,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+276,CSAP Percentage Point Change 0304_1,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+277,CSAP Percentage Point Change 0304_2,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,TXT,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+278,CSAP Percentage Point Change 0304_2,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+279,CSAP_2003-2004Rdg3update - DENVER,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+280,Elementary,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+281,GR3R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+282,GR3W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+283,GR4R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+284,GR4W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+285,GR5M,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+286,GR5R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+287,GR5W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+288,GR6M,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+289,GR6R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+290,GR6W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+291,GR7M,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+292,GR7R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+293,GR7W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+294,GR8M,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+295,GR8R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+296,GR8S,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+297,GR8W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+298,GR9M,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+299,GR9R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+300,GR9W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+301,GR10M,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+302,GR10R,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+303,GR10W,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+304,High,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+305,Middle,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+306,School Master List,School CSAP report,Education,School performance,2003-2004,School,Denver,CDE,SAV,G:\Source Data\CDE\CSAP\2004\CSAP from CDE - Summer 2004 Release\Revised for Web
+307,CSAP05_disag_eth_math,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+308,CSAP05_disag_eth_read,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+309,CSAP05_disag_eth_write,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+310,CSAP05_disag_frl_math,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+311,CSAP05_disag_frl_read,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+312,CSAP05_disag_frl_write,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+313,CSAP05_disag_langprof_math,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+314,CSAP05_disag_langprof_read,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+315,CSAP05_disag_langprof_write,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+316,CSAP05_disag_migrant_math,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+317,CSAP05_disag_migrant_read,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+318,CSAP05_disag_migrant_write,School CSAP report,Education,School performance,2004-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2005
+319,2006_CO_CSAPReading,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+320,CSAP_FieldDescriptions,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+321,CSAP06_Eth_Math,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+322,CSAP06_Eth_Reading,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+323,CSAP06_Eth_Science,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+324,CSAP06_Eth_Writing,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+325,CSAP06_Frl_Math,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+326,CSAP06_Frl_Reading,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+327,CSAP06_Frl_Science,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+328,CSAP06_Frl_Writing,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+329,CSAP06_Gen_Math,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+330,CSAP06_Gen_Reading,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+331,CSAP06_Gen_Writing,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+332,CSAP06_Lang_Math,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+333,CSAP06_Lang_Reading,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+334,CSAP06_Lang_Science,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+335,CSAP06_Lang_Writing,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+336,CSAP06_Mig_Math,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+337,CSAP06_Mig_Reading,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+338,CSAP06_Mig_Science,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+339,CSAP06_Mig_Writing,School CSAP report,Education,School performance,2005-2006,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2006
+340,2007_CSAP_ETH_Math,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+341,2007_CSAP_ETH_Reading,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+342,2007_CSAP_ETH_Writing,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+343,2007_CSAP_FRLUN_Math,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+344,2007_CSAP_FRLUN_Reading,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+345,2007_CSAP_FRLUN_Writing,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+346,2007_CSAP_GEN_Math,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+347,2007_CSAP_GEN_Reading,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+348,2007_CSAP_GEN_Writing,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+349,2007_CSAP_LAN_Math,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+350,2007_CSAP_LAN_Reading,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+351,2007_CSAP_LAN_Writing,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+352,2007_CSAP_MIG_Math,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+353,2007_CSAP_MIG_Reading,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+354,2007_CSAP_MIG_Writing,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+355,2008_CSAP_DS_Read,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+356,CSA_Summary_ByGradeSchool_Math,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+357,CSA_Summary_ByGradeSchool_Reading,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+358,CSA_Summary_ByGradeSchool_Writing,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+359,CSAP07_MA_DS,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+360,CSAP07_RD_DS,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+361,CSAP07_SC_DS,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+362,CSAP07_WR_DS,School CSAP report,Education,School performance,2006-2007,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2007
+363,2008_CSAP_DS_Math,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+364,2008_CSAP_DS_Read,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+365,2008_CSAP_DS_Sci,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+366,2008_CSAP_DS_Write,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+367,2008_CSAP_ETH_MATH,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+368,2008_CSAP_ETH_READING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+369,2008_CSAP_ETH_WRITING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+370,2008_CSAP_FRLUN_MATH,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+371,2008_CSAP_FRLUN_READING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+372,2008_CSAP_FRLUN_WRITING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+373,2008_CSAP_GEN_MATH,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+374,2008_CSAP_GEN_READING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+375,2008_CSAP_GEN_WRITING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+376,2008_CSAP_LANGPROF_MATH,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+377,2008_CSAP_LANGPROF_READING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+378,2008_CSAP_LANGPROF_WRITING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+379,2008_CSAP_MIGRANT_MATH,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+380,2008_CSAP_MIGRANT_READING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+381,2008_CSAP_MIGRANT_WRITING,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+382,2008_CSAP_piton_frlun,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+383,CSAP_Datarequest_2008,School CSAP report,Education,School performance,2007-2008,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2008
+384,2009_CSAP_DS_escritura,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+385,2009_CSAP_DS_lectura,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+386,2009_CSAP_DS_math,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+387,2009_CSAP_DS_read,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+388,2009_CSAP_DS_sci,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+389,2009_CSAP_DS_write,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+390,2009_CSAP_ETH_LECTURA,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+391,2009_CSAP_ETH_MATH,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+392,2009_CSAP_ETH_READ,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+393,2009_CSAP_ETH_WRITE,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+394,2009_CSAP_FRLUN_ESCRITURA,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+395,2009_CSAP_FRLUN_LECTURA,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+396,2009_CSAP_FRLUN_MATH,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+397,2009_CSAP_FRLUN_READ,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+398,2009_CSAP_FRLUN_WRITE,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+399,2009_CSAP_GENDER_ESCRITURA,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+400,2009_CSAP_GENDER_MATH,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+401,2009_CSAP_GENDER_READ,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+402,2009_CSAP_GENDER_WRITE,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+403,2009_CSAP_LANGPROF_MATH,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+404,2009_CSAP_LANGPROF_READ,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+405,2009_CSAP_LANGPROF_WRITE,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+406,2009_CSAP_MIGRANT_MATH,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+407,2009_CSAP_MIGRANT_READ,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+408,2009_CSAP_MIGRANT_WRITE,School CSAP report,Education,School performance,2008-2009,School,Denver,CDE,Excel,G:\Source Data\CDE\CSAP\2009
+409,CSAP_grade3_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+410,CSAP_grade4_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+411,CSAP_grade5_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+412,CSAP_grade6_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+413,CSAP_grade7_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+414,CSAP_grade8_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+415,CSAP_grade9_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+416,CSAP_grade10_DPS_APS,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+417,CSAP_reading_writing_math_by_grade_DPS_APS_1011,School CSAP report,Education,School performance,2010-2011,School,Corridor,CDE,Excel,G:\Source Data\CDE\CSAP\2011
+418,CSAP 2006-2007 ,School CSAP report overall,Education,School performance,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\CSAP\CSAP_byEMH_07to10
+419,CSAP 2007-2008 ,School CSAP report overall,Education,School performance,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\CSAP\CSAP_byEMH_07to10
+420,CSAP 2008-2009 ,School CSAP report overall,Education,School performance,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\CSAP\CSAP_byEMH_07to10
+421,CSAP 2009-2010,School CSAP report overall,Education,School performance,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\CSAP\CSAP_byEMH_07to10
+422,AdministrationSchedule1999to2002,CSAP test administration schedule by grade,Education,School performance,1999-2002,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\CSAP
+423,DataRequest_Form,CDE data request form,Education,Data request,NA,School,State,CDE,Word,G:\Source Data\CDE\CSAP
+424,02-03DropOutRateBySchool,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2002-2003,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+425,02-03DropOutRateBySchool_Metro,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2002-2003,School,Region,CDE,Excel,G:\Source Data\CDE\DropOut
+426,2001_DropOut_DistrictTotals,"Drop out counts by district, grade, gender, race/ethnicity",Education,Drop out rates,2000-2001,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\DropOut
+427,2002_DropOut_DistrictTotals,"Drop out counts by district, grade, gender, race/ethnicity",Education,Drop out rates,2001-2002,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\DropOut
+428,2003_Dropout_DistrictTotals,"Drop out counts by district, grade, gender, race/ethnicity",Education,Drop out rates,2002-2003,District,State,CDE,Excel,G:\Source Data\CDE\DropOut
+429,2003_DropOutRateBySchool,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2002-2003,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+430,2004_DropOutRate_DistrictTotals,"Drop out counts by district, grade, gender, race/ethnicity",Education,Drop out rates,2003-2004,District,State,CDE,Excel,G:\Source Data\CDE\DropOut
+431,2004-05IPSTSCHOOL,"Drop out rate by school, program type, race/ethnicity",Education,Drop out rates,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+432,2004-05REGSCHOOL,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+433,2005_DropOutRate_DistrictTotals,"Drop out counts by district, grade, gender, race/ethnicity",Education,Drop out rates,2004-2005,District,State,CDE,Excel,G:\Source Data\CDE\DropOut
+434,2006_C-School_ Dropout_by_REG_&_IPST,"Drop out rate by school, grade, gender, program type, race/ethnicity",Education,Drop out rates,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+435,2006_D-School_Drops_by_REG_Grade,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+436,2007-3-DropratesbySchoolGenderGrade&Race,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+437,2007-4-DropoutRatesbySchoolGenderIPST&Race,"Drop out rate by school, gender, program type, race/ethnicity",Education,Drop out rates,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+438,2009DropoutRatesbyGenderIPST&Race-School,"Drop out rate by school, grade, gender, program type, race/ethnicity",Education,Drop out rates,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+439,2009DropratesbyGenderGrade&Race-School,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+440,C2006-School_ Dropout_by_REG_&_IPST,"Drop out rate by school, grade, gender, program type, race/ethnicity",Education,Drop out rates,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+441,C-2007School_ Dropout_by_REG_&_IPST,"Drop out rate by school, gender, program type, race/ethnicity",Education,Drop out rates,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+442,C-2008DropratesbyGenderGrade&Race-School,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+443,D2006-School_Drops_by_REG_Grade,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+444,D-2008DropRatesbyGenderIPST&Race-School,"Drop out rate by school, grade, gender, program type, race/ethnicity",Education,Drop out rates,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+445,Notes for Dropout Rate,Notes to accompany drop out rate data,Education,Drop out rates,NA,School,State,CDE,Word,G:\Source Data\CDE\DropOut
+446,SchoolREG04-05,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\DropOut
+447,20092010-DropoutRatesbyGenderIPSTRaceSCHOOL,"Drop out rate by school, gender, program type, race/ethnicity",Education,Drop out rates,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\DropOut\2009-2010
+448,EOY20092010_DropratesbyGenderGradeRacebydistrict,"Drop out counts by district, grade, gender, race/ethnicity",Education,Drop out rates,2009-2010,District,State,CDE,Excel,G:\Source Data\CDE\DropOut\2009-2010
+449,EOY20092010-DropoutRatesbyGenderIPSTRaceDISTRICT,"Drop out rate by district, gender, program type, race/ethnicity",Education,Drop out rates,2009-2010,District,State,CDE,Excel,G:\Source Data\CDE\DropOut\2009-2010
+450,EOY20092010-DropratesbyGenderGradeRacebySCHOOL,"Drop out rate by school, grade, gender, race/ethnicity",Education,Drop out rates,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\DropOut\2009-2010
+451,04-05EnrollmentByEthnicity&Grade,Enrollment by ethnicity and grade,Education,Enrollment,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+452,05-06DistrictEnrollment1,Enrollment district totals,Education,Enrollment,2004-2005,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+453,05-06EnrollmentByEthnicity&Grade,Enrollment by ethnicity and grade,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+454,05-06EnrollmentByGrade,Enrollment by grade,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+455,05-06FreeLunch,Enrollment by F&RL,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+456,05-06InstrucDistFinal,Enrollment by program type,Education,Enrollment,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+457,05-06PMBYGRADE,Enrollment by grade,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+458,06-07DistrictEnrollment,Enrollment district totals,Education,Enrollment,2006-2007,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+459,06-07EnrollmentByEthnicity&Grade,Enrollment by ethnicity and grade,Education,Enrollment,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+460,06-07EnrollmentBySchoolGrade,Enrollment by grade,Education,Enrollment,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+461,06-07FreeLunch,Enrollment by F&RL,Education,Enrollment,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+462,07-08_Homeschool,Home based education,Education,Enrollment,2003-2007,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+463,07-08EnrollmentByEthnicity&Grade,Enrollment by ethnicity and grade,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+464,07-08EnrollmentByGrade,Enrollment by grade,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+465,07-08FreeLunch_byCountyDistSchool,Enrollment by F&RL,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+466,07-08FreeLunch_PK-12,Enrollment by F&RL,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+467,07-08K-12SchFred,Enrollment by F&RL,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+468,08-09K_12FreeandReducedLunchEligibilitybydistrictandschool,Enrollment by F&RL,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+469,08-09PK-12FreeandReducedlunchEligibilitybyDistrictandSchool,Enrollment by F&RL,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+470,08-09PupilMembershipbyinstructionprogram,Enrollment by program type,Education,Enrollment,2008-2009,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+471,08-09StudentsAttendingPublicSchoolsNotinParent'sDistrictofResidence,Enrollment out of district from place of residence,Education,Enrollment,2008-2009,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+472,0809MembershipbySchoolandGradelevel,Enrollment by grade,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+473,0910_K12freereducedlunchbycountydistrictandschool,Enrollment by F&RL,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+474,0910_Pk12freereducedlunchbydistrictandschool,Enrollment by F&RL,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+475,0910_Pupilmembershipbyschoolandgradelevel,Enrollment by grade,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+476,0910_PupilMembershipbyschoolgraderaceandgender,Enrollment by ethnicity and grade,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+477,0910_PupilPercentMinoritybyschoolgraderaceandgender,Enrollment by ethnicity and grade percentage,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+478,1011_BySchoolRaceGenderPercentMinority,Enrollment by ethnicity and grade percentage,Education,Enrollment,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+479,1011_K-12_FRED,Enrollment by F&RL,Education,Enrollment,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+480,1011_PK-12_FRED,Enrollment by F&RL,Education,Enrollment,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+481,1011_PupilMembershipbySchoolandGrade,Enrollment by grade,Education,Enrollment,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+482,2000AdamsCounty_Enrollment,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2000-2001,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+483,2000ArapahoeCounty_Enrollment,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2000-2001,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+484,2000BoulderCounty_Enrollment,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2000-2001,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+485,2000DouglasCounty_Enrollment,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2000-2001,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+486,2000JeffersonCounty_Enrollment,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2000-2001,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+487,2001PMbyDistrictSchoolbyGrade,Enrollment by grade,Education,Enrollment,2001-2002,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+488,2004EnrollmentSchooLevel1,Enrollment by grade,Education,Enrollment,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+489,2007-08K-12SchFRL,Enrollment by F&RL,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+490,20022003PMbyDistrict-School-Grade,Enrollment by grade,Education,Enrollment,2002-2003,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+491,20032004PMBYSCHOOLGRADE,Enrollment by grade,Education,Enrollment,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+492,Fall2000DenverCounty_Enrollment,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2000-2001,School,Denver,CDE,PDF spreadsheet,G:\Source Data\CDE\Enrollment
+493,Fall2003DistrictByInstructProgram,Enrollment by program type,Education,Enrollment,2003-2004,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+494,Fall2003Enrollment,Enrollment by grade,Education,Enrollment,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+495,Fall2003FreeLunch,Enrollment by F&RL,Education,Enrollment,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+496,Fall2004DistrictByInstructProgram,Enrollment by program type,Education,Enrollment,2004-2005,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+497,Fall2004Enrollment,Enrollment by grade,Education,Enrollment,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+498,Fall2004FreeLunch,Enrollment by F&RL,Education,Enrollment,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+499,Fall2005Enrollment,Enrollment by grade,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+500,Fall2005EnrollmentByEthnicity,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+501,Fall2005EnrollmentByInstructionType,Enrollment by program type,Education,Enrollment,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+502,Fall2005FreeLunch,Enrollment by F&RL,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+503,Fall2005Non-Publicschoolmembership,Private school enrollment by grade,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+504,Fall2006DistrictByInstructProgram,Enrollment by program type,Education,Enrollment,2006-2007,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+505,Fall2007_PercentMinority,Enrollment by ethnicity and grade percentage,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+506,Fall2008_K12_FRL_Eligibilitybyschool,Enrollment by F&RL,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+507,Fall2008_PupilMembershipbyInstructionProgram_ByDist,Enrollment by program type,Education,Enrollment,2008-2009,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+508,Fall2008_StudentsAttendingPublicSchoolsNotinParent'sDistrictofResidence,Enrollment out of district from place of residence,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+509,Fall2008EnrollmentBySchoolandGradelevel,Enrollment by grade,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+510,Fall2008EnrollmentBySchoolEthnicityGenderGradeLevel,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+511,Fall2008PercentMinoritybyschoolEthnicityGenderandGradeLevel,Enrollment by ethnicity and grade percentage,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+512,Fall2008PupilMembershipbyCountydistrictEthnicityGenderandGradelevel,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2008-2009,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+513,Fall2008PupilMembershipbySchoolEthnicityGenderGradeLevel,"Enrollment by ethnicity, gender and grade",Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+514,FRL_EligibilityLetter_0809,Letter to parents on free and reduced lunch eligibility,Education,Enrollment,2008-2009,School,State,CDE,Word,G:\Source Data\CDE\Enrollment
+515,FRL_Income2009-10,Letter to superintendents and food service directors on F&RL,Education,Enrollment,2009-2010,District,State,CDE,PDF document,G:\Source Data\CDE\Enrollment
+516,MetroAreaStudentMembership95-05,Enrollment by district between 1995 - 2005,Education,Enrollment,1995-2005,District,Region,CDE,Excel,G:\Source Data\CDE\Enrollment
+517,PupMemberbyDistrictSetting,Enrollment by district by geography (urban/rural/etc),Education,Enrollment,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Enrollment
+518,3-2008Grad&CompRatesbyGenderRace-School,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+519,3-SCHOOL_Grads_and_Comps_by_IPST,Graduation & completion rates by program type,Education,Graduation,?,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+520,4-2008GradsandCompsbyIPST-School,Graduation & completion rates by program type,Education,Graduation,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+521,4-School_Grad_&_Comp_Rates_ by_ Race_ &_Gender,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,?,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+522,4-YearGradTrend(2000thru2003),"Graduation rates by gender, race/ethnicity",Education,Graduation,2000-2003,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+523,2002AdamsCountyGrads,"Graduation rates by gender, race/ethnicity",Education,Graduation,2001-2002,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Graduation
+524,2002ArapahoeCountyGrads,"Graduation rates by gender, race/ethnicity",Education,Graduation,2001-2002,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Graduation
+525,2002BoulderCountyGrads,"Graduation rates by gender, race/ethnicity",Education,Graduation,2001-2002,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Graduation
+526,2002DenverCountyGrads,"Graduation rates by gender, race/ethnicity",Education,Graduation,2001-2002,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Graduation
+527,2002DouglasCountyGrads,"Graduation rates by gender, race/ethnicity",Education,Graduation,2001-2002,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Graduation
+528,2002JeffersonCountyGrads,"Graduation rates by gender, race/ethnicity",Education,Graduation,2001-2002,School,County,CDE,PDF spreadsheet,G:\Source Data\CDE\Graduation
+529,2006_GraduationBySchoolByInstructProgType,Graduation & completion rates by program type,Education,Graduation,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+530,2006-GradCompRatesbyDistrictRaceGender,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+531,2007C-Grad&CompRatesbySchoolRace&Gender,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+532,2007-DistrictGradandCompratesbyIPST,Graduation & completion rates by program type,Education,Graduation,2006-2007,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+533,2007D-SchoolGradandCompRatesbyIPST,Graduation & completion rates by program type,Education,Graduation,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+534,2007-GradCompRatesbyDistrictRaceGender,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2006-2007,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+535,2007-GradCompRatesbySchoolRaceGender,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+536,2007-SchoolGradandCompRatesbyIPST,Graduation & completion rates by program type,Education,Graduation,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+537,2008Grad&CompRatesbyGenderRace-School,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+538,2008GradsandCompsbyIPST-School,Graduation & completion rates by program type,Education,Graduation,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+539,2009_2010GradCompRatesbyRaceGenderSchoolLevel,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+540,2009Grad&CompRatesbyRace&Gender-School,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+541,2009GradsandCompsbyIPST-School,Graduation & completion rates by program type,Education,Graduation,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+542,2010_2011_Graduates_and_Completers_by_School_and_Instructional_Service_Program_Type,Graduation & completion rates by program type,Education,Graduation,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+543,2010_2011_Graduates_and_Completers_by_School_Gender_And_RaceEthnicity,"Graduation & completion rates by gender, race/ethnicity",Education,Graduation,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+544,20092010-GradsandCompsbyIPSTSCHOOLLEVEL,Graduation & completion rates by program type,Education,Graduation,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+545,DistGrad02-03,Graduation & completion rates,Education,Graduation,2002-2003,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+546,DistGrad03-04,Graduation & completion rates,Education,Graduation,2003-2004,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+547,DistGrad04-05,Graduation & completion rates,Education,Graduation,2004-2005,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+548,DistGrad05-06,Graduation & completion rates,Education,Graduation,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+549,DistIPSTGrad03-04,Graduation & completion rates by program type,Education,Graduation,2003-2004,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+550,DistIPSTGrad04-05,Graduation & completion rates by program type,Education,Graduation,2004-2005,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+551,DistIPSTGrad05-06,Graduation & completion rates by program type,Education,Graduation,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Graduation
+552,Notes_CDE_Graduatio Data2005,Graduation summary notes,Education,Graduation,2004-2005,District,State,CDE,Word,G:\Source Data\CDE\Graduation
+553,Notes_CDE_GraduationData,Graduation general notes,Education,Graduation,NA,District,State,CDE,Word,G:\Source Data\CDE\Graduation
+554,SchoolIPSTGrad03-04,Graduation & completion rates by program type,Education,Graduation,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+555,SchoolIPSTGrad04-05,Graduation & completion rates by program type,Education,Graduation,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+556,SchoolIPSTGrad05-06,Graduation & completion rates by program type,Education,Graduation,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+557,SchoolREG02-03,"Graduation rates by gender, race/ethnicity",Education,Graduation,2002-2003,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+558,SchoolREG03-04,"Graduation rates by gender, race/ethnicity",Education,Graduation,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+559,SchoolREG04-05,"Graduation rates by gender, race/ethnicity",Education,Graduation,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+560,SchoolREG05-06,"Graduation rates by gender, race/ethnicity",Education,Graduation,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Graduation
+561,2006-08SchoolGrowthSummary,"Median growth percentile by subject, gender, F&RL",Education,Growth Model,2006-2008,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+562,2007to2009_EMH_with_Disaggs,"Median growth percentile by subject, gender, F&RL, socioeconomic status",Education,Growth Model,2007-2009,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+563,2008Growth Rating,Growth rating by school,Education,Growth Model,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+564,2008SchoolGrowthSummary,"Median groth percentile by subject, gender, F&RL",Education,Growth Model,2006-2008,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+565,2009_Growth_DS_math,"Growth percentiles - catch up, keep up, move up - math",Education,Growth Model,2007-2009,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+566,2009_Growth_DS_read,"Growth percentiles - catch up, keep up, move up - reading",Education,Growth Model,2007-2009,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+567,2009_Growth_DS_write,"Growth percentiles - catch up, keep up, move up - writing",Education,Growth Model,2007-2009,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+568,2011 growth data district school and EMH,"Growth percentiles - median, adequate, catch up, keep up",Education,Growth Model,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+569,School_Growth_Summary_Flat_File_by_EMH_no_Disaggs,"Growth percentiles - median, adequate, catch up, keep up",Education,Growth Model,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+570,School_Growth_Summary_Flat_File_by_EMH_with_Disaggs,"Growth percentiles - median, adequate, catch up, keep up",Education,Growth Model,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel
+571,CSAP 2006-2007 ,School CSAP report,Education,School performance,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel\CORA_GrowthDataRequest_Fall09
+572,CSAP 2007-2008 ,School CSAP report,Education,School performance,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel\CORA_GrowthDataRequest_Fall09
+573,CSAP 2008-2009 ,School CSAP report,Education,School performance,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\GrowthModel\CORA_GrowthDataRequest_Fall09
+574,20092010SchoolmobilityratebyGenderandRace,"School mobility rate by gender, race/ethnicity",Education,Mobility,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+575,20092010SchoolmobilityratebyInstructionProgramservicetype,School mobility rate by program type,Education,Mobility,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+576,A-2008-09MobilitybyGender&Race-School,"School mobility rate by gender, race/ethnicity",Education,Mobility,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+577,B-2008-09MobilitybyIPST-School,School mobility rate by program type,Education,Mobility,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+578,d-mobilitybyGenderRaceandSchoolv2_200607,"School mobility rate by gender, race/ethnicity",Education,Mobility,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+579,e-MobilityRatesbyIPSTandSchoolv200607,School mobility rate by program type,Education,Mobility,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+580,Mobilitybygenderandrace-school_200708,"School mobility rate by gender, race/ethnicity",Education,Mobility,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+581,MobilitybyIPST-school_200708,School mobility rate by program type,Education,Mobility,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+582,SchoolMobility_byIPST_bySchool0607,School mobility rate by program type,Education,Mobility,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+583,SchoolMobility_byRaceEthnicity_bySchool0607,"School mobility rate by gender, race/ethnicity",Education,Mobility,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Mobility
+584,2008-09APCourseTaking,"Advanced placement course completions by gender, race/ethnicity",Education,Advanced placement,2008-2009,District,State,CDE,Excel,G:\Source Data\CDE\Advanced Placement
+585,Advancedplacementcoursesstatistics,"Advanced placement course completions by gender, race/ethnicity",Education,Advanced placement,2009-2010,District,State,CDE,Excel,G:\Source Data\CDE\Advanced Placement
+586,APbyCourseandDistrict04-05,"Advanced placement course completions by gender, race/ethnicity",Education,Advanced placement,2004-2005,District,State,CDE,Excel,G:\Source Data\CDE\Advanced Placement
+587,APbyCourseandDistrict05-06,"Advanced placement course completions by gender, race/ethnicity",Education,Advanced placement,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Advanced Placement
+588,APbyCourseandDistrict06-07,"Advanced placement course completions by gender, race/ethnicity",Education,Advanced placement,2006-2007,District,State,CDE,Excel,G:\Source Data\CDE\Advanced Placement
+589,APbyCourseandDistrict07-08,"Advanced placement course completions by gender, race/ethnicity",Education,Advanced placement,2007-2008,District,State,CDE,Excel,G:\Source Data\CDE\Advanced Placement
+590,2008NonPublic_Enrollment,School enrollment - non-public,Education,Enrollment,2008-2009,School,State,CDE,PDF report,G:\Source Data\CDE\NonPublicSchools
+591,Fall2009Non-PublicSchoolMembership,School enrollment - non-public,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\NonPublicSchools
+592,Fall2010Non-Publicschoolmembership(3),School enrollment - non-public,Education,Enrollment,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\NonPublicSchools
+593,CSAP06_Gen_Math,School CSAP report,Education,School performance,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Performance
+594,CSAP06_Gen_Reading,School CSAP report,Education,School performance,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Performance
+595,CSAP06_RD_DS,School CSAP report,Education,School performance,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Performance
+596,05-06PostSecondaryOptionsParticipation,School enrollment in post secondary classes,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\PostSecondaryOptions
+597,06-07PostSecondaryOptionsParticipation,School enrollment in post secondary classes,Education,Enrollment,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\PostSecondaryOptions
+598,07-08PSEO,School enrollment in post secondary classes,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\PostSecondaryOptions
+599,2008-09PSEOCourseTaking,School enrollment in post secondary classes,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\PostSecondaryOptions
+600,20092010PostSecondarycoursetaking,School enrollment in post secondary classes,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\PostSecondaryOptions
+601,00-01PupilTeacherRatio,Student teacher ratio,Education,Enrollment,2000-2001,School,State,CDE,Excel,G:\Source Data\CDE\PupilTeacherRatio
+602,01-02PupilTeacherRatio,Student teacher ratio,Education,Enrollment,2001-2002,School,State,CDE,Excel,G:\Source Data\CDE\PupilTeacherRatio
+603,02-03PupilTeacherRatio,Student teacher ratio,Education,Enrollment,2002-2003,School,State,CDE,Excel,G:\Source Data\CDE\PupilTeacherRatio
+604,03-04PupilTeacherRatio,Student teacher ratio,Education,Enrollment,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\PupilTeacherRatio
+605,04-05PupilTeacherRatio,Student teacher ratio,Education,Enrollment,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\PupilTeacherRatio
+606,05-06PupilTeacherRatios,Student teacher ratio,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\PupilTeacherRatio
+607,pupilmembershipandteacherdata,Student teacher ratio,Education,Enrollment,2009-2010,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\PupilTeacherRatio
+608,StudentTeacherRatiosbyschool0910,Student teacher ratio,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\PupilTeacherRatio
+609,2003-Ratings,School accountability report,Education,Enrollment,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\SAR
+610,2004-Ratings,School accountability report,Education,Enrollment,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\SAR
+611,2005-Ratings,School accountability report,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\SAR
+612,2006-Ratings,School accountability report,Education,Enrollment,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\SAR
+613,2007_Ratings,School accountability report,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\SAR
+614,2007-08 SAR Regular,School accountability report - full,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\SAR
+615,2008_Ratings,School accountability report,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\SAR
+616,2007-08 SAR Regular,School accountability report - full,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\SAR\SAR_DataRequest_2007
+617,2007-2008AlternativeSchools,School address report,Education,Address,2007-2008,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools
+618,2010-11SchoolMailingLabels,School address report,Education,Address,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+619,2010-2011Non-PublicDirectory,School address report,Education,Address,2010-2011,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools
+620,AltSchools2006,School address report,Education,Address,2006-2007,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools
+621,CDE_SchoolsList_0809,School address report,Education,Address,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+622,CDE_Title1Schools,School address report,Education,Address,2007-2008,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools
+623,Denver_PublicSchools08-09,School address report,Education,Address,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+624,Districtmailinglabels07-08Master,School address report,Education,Address,2007-2008,District,State,CDE,Excel,G:\Source Data\CDE\Schools
+625,Districts06-07,School address report,Education,Address,2006-2007,District,State,CDE,Excel,G:\Source Data\CDE\Schools
+626,DownloadableMailingLabels_0910,School address report,Education,Address,2009-2010,School,State,CDE,HTML link,G:\Source Data\CDE\Schools
+627,MailingLabelsDistricts2009-2010,School address report,Education,Address,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+628,New Schools 9-2-2010,School address report,Education,Address,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+629,PublicSchoolMailingMaster07-08,School address report,Education,Address,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+630,PublicSchools_MailingLabels2009-2010,School address report,Education,Address,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+631,PublicSchools06-07,School address report,Education,Address,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+632,PublicSchools08-09,School address report,Education,Address,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+633,SchoolMailingLabels2008-2009,School address report,Education,Address,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+634,Schools_Fall2012,School address report,Education,Address,2011-2012,School,State,CDE,Excel,G:\Source Data\CDE\Schools
+635,2000_NonPublicSchool_EnrollmentByGrade,School enrollment - non-public,Education,Enrollment,2000-2001,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools\NonPublicSchools
+636,2000_NonPublicSchool_Trend,School enrollment - non-public,Education,Enrollment,1996-2000,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools\NonPublicSchools
+637,2000HomeBasedEducationTrend,School enrollment - home study,Education,Enrollment,1996-2000,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools\NonPublicSchools
+638,2007-2008Non-PublicMailingLabels,School address report,Education,Address,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Schools\NonPublicSchools
+639,2007NONPUBLICSCHOOLDIRECTORY,School address report,Education,Address,2007-2008,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools\NonPublicSchools
+640,2008NONPUBLICSCHOOLDIRECTORY,School address report,Education,Address,2008-2009,School,State,CDE,PDF spreadsheet,G:\Source Data\CDE\Schools\NonPublicSchools
+641,MailingLabelsNon-Public2008-2009,School address report,Education,Address,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Schools\NonPublicSchools
+642,Nonpublic20062007,School address report,Education,Address,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Schools\NonPublicSchools
+643,2007-08 SAR Regular,School accountability report - full,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Schools\SAR
+644,Student-teacher ratios by school,Student teacher ratio,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Schools\SAR
+645,CDESchoolPerformanceFramework_flatfile_121710,School performance report,Education,Performance,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\SPF
+646,DPF 2011 Final Accreditation Ratings for SBE,District accreditation report,Education,Performance,2011-2012,District,State,CDE,Excel,G:\Source Data\CDE\SPF
+647,DPF 2011 flat file,District accreditation report,Education,Performance,2011-2012,District,State,CDE,Excel,G:\Source Data\CDE\SPF
+648,SPF 2011 CDE plan type recommendations for SBE,School accreditation report,Education,Performance,2011-2012,School,State,CDE,Excel,G:\Source Data\CDE\SPF
+649,SPF 2011 flat file,School performance report,Education,Performance,2011-2012,School,State,CDE,Excel,G:\Source Data\CDE\SPF
+650,SPFTechnicalGuide,School performance guide,Education,Performance,2010,NA,State,CDE,PDF report,G:\Source Data\CDE\SPF
+651,01-02SuspandExpulSchool,Suspensions and expulsions report,Education,Safety & Discipline,2001-2002,District,State,CDE,Excel,G:\Source Data\CDE\Suspension
+652,02-03SuspandExpulSchool,Suspensions and expulsions report,Education,Safety & Discipline,2002-2003,District,State,CDE,Excel,G:\Source Data\CDE\Suspension
+653,03-04SuspandExpulSchool,Suspensions and expulsions report,Education,Safety & Discipline,2003-2004,District,State,CDE,Excel,G:\Source Data\CDE\Suspension
+654,03-04SuspionBySchool,Suspensions and expulsions report,Education,Safety & Discipline,2003-2004,District,State,CDE,Excel,G:\Source Data\CDE\Suspension
+655,05-06SuspandExplforHisp,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2005-2006,District,State,CDE,Excel,G:\Source Data\CDE\Suspension
+656,Susp-expul by school 00-01,Suspensions and expulsions summary report,Education,Safety & Discipline,2000-2001,School,State,CDE,Excel,G:\Source Data\CDE\Suspension
+657,Susp-expul by school 01-02,Suspensions and expulsions summary report,Education,Safety & Discipline,2001-2002,School,State,CDE,Excel,G:\Source Data\CDE\Suspension
+658,Susp-expul by school 02-03,Suspensions and expulsions summary report,Education,Safety & Discipline,2002-2003,School,State,CDE,Excel,G:\Source Data\CDE\Suspension
+659,Susp-expul by school 03-04,Suspensions and expulsions summary report,Education,Safety & Discipline,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\Suspension
+660,Susp-expul by school 04-05,Suspensions and expulsions summary report,Education,Safety & Discipline,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\Suspension
+661,Susp-expul by school 05-06,Suspensions and expulsions summary report,Education,Safety & Discipline,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Suspension
+662,TrendTable10years20102011,Suspensions and expulsions summary report - incident type,Education,Safety & Discipline,2001-2011,State,State,CDE,Excel,G:\Source Data\CDE\Suspension
+663,AmInd2010-2011data,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+664,Asian1011,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+665,Black1011,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+666,Hispanic1011,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+667,NativeHawaiian1011,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+668,Total20102011,Suspensions and expulsions summary report,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+669,TwoorMore1011,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+670,White20102011,Suspensions and expulsions report - race/gender,Education,Safety & Discipline,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Suspension\2010-2011
+671,2006_TurnoverRateReport,Personnel turnover rate,Education,Personnel,2006-2007,District,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+672,avg teacher experience,Teacher experience,Education,Personnel,2000-2006,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+673,"avgsalaries,exp,andedforprincipals",Principal experience & salary,Education,Personnel,2009-2010,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\TeacherPrincQualification
+674,"avgsalaries,expandedforteachers",Teacher experience & salary,Education,Personnel,2009-2010,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\TeacherPrincQualification
+675,avgteachersalaries0910,Student teacher ratio,Education,Enrollment,2009-2010,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\TeacherPrincQualification
+676,avgteachersalary0809,Student teacher ratio,Education,Enrollment,2008-2009,District,State,CDE,PDF spreadsheet,G:\Source Data\CDE\TeacherPrincQualification
+677,Denver Teachers Retained,Teacher retension,Education,Personnel,1999-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+678,Denver Teachers Retained_raw,Teacher retension,Education,Personnel,1999-2005,School,Denver,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+679,Principal yrs experience 00-01,Principal experience,Education,Personnel,2000-2001,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+680,Principal yrs experience 01-02,Principal experience,Education,Personnel,2001-2002,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+681,Principal yrs experience 02-03,Principal experience,Education,Personnel,2002-2003,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+682,Principal yrs experience 03-04,Principal experience,Education,Personnel,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+683,Principal yrs experience 04-05,Principal experience,Education,Personnel,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+684,Principal yrs experience 05-06,Principal experience,Education,Personnel,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+685,TeacherbyAge2009-10,Teacher age cohort,Education,Personnel,1986-2009,State,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+686,TeacherLevelOfDegreebySchool 00-01,Teacher education level,Education,Personnel,2000-2001,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+687,TeacherLevelOfDegreebySchool 01-02,Teacher education level,Education,Personnel,2001-2002,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+688,TeacherLevelOfDegreebySchool 02-03,Teacher education level,Education,Personnel,2002-2003,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+689,TeacherLevelOfDegreebySchool 03-04,Teacher education level,Education,Personnel,2003-2004,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+690,TeacherLevelOfDegreebySchool 04-05,Teacher education level,Education,Personnel,2004-2005,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+691,TeacherLevelOfDegreebySchool 05-06,Teacher education level,Education,Personnel,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+692,teachers yrs at same school,Teacher average longevity at same school,Education,Personnel,2000-2006,School,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+693,"teachersbydistrict,ethnicityandgender09-10",Teacher demographics,Education,Personnel,2009-2010,District,State,CDE,Excel,G:\Source Data\CDE\TeacherPrincQualification
+694,Classroom Teachers Trend by Age Group 2010,Teacher age cohort,Education,Personnel,1986-2010,State,State,CDE,Excel,G:\Source Data\CDE\TeacherStaffInfo
+695,CountofTeachersbyDistrictEthnicityandGender2010,Teacher demographics,Education,Personnel,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\TeacherStaffInfo
+696,StudentTeacherRatios2010,Student teacher ratio,Education,Enrollment,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\TeacherStaffInfo
+697,Historic Reading Data,School CSAP report - historic,Education,School performance,1997-2000,School,State,CDE,HTML link,G:\Source Data\CDE\TO_REVIEW
+698,Transportation2010,Transportation expenditures and reimbursements,Education,Transportation,2010-2011,District,State,CDE,Excel,G:\Source Data\CDE\Transportation
+699,TransportationHistorical2010C,Transportation expenditures and reimbursements,Education,Transportation,2006-2010,District,State,CDE,Excel,G:\Source Data\CDE\Transportation
+700,2005-2006TruancyDataSpreadsheet,Truancy rate report,Education,Enrollment,2005-2006,School,State,CDE,Excel,G:\Source Data\CDE\Truancy
+701,2006-2007_Truancy.Rates_Comparison.to.2005-06,Truancy rate report,Education,Enrollment,2006-2007,School,State,CDE,Excel,G:\Source Data\CDE\Truancy
+702,Truancydata2007-2008,Truancy rate report,Education,Enrollment,2007-2008,School,State,CDE,Excel,G:\Source Data\CDE\Truancy
+703,Truancydata2008-2009,Truancy rate report,Education,Enrollment,2008-2009,School,State,CDE,Excel,G:\Source Data\CDE\Truancy
+704,Truancydata2009-2010,Truancy rate report,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Truancy
+705,Truancydata20102011(ver2),Truancy rate report,Education,Enrollment,2010-2011,School,State,CDE,Excel,G:\Source Data\CDE\Truancy
+706,TruancyRates09-10Rev6-16-11,Truancy rate report,Education,Enrollment,2009-2010,School,State,CDE,Excel,G:\Source Data\CDE\Truancy
+707,Memo-Piton SFY 2003 OOH CWS ,Memo file referencing file field names,Health,Child welfare,2003,NA,NA,CWS,Word,G:\Source Data\CDHS\ChildWelfare
+708,Original,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare
+709,Piton SFY 2001 Anonymous OOH CWS,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare
+710,Piton SFY 2002 OOH CWS,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare
+711,Piton SFY 2004 Anonymous OOH CWS,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare
+712,Piton SFY 2004 Anonymous OOH CWS+KIN,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare
+713,piton-explan,Variable list for the dbf file,Health,Child welfare,2000,NA,NA,CWS,Word,G:\Source Data\CDHS\ChildWelfare
+714,PITON-ooh,,,,,,,,DBF,G:\Source Data\CDHS\ChildWelfare
+715,FFHC_KFSTR_KNSHP_RCVHC_rsrcs_fy2005_u,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare\2004_Dec05
+716,Piton anonymous OOH Services SFY2005,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare\2004_Dec05
+717,Piton cc provs open from 2004 thru 2005,,,,,,,,SAV,G:\Source Data\CDHS\ChildWelfare\2004_Dec05
+718,srvc_type_child_care_2004,Service type variables for child care,Health,Child welfare,2004,NA,NA,CWS,Excel,G:\Source Data\CDHS\ChildWelfare\2004_Dec05
+719,srvc_type_out_of_home_2004,Service type variables for out of home care,Health,Child welfare,2004,NA,NA,CWS,Excel,G:\Source Data\CDHS\ChildWelfare\2004_Dec05
+720,variables 2004,Variable list,Health,Child welfare,2004,NA,NA,CWS,Excel,G:\Source Data\CDHS\ChildWelfare\2004_Dec05
+721,MIEU Ad Hoc Data Request Form,Data request form,Health,Child welfare,2004,NA,NA,CWS,Word,G:\Source Data\CDHS\ChildWelfare\Confidentiality Agreements
+722,OOH Origins Data Request Form,Data request form,Health,Child welfare,2004,NA,NA,CWS,Word,G:\Source Data\CDHS\ChildWelfare\Confidentiality Agreements
+723,counties,County codes,Health,Births Deaths,,,,CDPHE,Excel,G:\Source Data\CDPHE
+724,Births_All_CO_1990to2007,Database historical birth records,Health,Birth records,1990-2007,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births
+725,Births_All_CO_1990to2007a,Database historical birth records,Health,Birth records,1990-2007,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births
+726,2009 ReadMe,Password for zip file,Health,Birth records,2009,NA,NA,CDPHE,Word,G:\Source Data\CDPHE\Births\2009 Data
+727,Births_Denver_2009,Births by selected maternal characteristics,Health,Birth records,2009,Neighborhood,Denver,CDPHE,Excel,G:\Source Data\CDPHE\Births\2009 Data\births_2009
+728,Births_Tract_BrmfldFix_2009,Births by selected maternal characteristics,Health,Birth records,2009,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\2009 Data\births_2009
+729,piton_2009data,Database historical birth records and summary tables,Health,Birth records,2005-2009,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births\2009 Data\births_2009
+730,Births_Denver_2010,Births by selected maternal characteristics,Health,Birth records,2010,Neighborhood,Denver,CDPHE,Excel,G:\Source Data\CDPHE\Births\2010 Data
+731,piton_2010data,Database birth records and summary tables,Health,Birth records,2010,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births\2010 Data
+732,SecureMessageAtt,Secured message link,,,,,,,HTML link,G:\Source Data\CDPHE\Births\2010 Data
+733,Births_1990-2008_byTract_master,Births by selected maternal characteristics,Health,Birth records,1990-2008,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Births1990-2008_ByTract_NotRaw
+734,Births_1990-2008_byTract_suppressed,Births by selected maternal characteristics,Health,Birth records,1990-2008,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Births1990-2008_ByTract_NotRaw
+735,BirthTrends_1990-2008,Database historical birth records and summary tables,Health,Birth records,1990-2008,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births\Births1990-2008_ByTract_NotRaw
+736,2008_tech_notes,Notes Regarding Colorado's Revised Certificate of Live Birth,Health,Birth records,2008,NA,State,CDPHE,PDF report,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk
+737,Births_Tract_1990,Births by selected maternal characteristics,Health,Birth records,1990,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+738,Births_Tract_1991,Births by selected maternal characteristics,Health,Birth records,1991,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+739,Births_Tract_1992,Births by selected maternal characteristics,Health,Birth records,1992,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+740,Births_Tract_1993,Births by selected maternal characteristics,Health,Birth records,1993,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+741,Births_Tract_1994,Births by selected maternal characteristics,Health,Birth records,1994,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+742,Births_Tract_1995,Births by selected maternal characteristics,Health,Birth records,1995,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+743,Births_Tract_1996,Births by selected maternal characteristics,Health,Birth records,1996,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+744,Births_Tract_1997,Births by selected maternal characteristics,Health,Birth records,1997,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+745,Births_Tract_1998,Births by selected maternal characteristics,Health,Birth records,1998,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+746,Births_Tract_1999,Births by selected maternal characteristics,Health,Birth records,1999,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+747,Births_Tract_2000,Births by selected maternal characteristics,Health,Birth records,2000,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+748,Births_Tract_2001,Births by selected maternal characteristics,Health,Birth records,2001,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+749,Births_Tract_2002,Births by selected maternal characteristics,Health,Birth records,2002,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+750,Births_Tract_2003,Births by selected maternal characteristics,Health,Birth records,2003,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+751,Births_Tract_2004,Births by selected maternal characteristics,Health,Birth records,2004,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+752,Births_Tract_2005,Births by selected maternal characteristics,Health,Birth records,2005,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+753,Births_Tract_2006,Births by selected maternal characteristics,Health,Birth records,2006,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+754,Births_Tract_2007,Births by selected maternal characteristics,Health,Birth records,2007,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+755,Births_Tract_2008,Births by selected maternal characteristics,Health,Birth records,2008,Tract,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\BirthsByTract_FromKirk\births_tract_9008
+756,2008_tech_notes,Notes Regarding Colorado's Revised Certificate of Live Birth,Health,Birth records,2008,NA,State,CDPHE,PDF report,G:\Source Data\CDPHE\Births\MappingTheNextGeneration
+757,Births_Tract_9008 READ ME,Notes from email describing details in the transmitted files,Health,Birth records,1990-2008,NA,State,CDPHE,Word,G:\Source Data\CDPHE\Births\MappingTheNextGeneration
+758,Births_Tract_BrmfldFix_9008  READ ME,Notes from email describing details in the transmitted files,Health,Birth records,1990-2008,NA,State,CDPHE,Word,G:\Source Data\CDPHE\Births\MappingTheNextGeneration
+759,At Risk Births 1990 to 2004,At risk births,Health,Birth records,1990-2004,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+760,At Risk Births 1990 to 2006,At risk births,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+761,Births_Denver_2007-2008,Births by selected maternal characteristics,Health,Birth records,2007-2008,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+762,Births_Denver_highrisk_2007,At risk births,Health,Birth records,2007,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+763,Births_Denver_race_2007,Births by maternal race,Health,Birth records,2007,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+764,Births_Denver_total_2007,Births summary,Health,Birth records,2007,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+765,Foreign Born By Neighborhood 1990 to 2004,Births by maternal place of birth,Health,Birth records,1990-2004,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+766,Foreign Born By Neighborhood 1990 to 2006,Births by maternal place of birth,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+767,Race and Ethnicity By Neighborhood 1990 to 2004,Births by maternal race,Health,Birth records,1990-2004,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+768,Race and Ethnicity By Neighborhood 1990 to 2006,Births by maternal race,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+769,Total Births Births 1990 to 2004,Births summary,Health,Birth records,1990-2004,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+770,Total Births Births 1990 to 2006,Births summary,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\Raw_ByNeighborhood
+771,2007_DataRequest_Explanation,Notes from email describing details in the transmitted files,Health,Birth records,2007,NA,State,CDPHE,Word,G:\Source Data\CDPHE\Births\RawData
+772,2007_tech_notes,Notes Regarding Colorado's Revised Certificate of Live Birth,Health,Birth records,2007,NA,State,CDPHE,Word,G:\Source Data\CDPHE\Births\RawData
+773,At Risk Births 1990 to 2006,At risk births,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\RawData
+774,birth_stats_90_06,Database historical birth records,Health,Birth records,1990-2006,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births\RawData
+775,CDPHE County to Census FIPS Relationship Table,County codes,Health,Birth records,2006,County,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\RawData
+776,datadic_births 1990-2004,Birth records data dictionary,Health,Birth records,1990-2004,NA,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\RawData
+777,datadic_births,Birth records data dictionary,Health,Birth records,2009,NA,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\RawData
+778,Foreign Born By Neighborhood 1990 to 2006,Births by maternal place of birth,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\RawData
+779,piton_2007vitals,Database birth and death records,Health,Births Deaths,2007,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births\RawData
+780,piton_2008data,Database birth and death records,Health,Births Deaths,2000-2008,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births\RawData
+781,piton_birth_momplacebirth,Births by maternal place of birth,Health,Birth records,2006,Point,State,CDPHE,TXT,G:\Source Data\CDPHE\Births\RawData
+782,piton_countrycodes,Place of birth codes,Health,Birth records,2006,Country,World,CDPHE,TXT,G:\Source Data\CDPHE\Births\RawData
+783,Race and Ethnicity By Neighborhood 1990 to 2006,Births by maternal race,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\RawData
+784,Total Births Births 1990 to 2006,Births summary,Health,Birth records,1990-2006,Neighborhood,State,CDPHE,Excel,G:\Source Data\CDPHE\Births\RawData
+785,Births_04_05,Database birth records,Health,Births Deaths,2004-2005,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Births\Temp
+786,List,Database field name list,Health,Birth records,2008,NA,State,CDPHE,Word,G:\Source Data\CDPHE\Births\Temp
+787,datadic_deaths,Death records data dictionary,Health,Death records,2009,NA,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths
+788,2005 Death Variables Requested,Death records variables requested,Health,Death records,2005,NA,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+789,d00,Death records,Health,Death records,2000,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+790,d01,Death records,Health,Death records,2001,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+791,d02,Death records,Health,Death records,2002,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+792,d03,Death records,Health,Death records,2003,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+793,d04,Death records,Health,Death records,2004,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+794,d05,Death records,Health,Death records,2005,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+795,d06,Death records,Health,Death records,2006,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+796,d90,Death records,Health,Death records,1990,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+797,d91,Death records,Health,Death records,1991,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+798,d92,Death records,Health,Death records,1992,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+799,d93,Death records,Health,Death records,1993,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+800,d94,Death records,Health,Death records,1994,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+801,d95,Death records,Health,Death records,1995,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+802,d96,Death records,Health,Death records,1996,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+803,d97,Death records,Health,Death records,1997,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+804,d98,Death records,Health,Death records,1998,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+805,d99,Death records,Health,Death records,1999,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+806,datadic_deaths,Death records data dictionary,Health,Death records,2005,NA,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+807,datadic_linked,Death records data dictionary - infants,Health,Death records,2003,NA,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+808,id04,Death records,Health,Death records,2004,Point,State,CDPHE,Excel,G:\Source Data\CDPHE\Deaths\RawData
+809,piton_2008data,Database birth and death records,Health,Births Deaths,2000-2008,Point,State,CDPHE,MS Access,G:\Source Data\CDPHE\Deaths\RawData
+810,2004 County Origin of Mother,Births by orogina of the mother report,Health,Birth records,2004,County,Region,CDPHE,PDF report,G:\Source Data\CDPHE\RequestForms
+811,CDPHE_BirthDataRequest - Confidentiality Form,Confidentiality agreement,Health,Births Deaths,2008,NA,State,CDPHE,PDF report,G:\Source Data\CDPHE\RequestForms
+812,CDPHE_BirthDataRequest,Birth death records data request,Health,Births Deaths,2008,NA,State,CDPHE,Word,G:\Source Data\CDPHE\RequestForms
+813,CDPHE_BirthDataRequest_2009,Birth death records data request,Health,Births Deaths,2009,NA,State,CDPHE,Word,G:\Source Data\CDPHE\RequestForms
+814,CDPHE_BirthDataRequest_2009neigh,Birth records data request (neighborhood),Health,Birth records,2009,NA,Denver,CDPHE,PDF report,G:\Source Data\CDPHE\RequestForms
+815,CDPHE_BirthDataRequest_2009new,Birth records data request (neighborhood),Health,Birth records,2009,NA,Denver,CDPHE,Word,G:\Source Data\CDPHE\RequestForms
+816,Confidentiality,Confidentiality agreement,Health,Births Deaths,2007,NA,State,CDPHE,PDF report,G:\Source Data\CDPHE\RequestForms
+817,Datarequest_Form,Birth death records data request,Health,Births Deaths,2007,NA,State,CDPHE,PDF report,G:\Source Data\CDPHE\RequestForms
+818,RequestInformation,Directions regarding what data to request,Health,Births Deaths,2007,NA,State,CDPHE,Word,G:\Source Data\CDPHE\RequestForms
+819,2000tab_2010col_st_08,,,,,,,Census,TXT,G:\Source Data\CensusBureau
+820,2007_US_MSA_Map,Map of MSAs,Geography,Geography,2007,MSA,US,Census,PDF map,G:\Source Data\CensusBureau
+821,CountyAndCityDataBook_07,County and City Data Book,Demographics,Demographics,2007,City,US,Census,PDF report,G:\Source Data\CensusBureau
+822,MSA_Explanation_2007,Statistical area definitions,Geography,Geography,2007,City,US,Census,PDF report,G:\Source Data\CensusBureau
+823,90_STF3_PART1,Statistical file 3 database,Demographics,Demographics,1990,Block Group,State,Census,MS Access,G:\Source Data\CensusBureau\1990
+824,90_STF3_PART2,Statistical file 3 database,Demographics,Demographics,1990,Block Group,State,Census,MS Access,G:\Source Data\CensusBureau\1990
+825,1990_DTDownload,Population and age cohort,Demographics,Population,1990,Denver,Denver,Census,CSV,G:\Source Data\CensusBureau\1990
+826,Broomfield Shares,Broomfield population shares,Demographics,Population,1990-2000,County,Region,Census,Excel,G:\Source Data\CensusBureau\1990
+827,STF1_1990,Statistical file 1 database,Demographics,Demographics,1990,Block Group,State,Census,MS Access,G:\Source Data\CensusBureau\1990
+828,2000_PopBySexByAge_COBlocks,Population by sex and age cohort,Demographics,Population,2000,Block,State,Census,CSV,G:\Source Data\CensusBureau\2000
+829,2000_ProfileGenDemographic,Demographic profiles,Demographics,Demographics,2000,City,State,Census,PDF report,G:\Source Data\CensusBureau\2000
+830,2000_SF1_Documentation,Documentation for SF1,Demographics,Demographics,2000,NA,US,Census,PDF report,G:\Source Data\CensusBureau\2000
+831,2000_SF3_Documentation,Documentation for SF3,Demographics,Demographics,2000,NA,US,Census,PDF report,G:\Source Data\CensusBureau\2000
+832,2000_SummSocialEconHous,"Summary social, economic, housing characteristics",Demographics,"Social, economic, housing",2000,City,State,Census,PDF report,G:\Source Data\CensusBureau\2000
+833,PopulationByBlock_CO_2000,Population by sex and age cohort,Demographics,Population,2000,Block,State,Census,CSV,G:\Source Data\CensusBureau\2000
+834,SexByAge_SF1_ByTract,Population by sex and age cohort,Demographics,Population,2000,Tract,State,Census,CSV,G:\Source Data\CensusBureau\2000
+835,SexByAge_SF1_Under20_ByTract,Population by sex and age cohort,Demographics,Population,2000,Tract,State,Census,CSV,G:\Source Data\CensusBureau\2000
+836,2000_Pop_and_Income_Adams,Population and income,Demographics,Population and income,2000,Block Group,Adams,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\AdamsCounty\2000_Ed_and_income_Adams
+837,Adams_pop_income_2000,Population and income,Demographics,Population and income,2000,Block Group,Adams,Census,TXT,G:\Source Data\CensusBureau\2000\RegionalCensusData\AdamsCounty\2000_Ed_and_income_Adams
+838,dt_dec_2000_sf1_u_data1,Population characteristics,Demographics,Population characteristics,2000,Tract,Adams,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\AdamsCounty\2000_STF1
+839,dt_dec_2000_sf3_u_data1,Population characteristics,Demographics,Population characteristics,2000,Tract,Adams,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\AdamsCounty\2000_STF3
+840,dt_dec_2000_sf3_u_data2,Population characteristics,Demographics,Population characteristics,2000,Tract,Adams,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\AdamsCounty\2000_STF3
+841,dt_dec_2000_sf3_u_data1,Population characteristics,Demographics,Population characteristics,2000,Tract,Adams,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\AdamsCounty\2000_STF3a
+842,2000_Ed_and_income_Arapahoe,Education & income,Demographics,Education & income,2000,Tract,Arapahoe,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\ArapahoeCounty
+843,2000_Ed_and_Income_Boulder,Education & income,Demographics,Education & income,2000,Tract,Boulder,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\BoulderCounty
+844,2000_Ed_and_Income_Denver,Education & income,Demographics,Education & income,2000,Tract,Denver,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty
+845,dc_dec_2000_sf1_u_data1,Population characteristics,Demographics,Population characteristics,2000,Tract,Denver,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty
+846,dc_dec_2000_sf1_u_data1,Population characteristics,Demographics,Population characteristics,2000,Block,Denver,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DenverCounty\Population_byBlock
+847,2000_Ed_and_Income_Douglas,Education & income,Demographics,Education & income,2000,Tract,Douglas,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\DouglasCounty
+848,dc_dec_2000_sf3_u_data1,Education & income,Demographics,Education & income,2000,Tract,Denver,Census,TXT,G:\Source Data\CensusBureau\2000\RegionalCensusData\DouglasCounty
+849,2000_Ed_and_Income_Jefferson,Education & income,Demographics,Education & income,2000,Tract,Jefferson,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\JeffersonCounty
+850,2000_Ed_and_Income_Weld,Education & income,Demographics,Education & income,2000,Tract,Weld,Census,Excel,G:\Source Data\CensusBureau\2000\RegionalCensusData\WeldCounty
+851,0README_DPSF,FTP delivered demographic profile summary file,Demographics,Demographics,2010,NA,NA,Census,Word,G:\Source Data\CensusBureau\2010
+852,0README_DPSF,FTP delivered demographic profile summary file,Demographics,Demographics,2010,NA,NA,Census,PDF document,G:\Source Data\CensusBureau\2010
+853,0README_PL,FTP delivered redistricting summary file,Demographics,Demographics,2010,NA,NA,Census,PDF document,G:\Source Data\CensusBureau\2010
+854,Census_2010,"Population race/ethnicity, housing",Demographics,"Race/ethnicity, housing",2010,Block,State,Census,Excel,G:\Source Data\CensusBureau\2010
+855,co000012010,Population characteristics,Demographics,Population characteristics,2010,Block,State,Census,CSV,G:\Source Data\CensusBureau\2010
+856,co000022010,Population characteristics,Demographics,Population characteristics,2010,Block,State,Census,CSV,G:\Source Data\CensusBureau\2010
+857,cogeo2010,Population characteristics,Demographics,Population characteristics,2010,Block,State,Census,CSV,G:\Source Data\CensusBureau\2010
+858,PL2010_Access,Database of all Census data,Demographics,Population characteristics,2010,Block,State,Census,MS Access,G:\Source Data\CensusBureau\2010
+859,co000012010,Population characteristics,Demographics,Population characteristics,2010,Block,State,Census,CSV,G:\Source Data\CensusBureau\2010\Demographic Profiles
+860,DPSF2010_Access,Database of all Census data - demographic profile,Demographics,Population characteristics,2010,Block,State,Census,MS Access,G:\Source Data\CensusBureau\2010\Demographic Profiles
+861,Census_Bureau_raw_download,Folder of all raw text files,Demographics,Population characteristics,2010,Block,State,Census,File folder,G:\Source Data\CensusBureau\2010\SF1 Data
+862,Data_from_IRE,Folder of all raw CSV files,Demographics,Population characteristics,2010,Tract,State,Census,File folder,G:\Source Data\CensusBureau\2010\SF1 Data
+863,Metro_Tracts_youth_1yr_age,Population characteristics,Demographics,Population characteristics,2010,Tract,State,Census,Excel,G:\Source Data\CensusBureau\2010\SF1 Data
+864,1_3yr_Estimates_Explained,,,,,,,,,G:\Source Data\CensusBureau\ACS
+865,ACS_10_1YR_DP02_MetroCounties,,,,,,,,,G:\Source Data\CensusBureau\ACS
+866,ACS_10_3YR_DP02_MetroCounties,,,,,,,,,G:\Source Data\CensusBureau\ACS
+867,ACS_2005_Questionnaire,,,,,,,,,G:\Source Data\CensusBureau\ACS
+868,ACS_Notes,,,,,,,,,G:\Source Data\CensusBureau\ACS
+869,ACS_Summary,,,,,,,,,G:\Source Data\CensusBureau\ACS
+870,DenverMSA2004_HousingReport,,,,,,,,,G:\Source Data\CensusBureau\ACS
