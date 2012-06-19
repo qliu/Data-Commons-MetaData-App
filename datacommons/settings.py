@@ -27,7 +27,6 @@ current_path = os.path.dirname(__file__)
 parent_path = os.path.join(current_path,'..')
 
 ROOT_PATH = parent_path
-file_path = parent_path+'\\manage.py'
 
 # Add lib directory to system path
 sys.path += [os.path.join(ROOT_PATH, 'lib')]

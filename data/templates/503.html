@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block inner_title %}
+	503 Service Unavailable
+{% endblock %}
+{%block content%}
+    <h1>Error code: 503</h1> <hr />
+    The page you are trying to access is unavailble. <br /><br />
+    Please return to the <a href="/{{ROOT_URL}}/login" title="Login">Login Page</a>
+{%endblock%}
+
+{% block bottom_javascript %}
+    <script>
+        window.location = "/{{ROOT_URL}}/login";
+    </script>
+{% endblock %}

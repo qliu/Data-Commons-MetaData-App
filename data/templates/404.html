@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block inner_title %}
+	404 Page Not Found
+{% endblock %}
+{%block content%}
+<h1>Error code: 404</h1> <hr />
+The page you requested could not be found. 
+<br /><br />
+Please return to the <a href="/{{ROOT_URL}}/login" title="Login">Login Page</a>
+{%endblock%}
+{% block bottom_javascript %}
+    <script>
+        window.location = "/{{ROOT_URL}}/login";
+    </script>
+{% endblock %}
