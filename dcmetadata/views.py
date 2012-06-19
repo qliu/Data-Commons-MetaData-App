@@ -76,7 +76,7 @@ def upload_sourcedata(request):
                     
                 # load inventory file into model instance    
                 source_data = SourceDataInventory(
-                    inventory_id=row[0],
+#                    inventory_id=row[0],
                     file_name=file_name,
                     description=row[2],
                     macro_domain=MacroDomain.objects.get(name=CleanNullValue(row[3])),

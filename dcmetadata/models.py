@@ -97,7 +97,7 @@ class SourceDataInventory(models.Model):
 	"""
 	Inventory of the source data.
 	"""	
-	inventory_id = models.IntegerField(primary_key=True)
+#	inventory_id = models.IntegerField(primary_key=True)
 	file_name = models.CharField(max_length=200)
 	description = models.CharField(max_length=200, null=True, blank=True)
 	macro_domain = models.ForeignKey('MacroDomain')
@@ -109,7 +109,7 @@ class SourceDataInventory(models.Model):
 	source = models.ForeignKey('Source')
 	format = models.ForeignKey('Format')
 	location =  models.CharField(max_length=200)
-	file_size = models.FloatField()
+	file_size = models.FloatField(default=0, null=True)
 	
 	def __unicode__(self):
 		'''
