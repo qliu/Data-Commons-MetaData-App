@@ -4,42 +4,42 @@ from django.contrib import admin
 # Customized Admin Form for Look-up Table Model
 ## Macro Domain Admin
 class MacroDomainAdmin(admin.ModelAdmin):
-    fields = ['id','name']
+    fields = ['name']
     list_display = ('id','name')
     
 admin.site.register(MacroDomain, MacroDomainAdmin)
 
 ## Subject Matter Admin
 class SubjectMatterAdmin(admin.ModelAdmin):
-    fields = ['id','name']
+    fields = ['name']
     list_display = ('id','name')
     
 admin.site.register(SubjectMatter, SubjectMatterAdmin)
 
 ## Geography Admin
 class GeographyAdmin(admin.ModelAdmin):
-    fields = ['id','name']
+    fields = ['name']
     list_display = ('id','name')
     
 admin.site.register(Geography, GeographyAdmin)
 
 ## Coverage Admin
 class CoverageAdmin(admin.ModelAdmin):
-    fields = ['id','name']
+    fields = ['name']
     list_display = ('id','name')
     
 admin.site.register(Coverage, CoverageAdmin)
 
 ## Format Admin
 class FormatAdmin(admin.ModelAdmin):
-    fields = ['id','name']
+    fields = ['name']
     list_display = ('id','name')
     
 admin.site.register(Format, FormatAdmin)
 
 ## Source Admin
 class SourceAdmin(admin.ModelAdmin):
-    fields = ['id','name']
+    fields = ['name']
     list_display = ('id','name')
     
 admin.site.register(Source, SourceAdmin)

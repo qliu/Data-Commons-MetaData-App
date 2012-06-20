@@ -11,10 +11,20 @@ dajaxice_autodiscover()
 
 urlpatterns = patterns('',
 
-	# Data Commons MetaData App URLs
+	# Data Commons MetaData App Tabble Upload URLs
 	#(r'^datacommons/sourcedata/$','dcmetadata.views.sourcedata'),
-	url(r'^datacommons/sourcedata/upload/$','dcmetadata.views.upload_sourcedata'),
-	url(r'^datacommons/metadata/',include('dcmetadata.urls')),
+	
+	## Upload lookup tables
+	### Upload standard lookup talbes
+	url(r'^lookuptable/standard_upload/$','dcmetadata.views.upload_standard_lookup_tables'),
+	### Upload other lookup tables
+	url(r'^lookuptalbe/format_upload/$','dcmetadata.views.upload_lookup_table_format'),
+	
+	## Upload source data inventory
+	url(r'^sourcedata/upload/$','dcmetadata.views.upload_sourcedata'),
+	
+	# Data Commons MetaData App URLs
+	url(r'^metadata/',include('dcmetadata.urls')),
 
     # Examples:
     # url(r'^$', 'datacommons.views.home', name='home'),
@@ -28,7 +38,4 @@ urlpatterns = patterns('',
 	
 	# URLs for Dajaxice
 	url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
-	
-	# test Dajaxice URLs
-	url(r'^test/test_dajaxice/$','dcmetadata.views.test_dajaxice'),
 )

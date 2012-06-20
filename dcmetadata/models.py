@@ -11,7 +11,7 @@ class MacroDomain(models.Model):
 	'''
 	Store macro domain of the source data
 	'''
-	id = models.IntegerField(primary_key=True)
+#	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
 	
 	def __unicode__(self):
@@ -25,7 +25,7 @@ class SubjectMatter(models.Model):
 	'''
 	Store subject of the source data
 	'''	
-	id = models.IntegerField(primary_key=True)
+#	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
 	
 	def __unicode__(self):
@@ -39,7 +39,7 @@ class Geography(models.Model):
 	'''
 	Store geographic scale/level of the source data
 	'''	
-	id = models.IntegerField(primary_key=True)
+#	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
 	
 	def __unicode__(self):
@@ -53,7 +53,7 @@ class Coverage(models.Model):
 	'''
 	Store geographic coverage of the source data
 	'''	
-	id = models.IntegerField(primary_key=True)
+#	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
 	
 	def __unicode__(self):
@@ -67,7 +67,7 @@ class Format(models.Model):
 	'''
 	Store data format of the source data
 	'''	
-	id = models.IntegerField(primary_key=True)
+#	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=20)
 	extension = models.CharField(max_length=50)
 	
@@ -82,7 +82,7 @@ class Source(models.Model):
 	'''
 	Store source of the source data
 	'''
-	id = models.IntegerField(primary_key=True)
+#	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=200)
 	
 	def __unicode__(self):

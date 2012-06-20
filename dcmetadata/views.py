@@ -2,12 +2,20 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.db import models
+from django.db.models.loading import get_model
 
 # Import from general utilities
 from util import *
 
 from dcmetadata.models import *
 
+
+# Source Data Lookup Table CSV file path
+LOOKUP_TABLE_ROOT_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/lookup_tables/'
+##Standard lookup table path (containing only two fields: id and name)
+STANDARD_LOOKUP_TABLES = ["coverage","geography","macrodomain","subjectmatter","source"]
+##Other lookup table path
+LOOKUP_TABLE_FORMAT = "format"
 
 # Source Data Inventory CSV file path
 SOURCE_DATA_INVENTORY_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/original_data/PitonDataInventory2012.csv'
@@ -16,7 +24,10 @@ SOURCE_DATA_INVENTORY_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/
 SOURCE_DATA_ROOT_PATH_ORIGIN = 'G:\\'
 
 # Source Data Root Path Mapped Locally
-SOURCE_DATA_ROOT_PATH_LOCAL = 'O:\\Data\\'
+#SOURCE_DATA_ROOT_PATH_LOCAL = 'O:\\Data\\'
+
+# Source Data Root Path On Server "Pitondc1"
+SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\Data\\'
 
 # Test
 def test(request):
@@ -31,6 +42,43 @@ def test(request):
             if os.path.exists(fpath):
                 total_size += os.path.getsize(fpath)
     return HttpResponse("test done!")
+
+# Upload standard lookup tables (containing only two fields: id and name) CSV file into PostgreSQL database
+def upload_standard_lookup_tables(request):
+    return_http_string = ""
+    try:
+        for table in STANDARD_LOOKUP_TABLES:
+            lookup_table_path = LOOKUP_TABLE_ROOT_PATH + table + ".csv"
+            with open(lookup_table_path,'rb') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    lookup_table = get_model("dcmetadata",table)(
+                        id=row[0],
+                        name=row[1]
+                    )
+                    lookup_table.save()
+                return_http_string = return_http_string + "Lookup Table " + table + " - Upload Complete! <br/>"
+        return HttpResponse(return_http_string)
+    except:
+        return HttpResponse("Upload Failed!")
+    
+# Upload other lookup tables
+def upload_lookup_table_format(request):
+    table = "format"
+    try:
+        lookup_table_path = LOOKUP_TABLE_ROOT_PATH + table + ".csv"
+        with open(lookup_table_path,'rb') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                lookup_table = get_model("dcmetadata",table)(
+                    id=row[0],
+                    name=row[1],
+                    extension=row[2]
+                )
+                lookup_table.save()
+        return HttpResponse("Lookup Table " + table + " - Upload Complete!")
+    except:
+        return HttpResponse("Upload Failed!")
 
 # Upload source data inventory CSV file into PostgreSQL database
 def upload_sourcedata(request):
@@ -76,7 +124,7 @@ def upload_sourcedata(request):
                     
                 # load inventory file into model instance    
                 source_data = SourceDataInventory(
-#                    inventory_id=row[0],
+                    id=row[0],
                     file_name=file_name,
                     description=row[2],
                     macro_domain=MacroDomain.objects.get(name=CleanNullValue(row[3])),
