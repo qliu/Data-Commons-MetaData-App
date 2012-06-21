@@ -1,5 +1,6 @@
 from dcmetadata.models import *
 from django.contrib import admin
+from dcmetadata.forms import *
 
 # Customized Admin Form for Look-up Table Model
 ## Macro Domain Admin
@@ -44,14 +45,15 @@ class SourceAdmin(admin.ModelAdmin):
     
 admin.site.register(Source, SourceAdmin)
 
-
 # Customized Admin Form for Source Data Inventory Model
 class SourceDataInventoryAdmin(admin.ModelAdmin):
-    fields = ['file_name','description','macro_domain','subject_matter',
-    'coverage','geography','begin_year','end_year','format','source','location']
+    fields = ['upload_file','file_name','format','description','macro_domain','subject_matter',
+    'coverage','geography','begin_year','end_year','source','location']
+    readonly_fields = ['file_name','format']
     list_display = ('file_name','description','macro_domain','subject_matter',
     'coverage','geography','_get_year_range','source','format','_get_file_size')
     list_filter = ['macro_domain','subject_matter','coverage','geography',
     'format','source','begin_year','end_year']
-
+    form = SourceDataInventoryAdminForm
+    
 admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)
