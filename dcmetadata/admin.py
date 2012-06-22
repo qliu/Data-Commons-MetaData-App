@@ -54,6 +54,11 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
     'coverage','geography','_get_year_range','source','format','_get_file_size')
     list_filter = ['macro_domain','subject_matter','coverage','geography',
     'format','source','begin_year','end_year']
-    form = SourceDataInventoryAdminForm
+    # By defualt use the Change page form
+    form = SourceDataInventoryAdminChangeForm
+    def get_form(self,request,obj=None,**kwargs):
+        if not obj: # obj is None, this is ADD page
+            self.form = SourceDataInventoryAdminAddForm
+        return super(SourceDataInventoryAdmin,self).get_form(request,obj,**kwargs)
     
 admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)

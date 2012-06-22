@@ -4,6 +4,8 @@ from django.contrib import admin
 # Import from general utilities
 from util import *
 
+# Choices
+YEAR_CHOICES = tuple((i,i) for i in range (1980,2013))
 
 # Look-up tables:
 ## Macro Domain
@@ -97,19 +99,19 @@ class SourceDataInventory(models.Model):
 	"""
 	Inventory of the source data.
 	"""	
-#	inventory_id = models.IntegerField(primary_key=True)
-	file_name = models.CharField(max_length=200)
+#	id = models.IntegerField(primary_key=True)
+	file_name = models.CharField(max_length=200, verbose_name='File Name')
 	description = models.CharField(max_length=200, null=True, blank=True)
-	macro_domain = models.ForeignKey('MacroDomain')
-	subject_matter = models.ForeignKey('SubjectMatter')
-	begin_year = models.IntegerField(null=True)
-	end_year = models.IntegerField(null=True)
+	macro_domain = models.ForeignKey('MacroDomain',verbose_name='Macro Domain')
+	subject_matter = models.ForeignKey('SubjectMatter',verbose_name='Subject Matter')
+	begin_year = models.IntegerField(verbose_name='Begin Year',choices=YEAR_CHOICES,null=True)
+	end_year = models.IntegerField(verbose_name='End Year',choices=YEAR_CHOICES,null=True)
 	geography = models.ForeignKey('Geography')
 	coverage = models.ForeignKey('Coverage')
 	source = models.ForeignKey('Source')
-	format = models.ForeignKey('Format')
+	format = models.ForeignKey('Format',null=True,blank=True)
 	location =  models.CharField(max_length=200)
-	file_size = models.FloatField(default=0, null=True)
+	file_size = models.FloatField(default=0,verbose_name='File Size',null=True, blank=True)
 	
 	def __unicode__(self):
 		'''
