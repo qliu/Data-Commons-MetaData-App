@@ -13,6 +13,13 @@ from django.template import RequestContext
 import os
 import csv
 
+# Import Regular Expression operations
+import re
+
+# Import the ElementTree XML API for Python
+#import elementtree.ElementTree as ET
+from xml.etree import ElementTree
+
 
 # GLOBAL VARIABLES
 ## File size precision for human readable presentation of file size in bytes

@@ -1,6 +1,9 @@
 from dcmetadata.models import *
-from django.contrib import admin
 from dcmetadata.forms import *
+from django.contrib import admin
+
+# Import from general utilities
+from util import *
 
 # Customized Admin Form for Look-up Table Model
 ## Macro Domain Admin
@@ -54,11 +57,28 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
     'coverage','geography','_get_year_range','source','format','_get_file_size')
     list_filter = ['macro_domain','subject_matter','coverage','geography',
     'format','source','begin_year','end_year']
+    
     # By defualt use the Change page form
     form = SourceDataInventoryAdminChangeForm
     def get_form(self,request,obj=None,**kwargs):
-        if not obj: # obj is None, this is ADD page
+        if not obj: # obj is None, this is ADD page, then use the Add page form
             self.form = SourceDataInventoryAdminAddForm
         return super(SourceDataInventoryAdmin,self).get_form(request,obj,**kwargs)
     
 admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)
+
+
+# Metadata Admin
+class MetadataAdmin(admin.ModelAdmin):
+    fields = ['id','field_name','data_type','description','metadata']
+    readonly_fields = ['id']
+    list_display = ('id','_get_metadata','metadata')
+    
+    # By defualt use the Change page form
+    form = MetadataAdminChangeForm
+    def get_form(self,request,obj=None,**kwargs):
+        if not obj: # obj is None, this is ADD page, then use the Add page form
+            self.form = MetadataAdminAddForm
+        return super(MetadataAdmin,self).get_form(request,obj,**kwargs)
+    
+admin.site.register(Metadata, MetadataAdmin)

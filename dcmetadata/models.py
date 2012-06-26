@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import admin
+from django.core import serializers
 
 # Import from general utilities
 from util import *
@@ -147,3 +148,31 @@ class SourceDataInventory(models.Model):
 		db_table = u'source_data_inventory'
 		
 	_get_file_size.short_description = "File Size"
+	
+
+# Metadata Model
+class Metadata(models.Model):
+	metadata = models.TextField(verbose_name='Original Metadata in XML')
+	
+	def _get_metadata(self):
+		'''
+		Return list of fields from metadata field
+		'''
+		fields = []
+		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
+		root = tree.getroot()
+		for child in root:
+			for child1 in child:
+				for (counter,child2) in enumerate(child1):
+					tag = child2.tag
+					data = child2.text
+					field =  tag + ":" + data + ("; " if counter == 2 else ", ")
+					# regular expressin to remove control characters (\n \r \t) from xml
+					fields.append(re.sub(r'[\t\n]','',field)) 
+		metadata_fields = ''.join(fields)
+		return metadata_fields
+	
+	_get_metadata.short_description = "Metadata"
+	
+	class Meta:
+		db_table = u'test'
