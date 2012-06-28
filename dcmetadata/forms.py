@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django import forms
+from django.forms.widgets import *
 from django.db import models
 
 # Import from general utilities
 from util import *
 
 from dcmetadata.models import *
-from dcmetadata.views import SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL
 
 ## Source Data Root Path in Inventory File
 #SOURCE_DATA_ROOT_PATH_ORIGIN = 'G:\\'
@@ -65,7 +65,10 @@ class SourceDataInventoryAdminAddForm(forms.ModelForm):
                 model.location = self.cleaned_data['location'].replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)
             # Create new format if it dosenot exist
             try:
-                model.format = Format.objects.get(extension=upload_file_extension)
+                # Full-text search on column Format
+                q = upload_file_extension
+                model.format = Format.objects.extra(
+                    where=['ext_tsv @@ plainto_tsquery(%s)'],params=[q])[0]
             except:
                 add_format = Format(name=upload_file_extension,extension=upload_file_extension)
                 add_format.save()
@@ -82,9 +85,6 @@ class SourceDataInventoryAdminAddForm(forms.ModelForm):
         
 # Custome Metadata Admin Model Form for CHANGE Page
 class MetadataAdminChangeForm(forms.ModelForm):
-    field_name = forms.CharField(label="Field Name")
-    data_type = forms.CharField(label="Data Type")
-    description =  forms.CharField(label="Description")
     
     class Meta:
         model = Metadata
@@ -94,3 +94,17 @@ class MetadataAdminAddForm(forms.ModelForm):
     
     class Meta:
         model = Metadata
+
+# Metadata Field Form
+class MetadataFieldForm(forms.Form):
+    field_name = forms.CharField(max_length=100)
+    data_type = forms.CharField(max_length=50)
+    description = forms.CharField(widget=forms.Textarea)
+    
+    class Meta:
+        fields = ('field_name','data_type','description')
+        widgets = {
+            'field_name': forms.TextInput(attrs={'width':'300px'}),
+            'data_type': forms.TextInput(attrs={'width':'300px'}),
+            'description': forms.Textarea(attrs={'cols':300,'rows':80}),
+        }

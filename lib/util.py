@@ -9,6 +9,7 @@ from django.utils import simplejson
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import HttpResponse, HttpResponseRedirect
 
 import os
 import csv
@@ -30,6 +31,27 @@ NO_DATA_VALUE = "No Data"
 
 ## File extensions accociated with shaplefile
 SHAPEFILE_EXTENSION = ["shp","dbf","prj","sbn","sbx","shp.xml","shx"]
+
+
+# Source Data Lookup Table CSV file path
+LOOKUP_TABLE_ROOT_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/lookup_tables/'
+##Standard lookup table path (containing only two fields: id and name)
+STANDARD_LOOKUP_TABLES = ["coverage","geography","macrodomain","subjectmatter","source"]
+##Other lookup table path
+LOOKUP_TABLE_FORMAT = "format"
+
+# Source Data Inventory CSV file path
+SOURCE_DATA_INVENTORY_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/original_data/PitonDataInventory2012.csv'
+
+# Source Data Root Path in Inventory File
+SOURCE_DATA_ROOT_PATH_ORIGIN = 'G:\\'
+
+# Source Data Root Path Mapped Locally
+#SOURCE_DATA_ROOT_PATH_LOCAL = 'O:\\Data\\'
+
+# Source Data Root Path On Server "Pitondc1"
+SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\Data\\'
+
 
 # Decorator to save time returning templates
 def render_to(template):

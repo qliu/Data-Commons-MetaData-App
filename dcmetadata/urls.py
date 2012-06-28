@@ -7,8 +7,11 @@ admin.autodiscover()
 
 urlpatterns = patterns('dcmetadata.views',
 
-	# Metadata URLs goes here
-	#(r'^datacommons/metadata/','datacommons.DCmetadata.views.'),
+	# Metadata URLs
+	url(r'^metadata/(?P<metadata_id>\d+)/$','metadata_detail'),
+	url(r'^metadata/(?P<metadata_id>\d+)/edit/$','metadata_edit'),
+	url(r'^metadata/(?P<metadata_id>\d+)/delete_confirm/$','metadata_delete_confirm'),
+	url(r'^metadata/(?P<metadata_id>\d+)/delete/$','metadata_delete'),
 
     # Examples:
     # url(r'^$', 'datacommons.views.home', name='home'),
@@ -19,7 +22,6 @@ urlpatterns = patterns('dcmetadata.views',
 
     # Uncomment the next line to enable the admin:
     #url(r'^admin/', include(admin.site.urls)),
-	
 	
 	# Test URLs:
 	url(r'^test/$','test'),

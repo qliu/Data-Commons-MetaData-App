@@ -154,9 +154,9 @@ class SourceDataInventory(models.Model):
 class Metadata(models.Model):
 	metadata = models.TextField(verbose_name='Original Metadata in XML')
 	
-	def _get_metadata(self):
+	def _get_metadata_string(self):
 		'''
-		Return list of fields from metadata field
+		Return list of fields from metadata field as a stirng
 		'''
 		fields = []
 		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
@@ -172,7 +172,35 @@ class Metadata(models.Model):
 		metadata_fields = ''.join(fields)
 		return metadata_fields
 	
-	_get_metadata.short_description = "Metadata"
+	_get_metadata_string.short_description = "Metadata"
+	
+	def _get_metadata_dict(self):
+		'''
+		Return a dictionary list of metadata elements
+		'''
+		metadata_dict_list = []
+		field_dict_list = []
+		other_dict_list = []
+		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
+		root = tree.getroot()
+		# get the tag-value pair for metadata fields
+		for field in root[0]:
+			field_dict_list.append({field[0].tag:re.sub(r'[\t\n\r]','',field[0].text),
+									field[1].tag:re.sub(r'[\t\n\r]','',field[1].text),
+									field[2].tag:re.sub(r'[\t\n\r]','',field[2].text)}
+									)# regular expressin to remove control characters (\n \r \t) from xml
+		metadata_dict_list.append(field_dict_list)
+		# get the tag-value pair for other metadata information
+		for other in root[1]:
+			other_dict_list.append({other[0].tag:re.sub(r'[\t\n\r]','',other[0].text),
+									other[1].tag:re.sub(r'[\t\n\r]','',other[1].text)}
+									)# regular expressin to remove control characters (\n \r \t) from xml
+
+		metadata_dict_list.append(other_dict_list)
+
+		return metadata_dict_list
+	
+	_get_metadata_dict.short_description = "Metadata Dictionary List"
 	
 	class Meta:
 		db_table = u'test'

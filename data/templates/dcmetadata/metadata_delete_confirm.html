@@ -1,0 +1,43 @@
+{% extends "admin/admin_base_site.html" %}
+{% load i18n admin_static admin_modify %}
+
+
+{% block extrahead %}{{ block.super }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{{STATIC_RUL}}admin/css/forms.css"/>{% endblock %}
+
+{% block title %}Are you sure? | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="/admin/dcmetadata/metadata/">Metadata</a> 
+&rsaquo; <a href="/dcmetadata/metadata/{{metadata_id}}">Metadata ID {{metadata_id}}</a>
+&rsaquo; Delete
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	{% block object-tools %}{% endblock %}
+
+	Test Page !
+	<br/><br/><hr><br/><br/>
+	<h1>Are you sure?</h1>
+	<br/>
+	
+	<p>Are you sure you want to delete metadata <b>"Metadata ID: {{metadata_id}}"</b>?</p>
+	
+	<br/><hr><br/><br/>
+	
+	<form action="../delete/" method="post"> {% csrf_token %}
+		<div>
+			<input type="hidden" name="post" value="yes" />
+			<input type="submit" value="Yes, I'm sure." />
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Cancel" onclick="window.location.href='../'">
+		</div>
+	</form>
+	
+</div>
+{% endblock %}

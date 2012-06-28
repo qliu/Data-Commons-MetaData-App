@@ -8,39 +8,17 @@ from django.db.models.loading import get_model
 from util import *
 
 from dcmetadata.models import *
-
-
-# Source Data Lookup Table CSV file path
-LOOKUP_TABLE_ROOT_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/lookup_tables/'
-##Standard lookup table path (containing only two fields: id and name)
-STANDARD_LOOKUP_TABLES = ["coverage","geography","macrodomain","subjectmatter","source"]
-##Other lookup table path
-LOOKUP_TABLE_FORMAT = "format"
-
-# Source Data Inventory CSV file path
-SOURCE_DATA_INVENTORY_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/original_data/PitonDataInventory2012.csv'
-
-# Source Data Root Path in Inventory File
-SOURCE_DATA_ROOT_PATH_ORIGIN = 'G:\\'
-
-# Source Data Root Path Mapped Locally
-#SOURCE_DATA_ROOT_PATH_LOCAL = 'O:\\Data\\'
-
-# Source Data Root Path On Server "Pitondc1"
-SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\Data\\'
+from dcmetadata.forms import *
 
 # Test
 def test(request):
-    file_location = "O:\Data\Source Data\CensusBureau\2010\SF1 Data"
-    file_name = "Census_Bureau_raw_download"
-    file_path = os.path.join(file_location,file_name)
+    print "*" * 100
+    q = 'mdb'
+    test_format = Format.objects.extra(
+        where=['ext_tsv @@ plainto_tsquery(%s)'],params=[q])
+    print test_format
+    print "*" * 100
 
-    total_size = 0
-    for root, dirs, files in os.walk(file_path):
-        for fname in files:
-            fpath = os.path.join(root,fname)
-            if os.path.exists(fpath):
-                total_size += os.path.getsize(fpath)
     return HttpResponse("test done!")
 
 # Upload standard lookup tables (containing only two fields: id and name) CSV file into PostgreSQL database
@@ -82,9 +60,6 @@ def upload_lookup_table_format(request):
 
 # Upload source data inventory CSV file into PostgreSQL database
 def upload_sourcedata(request):
-    '''
-    Upload source data inventory from csv file
-    '''
     try:
         with open(SOURCE_DATA_INVENTORY_PATH,'rb') as f:
             reader = csv.reader(f)
@@ -145,3 +120,82 @@ def upload_sourcedata(request):
 @render_to("dcmetadata/test_dajaxice.html")
 def test_dajaxice(request):
     return {}
+
+'''------------
+Metadata
+------------'''
+
+# Display Metadata Entry
+@render_to("dcmetadata/metadata_detail.html")
+def metadata_detail(request,metadata_id):
+    metadata = Metadata.objects.get(id=metadata_id)
+    metadata_xml = metadata.metadata
+    metadata_list = metadata._get_metadata_dict()
+    metadata_fields = metadata_list[0]
+    metadata_other = metadata_list[1]
+    return {'metadata_id':metadata_id,'metadata_xml':metadata_xml,
+            'metadata_fields':metadata_fields,
+            'metadata_other':metadata_other,
+            }
+
+# Edit Metadata Entry
+@render_to("dcmetadata/metadata_edit.html")
+def metadata_edit(request,metadata_id):
+    metadata =  Metadata.objects.get(id=metadata_id)
+    metadata_xml = metadata.metadata
+    metadata_form = MetadataFieldForm()
+    
+    return {'metadata_id':metadata_id,
+            'metadata_form':metadata_form,
+            'metadata_xml':metadata_xml,
+    }
+    
+    
+#    image_is_exist = True
+#    
+#    try:
+#        img = Imagery.objects.get(id=img_no)
+#    except:            
+#        # fetch ids
+#        imgid=[]
+#        image_is_exist = False
+#        id = Imagery.objects.values_list('id',flat=True)    
+#        for i in id:
+#            imgid.append(i)
+#        if not imgid:
+#            img_no = 1
+#        else:
+#            img_no = max(imgid)+1
+#        img = Imagery(id=img_no)
+#    if request.method == 'GET':
+#        if img:
+#            imgform = ImageForm(instance=img)
+#        else:
+#            initial = {}
+#            initial['id'] = img_no
+#            imgform = ImageForm(initial=initial)
+#    
+#    elif request.method == 'POST':
+#        imgform = ImageForm(data=request.POST, instance=img)
+#        if imgform.is_valid():
+#            imgform.save()
+#            return HttpResponseRedirect('/SWFWMD/imagerydb/imagery/%s/' % imgform.cleaned_data['id'])
+#    
+#    return {'img_no': img_no,'form': imgform,'image_is_exist':image_is_exist,}
+
+# Delete Metadata Entry
+## Metadata entry delete confirm
+@render_to("dcmetadata/metadata_delete_confirm.html")
+def metadata_delete_confirm(request,metadata_id):
+    return {'metadata_id':metadata_id,
+            }
+
+## Delete Metadata entry
+def metadata_delete(request,metadata_id):
+    try:
+        metadata = Metadata.objects.get(id=metadata_id)
+    except:
+        return HttpResponse("Metadata ID %s dose not exist." % metadata_id)
+    
+    metadata.delete()
+    return HttpResponseRedirect('/admin/dcmetadata/metadata/')

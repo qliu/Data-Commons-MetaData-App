@@ -1,0 +1,33 @@
+{% extends "admin/admin_base_site.html" %}
+{% load i18n admin_static admin_modify %}
+
+
+{% block extrahead %}{{ block.super }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{{STATIC_RUL}}admin/css/forms.css"/>{% endblock %}
+
+{% block title %}Metadata ID {{metadata_id}} | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="/admin/dcmetadata/metadata/">Metadata</a> 
+&rsaquo; Metadata ID {{metadata_id}}
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	{% block object-tools %}{% endblock %}
+
+	Test Page !
+	<br/><br/><hr><br/><br/>
+	<h1>Metadata ID: {{metadata_id}}</h1>
+	<br/><br/><hr><br/><br/>
+	Metadata XML:<br/><br/> {{metadata_xml}}
+	<br/><br/><hr><br/>
+
+	{{metadataform.as_p}}
+</div>
+{% endblock %}

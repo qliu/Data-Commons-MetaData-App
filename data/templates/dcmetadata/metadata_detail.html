@@ -1,0 +1,51 @@
+{% extends "admin/admin_base_site.html" %}
+{% load i18n admin_static admin_modify %}
+
+
+{% block extrahead %}{{ block.super }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{{STATIC_RUL}}admin/css/forms.css"/>{% endblock %}
+
+{% block title %}Metadata ID {{metadata_id}} | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="/admin/dcmetadata/metadata/">Metadata</a> 
+&rsaquo; Metadata ID {{metadata_id}}
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	{% block object-tools %}{% endblock %}
+
+	Test Page !
+	<br/><br/><hr><hr><hr><br/><br/>
+	<h1>Metadata ID: {{metadata_id}}</h1>
+	<br/><br/><hr><hr><hr><br/><br/>
+	Metadata XML:<br/><br/> {{metadata_xml}}
+	<br/><br/>
+	
+	<br/><hr><hr><br/>
+	<h2>Fields</h2>
+	<br/><hr><hr><br/>
+	
+	{% for field in metadata_fields %}
+		<b>Field Name:</b> {{field.field_name}}<br/>
+		<b>Data Type:</b> {{field.data_type}}<br/>
+		<b>Description:</b> {{field.description}}<br/><br/>
+		<hr><br/>
+	{% endfor %}
+	
+	<br/><hr><hr><br/>
+	<h2>Other Information</h2>
+	<br/><hr><hr><br/>
+
+	{% for other in metadata_other %}
+		<b>{{other.name}}:</b> {{other.value}}<br/><br/>
+		<hr><br/>
+	{% endfor %}
+</div>
+{% endblock %}

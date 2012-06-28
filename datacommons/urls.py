@@ -24,7 +24,7 @@ urlpatterns = patterns('',
 	url(r'^sourcedata/upload/$','dcmetadata.views.upload_sourcedata'),
 	
 	# Data Commons MetaData App URLs
-	url(r'^metadata/',include('dcmetadata.urls')),
+	url(r'^dcmetadata/',include('dcmetadata.urls')),
 
     # Examples:
     # url(r'^$', 'datacommons.views.home', name='home'),

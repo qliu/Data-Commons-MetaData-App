@@ -36,8 +36,8 @@ admin.site.register(Coverage, CoverageAdmin)
 
 ## Format Admin
 class FormatAdmin(admin.ModelAdmin):
-    fields = ['name']
-    list_display = ('id','name')
+    fields = ['name','extension']
+    list_display = ('id','name','extension')
     
 admin.site.register(Format, FormatAdmin)
 
@@ -70,9 +70,9 @@ admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)
 
 # Metadata Admin
 class MetadataAdmin(admin.ModelAdmin):
-    fields = ['id','field_name','data_type','description','metadata']
+    fields = ['id','metadata']
     readonly_fields = ['id']
-    list_display = ('id','_get_metadata','metadata')
+    list_display = ('id','_get_metadata_string','metadata')
     
     # By defualt use the Change page form
     form = MetadataAdminChangeForm
