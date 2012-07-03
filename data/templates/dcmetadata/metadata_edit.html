@@ -27,7 +27,9 @@
 	<br/><br/><hr><br/><br/>
 	Metadata XML:<br/><br/> {{metadata_xml}}
 	<br/><br/><hr><br/>
-
-	{{metadataform.as_p}}
+	{% for metadata_form in metadata_forms %}
+		{{metadata_form.as_p}}
+		<hr>
+	{% endfor %}
 </div>
 {% endblock %}

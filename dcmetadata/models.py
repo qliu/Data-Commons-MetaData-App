@@ -187,7 +187,8 @@ class Metadata(models.Model):
 		for field in root[0]:
 			field_dict_list.append({field[0].tag:re.sub(r'[\t\n\r]','',field[0].text),
 									field[1].tag:re.sub(r'[\t\n\r]','',field[1].text),
-									field[2].tag:re.sub(r'[\t\n\r]','',field[2].text)}
+									field[2].tag:re.sub(r'[\t\n\r]','',field[2].text),
+									field[3].tag:re.sub(r'[\t\n\r]','',field[3].text),}
 									)# regular expressin to remove control characters (\n \r \t) from xml
 		metadata_dict_list.append(field_dict_list)
 		# get the tag-value pair for other metadata information

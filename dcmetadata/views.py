@@ -143,10 +143,15 @@ def metadata_detail(request,metadata_id):
 def metadata_edit(request,metadata_id):
     metadata =  Metadata.objects.get(id=metadata_id)
     metadata_xml = metadata.metadata
-    metadata_form = MetadataFieldForm()
+    metadata_list = metadata._get_metadata_dict()
+    metadata_fields =  metadata_list[0]
+    metadata_other =  metadata_list[1]
+    metadata_forms = []
+    for i in range(len(metadata_fields)):
+        metadata_forms.append(MetadataFieldForm(metadata_fields[i]))
     
     return {'metadata_id':metadata_id,
-            'metadata_form':metadata_form,
+            'metadata_forms':metadata_forms,
             'metadata_xml':metadata_xml,
     }
     
