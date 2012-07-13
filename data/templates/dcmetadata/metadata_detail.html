@@ -1,52 +1,145 @@
 {% extends "admin/admin_base_site.html" %}
 {% load i18n admin_static admin_modify %}
 
-
-{% block extrahead %}{{ block.super }}{% endblock %}
-
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{{STATIC_RUL}}admin/css/forms.css"/>{% endblock %}
+{% block extrahead %}
+	{{ block.super }}
+		<!-- CSS -->
+		<link href="{{ MEDIA_URL }}css/third_party/JQuery/default.css" rel="stylesheet" type="text/css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_RUL}}admin/css/forms.css"/>
+		<style type="text/css">
+			.delete-link {
+				float:left;
+				padding-left:18px;
+				margin-left:100px;
+				background:url({{ MEDIA_URL }}images/icon_delete.gif) no-repeat left center;
+			}
+			.edit-link {
+				float:left;
+				padding-left:18px;
+				background:url({{ MEDIA_URL }}images/icon_edit.gif) no-repeat left center;
+			}
+			.delete-row {
+				float:right;
+				display:block;
+				margin-left:4px;
+				padding-left:18px;
+				background:url({{ MEDIA_URL }}images/delete.png) no-repeat left center;
+			}
+			
+			.metadata_detail{
+				display:block;
+				margin-left:30px;
+			}
+			
+			.metadata_detail hr{
+				width:90%;
+				float:left;
+			}
+			
+			.dynamic-fields-form th {
+				text-align:right;
+				font-weight:bold;
+			}
+			.dynamic-fields-form td span img {
+				vertical-align:middle;
+				border:0;
+			}
+			
+			.dynamic-other-form th {
+				text-align:right;
+				font-weight:bold;
+			}
+			.dynamic-other-form td span img {
+				vertical-align:middle;
+				border:0;
+			}
+			
+			table{
+				border: 0px solid;
+				border-bottom-width: 1px;
+				padding: 10px;
+				margin: 20px;
+			}
+			
+			.errornote{
+				font-size: 12px !important;
+				display: block;
+				padding: 4px 5px 4px 25px;
+				margin: 0 0 3px 0;
+				border: 1px solid red;
+				color: red;
+				background: #FFC url({{ MEDIA_URL }}images/icon_error.png) 5px .3em no-repeat;
+				line-height: 14px;
+			}
+			
+			.errorlist li{
+				font-size: 12px !important;
+				display: block;
+				padding: 4px 5px 4px 25px;
+				margin: 0 0 3px 0;
+				border: 1px solid red;
+				color: white;
+				background: red url({{ MEDIA_URL }}images/icon_errormsg.png) 5px .3em no-repeat;
+				line-height: 14px;
+			}
+			
+			ul{
+				display: block;
+				-webkit-margin-before: 0px;
+				-webkit-margin-after: 0px;
+				-webkit-margin-start: 0px;
+				-webkit-margin-end: 0px;
+				-webkit-padding-start: 0px;
+				margin-top: -23px !important;
+			}
+		</style>
+{% endblock %}
 
 {% block title %}Metadata ID {{metadata_id}} | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-<a href="/admin/">{% trans 'Home' %}</a>
-&rsaquo; <a href="/admin/dcmetadata/metadata/">Metadata</a> 
-&rsaquo; Metadata ID {{metadata_id}}
-
+<a href="{{ source_app_root }}/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="{{ source_app_root }}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
+&rsaquo; Metadata ID: {{metadata_id}}
 </div>
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-	{% block object-tools %}{% endblock %}
-
-	Test Page !
-	<br/><br/><hr><hr><hr><br/><br/>
+	<br/><hr><br/>
 	<h1>Metadata ID: {{metadata_id}}</h1>
-	<br/><br/><hr><hr><hr><br/><br/>
-	Metadata XML:<br/><br/> {{metadata_xml}}
-	<br/><br/>
-	
-	<br/><hr><hr><br/>
-	<h2>Fields</h2>
-	<br/><hr><hr><br/>
-	
-	{% for field in metadata_fields %}
-		<b>Field Name:</b> {{field.field_name}}<br/>
-		<b>Data Type:</b> {{field.data_type}}<br/>
-		<b>Description:</b> {{field.description}}<br/>
-		<b>Tags:</b> {{field.tags}}<br/><br/>
-		<hr><br/>
-	{% endfor %}
-	
-	<br/><hr><hr><br/>
+	<br/>
+	<h3>Source Data: &nbsp;" <a target="_blank" class="sourcedata-link" href="{{ source_app_root }}/admin/dcmetadata/sourcedatainventory/{{ metadata_id }}/">{{ source_data_name }}</a> "</h3>
+	<!--
+	<br/><hr><br/>
+	Metadata XML:<br/><br/> <p>{{ metadata_xml }}</p>
+	-->
+	<br/><br/><hr>
+	<h2>Metadata - Fields</h2>
+	<br/>
+	<div class="metadata_detail">
+		{% for field in metadata_fields %}
+			<br/>
+			<b>Field Name:</b> {{field.field_name}}<br/>
+			<b>Data Type:</b> {{field.data_type}}<br/>
+			<b>Description:</b> {{field.description}}<br/>
+			<b>Tags:</b> {{field.tags}}<br/><br/>
+			<hr><br/>
+		{% endfor %}
+	</div>
+	<br/>
 	<h2>Other Information</h2>
-	<br/><hr><hr><br/>
-
-	{% for other in metadata_other %}
-		<b>{{other.name}}:</b> {{other.value}}<br/><br/>
-		<hr><br/>
-	{% endfor %}
+	<br/>
+	<div class="metadata_detail">
+		{% for other in metadata_other %}
+			<br/><br/>
+			<b>{{other.info_name}}:</b> {{other.info_value}}
+			<br/><br/><hr>
+		{% endfor %}
+	</div>
+	<br/><br/>
+	<a class="edit-link" href="edit">Edit Metadata</a>
+	<a class="delete-link" href="delete_confirm">Delete Metadata</a>
 </div>
 {% endblock %}

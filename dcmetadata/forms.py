@@ -2,6 +2,7 @@ from django.contrib import admin
 from django import forms
 from django.forms.widgets import *
 from django.db import models
+from django.forms.formsets import formset_factory
 
 # Import from general utilities
 from util import *
@@ -18,6 +19,8 @@ from dcmetadata.models import *
 # Custome SourceDataInventory Admin Model Form for CHANGE Page
 class SourceDataInventoryAdminChangeForm(forms.ModelForm):
     upload_file = forms.FileField(required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+    location = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=True)
 
     def save(self, commit=True):
         model = super(SourceDataInventoryAdminChangeForm, self).save(commit=False)
@@ -55,6 +58,7 @@ class SourceDataInventoryAdminChangeForm(forms.ModelForm):
 # Custome SourceDataInventory Admin Model Form for ADD page
 class SourceDataInventoryAdminAddForm(forms.ModelForm):
     upload_file = forms.FileField(required=True)
+    location = forms.CharField(widget=forms.TextInput(attrs={'size':'50'}))
 
     def save(self, commit=True):
         model = super(SourceDataInventoryAdminAddForm, self).save(commit=False)
@@ -100,26 +104,27 @@ class MetadataAdminAddForm(forms.ModelForm):
     class Meta:
         model = Metadata
 
-# Multi Widget
-class SplitTagWidget(MultiWidget):
-#    def __init__(self,attrs=None,value):
-#        widgets = tuple([TextInput(attrs=None) for i in value[:-1].split(";")])
-#        super(SplitTagWidget,self).__init__(widgets,attrs)
-        
-    def decompress(self, value):
-        if value:
-            return value[:-1].split(";")
-        return [None for i in value[:-1].split(";")]
-    
-    def format_output(self, rendered_widgets):
-        return u''.join(rendered_widgets)
-
 # Metadata Field Form
 class MetadataFieldForm(forms.Form):
-    field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}))
-    data_type = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'size':'50'}))
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':6}))
-    tags = forms.MultiValueField(widget=SplitTagWidget())
+    field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+    data_type = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'size':'50'}),required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+    tags = forms.CharField(widget=forms.TextInput(attrs={'size':'100'}),required=False,help_text='Seperate tags with semicolon. (Example: tag1;tag2;)')
     
     class Meta:
         fields = ('field_name','data_type','description','tags')
+        
+# Metadata Fields Formset
+MetadataFieldsFormset = formset_factory(MetadataFieldForm,extra=0)
+
+# Metadata Other Information Form
+class MetadataOtherForm(forms.Form):
+    info_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+    info_value = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+    
+# Metadata Other Information Formset
+MetadataOtherFormset = formset_factory(MetadataOtherForm,extra=0)
+
+# File Upload Form
+class FileUploadForm(forms.Form):
+    upload_file = forms.FileField(required=False)

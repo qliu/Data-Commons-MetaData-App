@@ -23,7 +23,7 @@ DATABASES = {
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
-
+## changes for server ->
     # Pitondc1
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -33,6 +33,7 @@ DATABASES = {
 #        'HOST': 'pitondc1',                      # Set to empty string for localhost. Not used with sqlite3.
 #        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
 #    }
+## <- changes for server
 }
 
 
@@ -46,7 +47,10 @@ ROOT_PATH = parent_path
 sys.path += [os.path.join(ROOT_PATH, 'lib')]
 
 # Root URLs of Data Commons App
+## changes for server ->
 SERVER_URL = 'localhost:8000'
+# SERVER_URL = 'pitondc1.piton.local'
+## <- changes for server
 ROOT_URL = 'datacommons'
 
 # Local time zone for this installation. Choices can be found here:
@@ -83,10 +87,10 @@ MEDIA_ROOT = os.path.join(ROOT_PATH, 'data/www')
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 # My Example: "http://localhost:8000/static/js/test/test_dajaxice_js.js"
-MEDIA_URL = 'http://%s/%s/static/' % (SERVER_URL, ROOT_URL)
+MEDIA_URL = 'http://%s/static/%s/' % (SERVER_URL, ROOT_URL)
 
 # Dajaxice Media Prefix
-DAJAXICE_MEDIA_PREFIX = "dajaxice"
+#DAJAXICE_MEDIA_PREFIX = "dajaxice"
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -157,11 +161,11 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    'django.contrib.admindocs',
+    # 'django.contrib.admindocs',
     # Dajaxice
-    'dajaxice',
+#    'dajaxice',
     # Dajax
-    'dajax',
+#    'dajax',
 )
 
 # A sample logging configuration. The only tangible logging

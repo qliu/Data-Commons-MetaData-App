@@ -10,24 +10,21 @@
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-<a href="/admin/">{% trans 'Home' %}</a>
-&rsaquo; <a href="/admin/dcmetadata/metadata/">Metadata</a> 
-&rsaquo; <a href="/dcmetadata/metadata/{{metadata_id}}">Metadata ID {{metadata_id}}</a>
-&rsaquo; Delete
-
+<a href="{{ source_app_root }}/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="{{ source_app_root }}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
+&rsaquo; <a href="{{ source_app_root }}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
+&rsaquo; Delete Confirm
 </div>
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
 	{% block object-tools %}{% endblock %}
-
-	Test Page !
+	<br/><hr><br/>
+	<h1>Metadata ID: {{metadata_id}}</h1>
 	<br/><br/><hr><br/><br/>
 	<h1>Are you sure?</h1>
-	<br/>
-	
-	<p>Are you sure you want to delete metadata <b>"Metadata ID: {{metadata_id}}"</b>?</p>
+	<p>Are you sure you want to delete metadata <b>"Metadata ID: {{metadata_id}}"</b> for source data "<b>{{ source_data_name }}</b>"?</p>
 	
 	<br/><hr><br/><br/>
 	

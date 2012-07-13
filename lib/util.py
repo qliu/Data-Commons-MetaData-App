@@ -17,9 +17,14 @@ import csv
 # Import Regular Expression operations
 import re
 
-# Import the ElementTree XML API for Python
+# Third Party Libs Import
+
+## Import the ElementTree XML API for Python
 #import elementtree.ElementTree as ET
 from xml.etree import ElementTree
+
+## Import xlrd for reading XLS files with Python
+from xlrd import open_workbook
 
 
 # GLOBAL VARIABLES
@@ -44,13 +49,19 @@ LOOKUP_TABLE_FORMAT = "format"
 SOURCE_DATA_INVENTORY_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/original_data/PitonDataInventory2012.csv'
 
 # Source Data Root Path in Inventory File
-SOURCE_DATA_ROOT_PATH_ORIGIN = 'G:\\'
+SOURCE_DATA_ROOT_PATH_ORIGIN = 'O:\\'
 
 # Source Data Root Path Mapped Locally
 #SOURCE_DATA_ROOT_PATH_LOCAL = 'O:\\Data\\'
 
 # Source Data Root Path On Server "Pitondc1"
-SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\Data\\'
+SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\'
+
+## changes for server ->
+# Server App Root
+SERVER_APP_ROOT = ""
+# SERVER_APP_ROOT = "/datacommons"
+## <- changes for server
 
 
 # Decorator to save time returning templates

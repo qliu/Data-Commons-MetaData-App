@@ -133,74 +133,192 @@ def metadata_detail(request,metadata_id):
     metadata_list = metadata._get_metadata_dict()
     metadata_fields = metadata_list[0]
     metadata_other = metadata_list[1]
-    return {'metadata_id':metadata_id,'metadata_xml':metadata_xml,
+    source_data = SourceDataInventory.objects.get(id=metadata_id)
+    source_data_name = source_data.file_name
+    
+    return {'source_app_root':SERVER_APP_ROOT,
+            'metadata_id':metadata_id,'metadata_xml':metadata_xml,
             'metadata_fields':metadata_fields,
             'metadata_other':metadata_other,
+            'source_data_name':source_data_name,
             }
 
 # Edit Metadata Entry
 @render_to("dcmetadata/metadata_edit.html")
-def metadata_edit(request,metadata_id):
-    metadata =  Metadata.objects.get(id=metadata_id)
-    metadata_xml = metadata.metadata
-    metadata_list = metadata._get_metadata_dict()
-    metadata_fields =  metadata_list[0]
-    metadata_other =  metadata_list[1]
-    metadata_forms = []
-    for i in range(len(metadata_fields)):
-        metadata_forms.append(MetadataFieldForm(metadata_fields[i]))
+def metadata_edit(request,metadata_id): 
+    # Initial vars
+    form_has_errors = False # Form Validation Error flag
+    is_add_new_metadata = False
+    metadata_xml = ""
+    metadata_list = []
+    source_data = SourceDataInventory.objects.get(id=metadata_id)
+    source_data_name = source_data.file_name
+    upload_form = FileUploadForm()
     
-    return {'metadata_id':metadata_id,
-            'metadata_forms':metadata_forms,
-            'metadata_xml':metadata_xml,
-    }
-    
-    
-#    image_is_exist = True
-#    
-#    try:
-#        img = Imagery.objects.get(id=img_no)
-#    except:            
-#        # fetch ids
-#        imgid=[]
-#        image_is_exist = False
-#        id = Imagery.objects.values_list('id',flat=True)    
-#        for i in id:
-#            imgid.append(i)
-#        if not imgid:
-#            img_no = 1
-#        else:
-#            img_no = max(imgid)+1
-#        img = Imagery(id=img_no)
-#    if request.method == 'GET':
-#        if img:
-#            imgform = ImageForm(instance=img)
-#        else:
-#            initial = {}
-#            initial['id'] = img_no
-#            imgform = ImageForm(initial=initial)
-#    
-#    elif request.method == 'POST':
-#        imgform = ImageForm(data=request.POST, instance=img)
-#        if imgform.is_valid():
-#            imgform.save()
-#            return HttpResponseRedirect('/SWFWMD/imagerydb/imagery/%s/' % imgform.cleaned_data['id'])
-#    
-#    return {'img_no': img_no,'form': imgform,'image_is_exist':image_is_exist,}
+    try:
+        # If metadata already exists
+        metadata =  Metadata.objects.get(id=metadata_id)
+        metadata_xml = metadata.metadata
+        metadata_list = metadata._get_metadata_dict()
+        metadata_fields =  metadata_list[0]
+        metadata_other = metadata_list[1]
+        
+        # If Metadata exists but no fields info
+        # Create empty dictionary list for formset initiate
+        if len(metadata_fields) == 0:           
+            metadata_fields = [{"field_name":"","data_type":"","description":"","tags":""}]
+        # If Metadata exists but no other info
+        # Create empty dictionary list for formset initiate
+        if len(metadata_other) == 0:            
+            metadata_other = [{"info_name":"","info_value":""}]
+        
+    except:
+        # If metadata not exist, Create new instance of Metadata model
+        is_add_new_metadata = True
+        metadata = Metadata(id=metadata_id)
+        # Create empty dictionary list for formset initiate
+        metadata_fields = [{"field_name":"","data_type":"","description":"","tags":""}]
+        metadata_other = [{"info_name":"","info_value":""}]
+      
+        
+    if request.method == 'POST':
+        # Read metadata from uploaded file
+        if 'upload_file_submit' in request.POST:
+            if 'upload_file' in request.POST:
+                upload_file_name = request.POST['upload_file']
+                upload_file_location = request.POST['upload_file_location']
+                header_row = int(request.POST['header_row'])-1
+                file_location = upload_file_location.replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)                
+                file_path = os.path.join(file_location,upload_file_name)
+                
+                # Open xls EXCEL workbook
+                xls_workbook = open_workbook(file_path)
+                
+                xls_sheet = xls_workbook.sheet_by_index(0)
+                metadata_fields = []
+                for xls_cell in xls_sheet.row(header_row):
+                    if (xls_cell.value != None) and (xls_cell.value != ""):
+                        metadata_fields.append({"field_name":xls_cell.value,"data_type":"","description":"","tags":""})
+            
+            metadata_fields_formset = MetadataFieldsFormset(initial=metadata_fields,prefix='metadata_fields_form')
+            metadata_other_formset = MetadataOtherFormset(initial=metadata_other,prefix='metadata_other_form')              
+            
+            return {'file_form':upload_form,
+                    'source_app_root':SERVER_APP_ROOT,
+                    'is_add_new_metadata':is_add_new_metadata,
+                    'source_data_name':source_data_name,
+                    'metadata_id':metadata_id,
+                    'metadata_fields_formset':metadata_fields_formset,
+                    'metadata_other_formset':metadata_other_formset,
+                    'metadata_xml':metadata_xml,
+                    'form_has_errors':form_has_errors,
+            }            
+        else:
+            # Build Element Tree Structure
+            et_root =  ElementTree.Element("metadata")
+            et_element_fields =  ElementTree.SubElement(et_root,"fields")
+            et_element_other =  ElementTree.SubElement(et_root,"other_metadata")
+            
+            # Save Fields metadata
+            metadata_fields_formset = MetadataFieldsFormset(request.POST,prefix='metadata_fields_form')
+            metadata_other_formset = MetadataOtherFormset(request.POST,prefix='metadata_other_form')
+            # If formset data cleaned
+            if metadata_fields_formset.is_valid() and metadata_other_formset.is_valid():
+                fields_data = metadata_fields_formset.cleaned_data          
+                for index,field in enumerate(fields_data):
+                    if len(field) > 0:
+                        et_field = ElementTree.SubElement(et_element_fields,"field_"+str(index+1))
+                        et_field_field_name = ElementTree.SubElement(et_field,"field_name")
+                        et_field_field_name.text = field['field_name']
+                        et_field_data_type = ElementTree.SubElement(et_field,"data_type")
+                        et_field_data_type.text =  field['data_type']
+                        et_field_description = ElementTree.SubElement(et_field,"description")
+                        et_field_description.text = field['description']
+                        et_field_tags = ElementTree.SubElement(et_field,"tags")
+                        et_field_tags.text = field['tags']
+                    else:
+                        # Remove the extra form from formset if the form data is empty
+                        metadata_fields_formset.forms.pop(index)
+                        
+                other_data = metadata_other_formset.cleaned_data
+                for index,info in enumerate(other_data):
+                    if len(info) > 0:
+                        et_info = ElementTree.SubElement(et_element_other,"info_"+str(index+1))
+                        et_info_name = ElementTree.SubElement(et_info,"info_name")
+                        et_info_name.text = info['info_name']
+                        et_info_value = ElementTree.SubElement(et_info,"info_value")
+                        et_info_value.text = info['info_value']
+                    else:
+                        # Remove the extra form from formset if the form data is empty
+                        metadata_other_formset.forms.pop(index)
+                        
+                metadata.metadata = ElementTree.tostring(et_root)
+                metadata.save()
+                if is_add_new_metadata:
+                    source_data.metadata = metadata
+                    source_data.save()
+            # If formset data NOT valid
+            else:               
+                form_has_errors = True
+                if 'save' in request.POST:
+                    return {'file_form':upload_form,
+                            'source_app_root':SERVER_APP_ROOT,
+                            'is_add_new_metadata':is_add_new_metadata,
+                            'source_data_name':source_data_name,
+                            'metadata_id':metadata_id,
+                            'metadata_fields_formset':metadata_fields_formset,
+                            'metadata_other_formset':metadata_other_formset,
+                            'metadata_xml':metadata_xml,
+                            'form_has_errors':form_has_errors,
+                    }                
+            
+    else:
+        metadata_fields_formset = MetadataFieldsFormset(initial=metadata_fields,prefix='metadata_fields_form')
+        metadata_other_formset = MetadataOtherFormset(initial=metadata_other,prefix='metadata_other_form')    
+
+    if 'save' in request.POST:
+        # Redirect to Metadata detail page
+        return HttpResponseRedirect('%s/dcmetadata/metadata/%s/' % (SERVER_APP_ROOT,metadata_id))
+    else:  
+        if len(metadata_fields_formset.forms) == 0:
+            metadata_fields = [{"field_name":"","data_type":"","description":"","tags":""}]
+            metadata_fields_formset = MetadataFieldsFormset(initial=metadata_fields,prefix='metadata_fields_form')
+        if len(metadata_other_formset.forms) == 0:
+            metadata_other = [{"info_name":"","info_value":""}]
+            metadata_other_formset = MetadataOtherFormset(initial=metadata_other,prefix='metadata_other_form')             
+        
+        # Save data to db and return to Metadata edit page
+        return {'file_form':upload_form,
+                'source_app_root':SERVER_APP_ROOT,
+                'is_add_new_metadata':is_add_new_metadata,
+                'source_data_name':source_data_name,
+                'metadata_id':metadata_id,
+                'metadata_fields_formset':metadata_fields_formset,
+                'metadata_other_formset':metadata_other_formset,
+                'metadata_xml':metadata_xml,
+                'form_has_errors':form_has_errors,
+        }
 
 # Delete Metadata Entry
 ## Metadata entry delete confirm
 @render_to("dcmetadata/metadata_delete_confirm.html")
 def metadata_delete_confirm(request,metadata_id):
+    source_data = SourceDataInventory.objects.get(id=metadata_id)
+    source_data_name = source_data.file_name
+
     return {'metadata_id':metadata_id,
+            'source_data_name':source_data_name,
             }
 
 ## Delete Metadata entry
 def metadata_delete(request,metadata_id):
     try:
         metadata = Metadata.objects.get(id=metadata_id)
+        source_data = SourceDataInventory.objects.get(id=metadata_id)
+        source_data.metadata = None
+        source_data.save()
     except:
         return HttpResponse("Metadata ID %s dose not exist." % metadata_id)
     
     metadata.delete()
-    return HttpResponseRedirect('/admin/dcmetadata/metadata/')
+    return HttpResponseRedirect('%s/admin/dcmetadata/sourcedatainventory/' % SERVER_APP_ROOT)

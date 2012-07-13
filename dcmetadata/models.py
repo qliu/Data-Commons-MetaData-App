@@ -113,6 +113,7 @@ class SourceDataInventory(models.Model):
 	format = models.ForeignKey('Format',null=True,blank=True)
 	location =  models.CharField(max_length=200)
 	file_size = models.FloatField(default=0,verbose_name='File Size',null=True, blank=True)
+	metadata = models.ForeignKey('Metadata',null=True,blank=True)
 	
 	def __unicode__(self):
 		'''
@@ -144,11 +145,26 @@ class SourceDataInventory(models.Model):
 		'''
 		return HumanReadableSize(self.file_size,FILE_SIZE_PRECISION)
 		
-	class Meta:
-		db_table = u'source_data_inventory'
-		
 	_get_file_size.short_description = "File Size"
 	
+		
+	def _get_metadata_link(self):
+		'''
+		Return HTML link for view and edit metadata associated with record
+		'''
+		try:
+			metadata = Metadata.objects.get(id=self.id)
+			return '<a href="%s/dcmetadata/metadata/%d/">View</a> <a href="/dcmetadata/metadata/%d/edit/">Edit</a>' % (SERVER_APP_ROOT,self.id,self.id)
+		except:
+			return '<a href="%s/dcmetadata/metadata/%d/edit/">Add</a>' % (SERVER_APP_ROOT,self.id)
+	
+	_get_metadata_link.allow_tags = True
+	_get_metadata_link.short_description = "Metadata"
+	
+	
+	class Meta:
+		db_table = u'source_data_inventory'
+
 
 # Metadata Model
 class Metadata(models.Model):
@@ -186,22 +202,24 @@ class Metadata(models.Model):
 		# get the tag-value pair for metadata fields
 		for field in root[0]:
 			field_dict_list.append({field[0].tag:re.sub(r'[\t\n\r]','',field[0].text),
-									field[1].tag:re.sub(r'[\t\n\r]','',field[1].text),
-									field[2].tag:re.sub(r'[\t\n\r]','',field[2].text),
-									field[3].tag:re.sub(r'[\t\n\r]','',field[3].text),}
+									field[1].tag:re.sub(r'[\t\n\r]','',field[1].text) if field[1].text != None else '',
+									field[2].tag:re.sub(r'[\t\n\r]','',field[2].text) if field[2].text != None else '',
+									field[3].tag:re.sub(r'[\t\n\r]','',field[3].text) if field[3].text != None else '',}
 									)# regular expressin to remove control characters (\n \r \t) from xml
 		metadata_dict_list.append(field_dict_list)
 		# get the tag-value pair for other metadata information
 		for other in root[1]:
-			other_dict_list.append({other[0].tag:re.sub(r'[\t\n\r]','',other[0].text),
-									other[1].tag:re.sub(r'[\t\n\r]','',other[1].text)}
+			other_dict_list.append({other[0].tag:re.sub(r'[\t\n\r]','',other[0].text) if other[0].text != None else '',
+									other[1].tag:re.sub(r'[\t\n\r]','',other[1].text) if other[1].text != None else ''}
 									)# regular expressin to remove control characters (\n \r \t) from xml
-
 		metadata_dict_list.append(other_dict_list)
 
 		return metadata_dict_list
 	
 	_get_metadata_dict.short_description = "Metadata Dictionary List"
 	
+	def __unicode__(self):
+		return self.id	
+	
 	class Meta:
-		db_table = u'test'
+		db_table = u'metadata'

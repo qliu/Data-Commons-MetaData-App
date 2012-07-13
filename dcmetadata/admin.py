@@ -54,7 +54,7 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
     'coverage','geography','begin_year','end_year','source','location']
     readonly_fields = ['file_name','format']
     list_display = ('file_name','description','macro_domain','subject_matter',
-    'coverage','geography','_get_year_range','source','format','_get_file_size')
+    'coverage','geography','_get_year_range','source','format','_get_file_size','_get_metadata_link')
     list_filter = ['macro_domain','subject_matter','coverage','geography',
     'format','source','begin_year','end_year']
     
@@ -80,5 +80,3 @@ class MetadataAdmin(admin.ModelAdmin):
         if not obj: # obj is None, this is ADD page, then use the Add page form
             self.form = MetadataAdminAddForm
         return super(MetadataAdmin,self).get_form(request,obj,**kwargs)
-    
-admin.site.register(Metadata, MetadataAdmin)

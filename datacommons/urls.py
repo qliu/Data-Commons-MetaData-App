@@ -5,9 +5,9 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
-# import dajaxice core
-from dajaxice.core import dajaxice_autodiscover
-dajaxice_autodiscover()
+## import dajaxice core
+#from dajaxice.core import dajaxice_autodiscover
+#dajaxice_autodiscover()
 
 urlpatterns = patterns('',
 
@@ -31,11 +31,11 @@ urlpatterns = patterns('',
     # url(r'^datacommons/', include('datacommons.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	# url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 	
-	# URLs for Dajaxice
-	url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
+#	# URLs for Dajaxice
+#	url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
