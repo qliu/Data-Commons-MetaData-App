@@ -61,7 +61,14 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
     # By defualt use the Change page form
     form = SourceDataInventoryAdminChangeForm
     def get_form(self,request,obj=None,**kwargs):
+        print "#" * 100
+        print obj
+        print "#" * 100
         if not obj: # obj is None, this is ADD page, then use the Add page form
+            print "#" * 100
+            print "ADD FORM HERE!!!"
+            print obj
+            print "#" * 100
             self.form = SourceDataInventoryAdminAddForm
         return super(SourceDataInventoryAdmin,self).get_form(request,obj,**kwargs)
     

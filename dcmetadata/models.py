@@ -154,9 +154,9 @@ class SourceDataInventory(models.Model):
 		'''
 		try:
 			metadata = Metadata.objects.get(id=self.id)
-			return '<a href="%s/dcmetadata/metadata/%d/">View</a> <a href="/dcmetadata/metadata/%d/edit/">Edit</a>' % (SERVER_APP_ROOT,self.id,self.id)
+			return '<a href="%s/dcmetadata/metadata/%d/" target="_blank">View</a> <a href="%s/dcmetadata/metadata/%d/edit/" target="_blank">Edit</a>' % (SERVER_APP_ROOT,self.id,SERVER_APP_ROOT,self.id)
 		except:
-			return '<a href="%s/dcmetadata/metadata/%d/edit/">Add</a>' % (SERVER_APP_ROOT,self.id)
+			return '<a href="%s/dcmetadata/metadata/%d/edit/" target="_blank">Add</a>' % (SERVER_APP_ROOT,self.id)
 	
 	_get_metadata_link.allow_tags = True
 	_get_metadata_link.short_description = "Metadata"

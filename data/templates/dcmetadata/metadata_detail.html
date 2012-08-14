@@ -92,6 +92,10 @@
 				-webkit-padding-start: 0px;
 				margin-top: -23px !important;
 			}
+			div#metadata_tools
+			{
+				float:right;
+			}
 		</style>
 {% endblock %}
 
@@ -111,6 +115,10 @@
 	<h1>Metadata ID: {{metadata_id}}</h1>
 	<br/>
 	<h3>Source Data: &nbsp;" <a target="_blank" class="sourcedata-link" href="{{ source_app_root }}/admin/dcmetadata/sourcedatainventory/{{ metadata_id }}/">{{ source_data_name }}</a> "</h3>
+	<div id="metadata_tools">
+		<a class="edit-link" href="edit">Edit Metadata</a>
+		<a class="delete-link" href="delete_confirm">Delete Metadata</a>
+	</div>
 	<!--
 	<br/><hr><br/>
 	Metadata XML:<br/><br/> <p>{{ metadata_xml }}</p>
@@ -139,7 +147,9 @@
 		{% endfor %}
 	</div>
 	<br/><br/>
-	<a class="edit-link" href="edit">Edit Metadata</a>
-	<a class="delete-link" href="delete_confirm">Delete Metadata</a>
+	<div id="metadata_tools">
+		<a class="edit-link" href="edit">Edit Metadata</a>
+		<a class="delete-link" href="delete_confirm">Delete Metadata</a>
+	</div>
 </div>
 {% endblock %}
