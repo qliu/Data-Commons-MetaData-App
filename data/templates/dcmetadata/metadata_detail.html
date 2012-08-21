@@ -1,5 +1,6 @@
 {% extends "admin/admin_base_site.html" %}
 {% load i18n admin_static admin_modify %}
+{% load custom_filter %}
 
 {% block extrahead %}
 	{{ block.super }}
@@ -34,6 +35,11 @@
 			.metadata_detail hr{
 				width:90%;
 				float:left;
+			}
+			
+			.metadata_detail_sub_tags{
+				display:block;
+				margin-left:20px;
 			}
 			
 			.dynamic-fields-form th {
@@ -119,30 +125,77 @@
 		<a class="edit-link" href="edit">Edit Metadata</a>
 		<a class="delete-link" href="delete_confirm">Delete Metadata</a>
 	</div>
-	<!--
+
 	<br/><hr><br/>
-	Metadata XML:<br/><br/> <p>{{ metadata_xml }}</p>
-	-->
+	Metadata JSON:<br/><br/>
+	table_metadata = <br/>
+	{<br/>
+	"table_tags":<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+	{% for key,value in table_tags_dict.items %}
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		"{{key}}":"{{ value }}",
+	{% endfor %}
+	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+	
+	"field_metadata":<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<br/>
+	{% for field_metadata_dict in field_metadata_dict_list %}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		"Field Name":"{{field_metadata_dict.field_name}}",
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		"Data Type":"{{field_metadata_dict.data_type}}",
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		"Verbose Name":"{{field_metadata_dict.verbose_name}}",
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		"No Data Value":"{{field_metadata_dict.no_data_value}}",
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		"tags":"{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			{% for key,value in field_metadata_dict.tags.items %}
+				"{{key}}":"{{ value }}",<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			{% endfor %}
+		}"<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		},<br/>
+	{% endfor %}
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br/>
+	}
 	<br/><br/><hr>
-	<h2>Metadata - Fields</h2>
+	
+	<h1>Table Metadata</h1>
+	<hr>
+	<h2>Table Tags</h2>
 	<br/>
 	<div class="metadata_detail">
-		{% for field in metadata_fields %}
-			<br/>
-			<b>Field Name:</b> {{field.field_name}}<br/>
-			<b>Data Type:</b> {{field.data_type}}<br/>
-			<b>Description:</b> {{field.description}}<br/>
-			<b>Tags:</b> {{field.tags}}<br/><br/>
-			<hr><br/>
-		{% endfor %}
+		<br/>
+		<b>Geography:</b> {{table_tags_dict.geography}}<br/>
+		<b>Geographic Level:</b> {{table_tags_dict.geographic_level}}<br/>
+		<b>Domain:</b> {{table_tags_dict.domain}}<br/>
+		<b>Subdomain:</b> {{table_tags_dict.subdomain}}<br/>
+		<b>Source:</b> {{table_tags_dict.source}}<br/>
+		<b>Time Period:</b>{{table_tags_dict.time_period|replace:";,-"}}<br/><br/>
+		<hr><br/>
 	</div>
 	<br/>
-	<h2>Other Information</h2>
+	<h2>Field Metadata</h2>
 	<br/>
 	<div class="metadata_detail">
-		{% for other in metadata_other %}
-			<br/><br/>
-			<b>{{other.info_name}}:</b> {{other.info_value}}
+		{% for field_metadata_dict in field_metadata_dict_list %}
+			<br/>
+			<b>Field Name:</b>{{field_metadata_dict.field_name}}<br/>
+			<b>Data Type:</b>{{field_metadata_dict.data_type}}<br/>
+			<b>Verbose Name:</b>{{field_metadata_dict.verbose_name}}<br/>
+			<b>No Data Value:</b>{{field_metadata_dict.no_data_value}}<br/>
+			<b>Tags:</b><br/>
+			<div class="metadata_detail_sub_tags">
+				<b>Geography:</b>{{field_metadata_dict.tags.geography}}<br/>
+				<b>Geographic Level:</b>{{field_metadata_dict.tags.geographic_level}}<br/>
+				<b>Domain:</b>{{field_metadata_dict.tags.domain}}<br/>
+				<b>Subdomain:</b>{{field_metadata_dict.tags.subdomain}}<br/>
+				<b>Time Period:</b>{{field_metadata_dict.tags.time_period|replace:";,-"}}<br/>
+				<b>Visualization Type:</b>{{field_metadata_dict.tags.visualization_type}}<br/>
+				<b>Geometry:</b>{{field_metadata_dict.tags.geometry}}<br/><br/>
+			</div>
 			<br/><br/><hr>
 		{% endfor %}
 	</div>

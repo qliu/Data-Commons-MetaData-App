@@ -94,6 +94,20 @@ class Source(models.Model):
 	class Meta:
 		db_table = u'inventory_source'
 
+## Visualization Type
+class VisualizationType(models.Model):
+	'''
+	Store visualization types for attribute
+	'''
+#	id = models.IntegerField(primary_key=True)
+	name = models.CharField(max_length=200)
+	
+	def __unicode__(self):
+		return self.name
+	
+	class Meta:
+		db_table = u'visualization_type'
+
 
 # Source Data Inventory Model
 class SourceDataInventory(models.Model):
@@ -125,8 +139,13 @@ class SourceDataInventory(models.Model):
 		'''
 		Return year range from begin_year to end_year
 		'''
-		if self.begin_year != None and self.end_year != None:
-			return '%d-%d' % (self.begin_year, self.end_year)
+		begin_year = self.begin_year
+		end_year = self.end_year
+		if begin_year != None and end_year != None:
+			if begin_year <= end_year:
+				return '%d-%d' % (begin_year, end_year)
+			else:
+				return 'Invalid Year Range'
 		else:
 			return 'No Data'
 		
@@ -162,33 +181,133 @@ class SourceDataInventory(models.Model):
 	_get_metadata_link.short_description = "Metadata"
 	
 	
+	def _get_time_period(self):
+		'''
+		Return time period in the format (begin_year;end_year)
+		'''
+		begin_year = self.begin_year
+		end_year = self.end_year
+		if begin_year != None and end_year != None:
+			if begin_year <= end_year:
+				return '%d;%d' % (begin_year, end_year)
+			else:
+				return 'Invalid Time Period'
+		else:
+			return None
+	
+	
 	class Meta:
 		db_table = u'source_data_inventory'
 
 
+# Dataset Metadata Model
+class DatasetMetadata(models.Model):
+	id = models.IntegerField(primary_key=True)
+	metadata = models.TextField(verbose_name='Original Dataset Metadata in JSON')
+	
+	def _get_metadata_dict(self):
+		'''
+		Return a dictionary of metadata elements from JSON field
+		JSON Format:
+		{
+			"name":"dataset name",
+			"tables":[core table, related tables],
+			"fields":["table_name.field_name"]
+		}
+		'''
+		if self.metadata != "":
+			metadata_dict = json.loads(self.metadata)
+		else:
+			metadata_dict = None
+		return metadata_dict
+	
+	_get_metadata_dict.short_descripton = "Metadata Dictionary"
+	
+	def __unicode__(self):
+		return self.id	
+
+	class Meta:
+		db_table = u'dataset_metadata'
+
+
+# Table Metadata Model
+class TableMetadata(models.Model):
+	id = models.IntegerField(primary_key=True)
+	metadata = models.TextField(verbose_name='Original Table Metadata in JSON')
+	
+	def _get_metadata_dict(self):
+		'''
+		Return a dictionary of metadata elements from JSON field
+		JSON Format:
+		{
+			"table_tags":{
+					"geography":"geographic extent/coverage",
+					"geographic_level":"geographical unit",
+					"domain":"macro domain/topic",
+					"subdomain":"subdomain/subject",
+					"source":"source",
+					"time_period":"begin_year;end_year"
+				},
+			"field_metadata":[
+				{
+					"field_name":"field name",
+					"data_type":"data type",
+					"verbose_name":"human-readable field name",
+					"no_data_value":"no data value",
+					"tags":
+					{
+						"geography":"geographic extent/coverage",
+						"geographic_level":"geographical unit",
+						"domain":"macro domain/topic",
+						"subdomain":"subdomain/subject",
+						"time_period":"begin_year;end_year",
+						"visualization_types":["visualization type"],
+						"geometry":"spatial_table_id"
+					}
+				}
+			]
+		}
+		'''		
+		if self.metadata != "":
+			metadata_dict = json.loads(self.metadata)
+		else:
+			metadata_dict = None
+		return metadata_dict
+	
+	_get_metadata_dict.short_descripton = "Metadata Dictionary"
+	
+	def __unicode__(self):
+		return self.id	
+
+	class Meta:
+		db_table = u'table_metadata'
+
+	
+
 # Metadata Model
 class Metadata(models.Model):
 	metadata = models.TextField(verbose_name='Original Metadata in XML')
+	metadata_json = models.TextField(verbose_name='Original Metadata in JSON')
 	
-	def _get_metadata_string(self):
-		'''
-		Return list of fields from metadata field as a stirng
-		'''
-		fields = []
-		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
-		root = tree.getroot()
-		for child in root:
-			for child1 in child:
-				for (counter,child2) in enumerate(child1):
-					tag = child2.tag
-					data = child2.text
-					field =  tag + ":" + data + ("; " if counter == 2 else ", ")
-					# regular expressin to remove control characters (\n \r \t) from xml
-					fields.append(re.sub(r'[\t\n]','',field)) 
-		metadata_fields = ''.join(fields)
-		return metadata_fields
-	
-	_get_metadata_string.short_description = "Metadata"
+#	def _get_metadata_string(self):
+#		'''
+#		Return list of fields from metadata field as a stirng
+#		'''
+#		fields = []
+#		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
+#		root = tree.getroot()
+#		for child in root:
+#			for child1 in child:
+#				for (counter,child2) in enumerate(child1):
+#					tag = child2.tag
+#					data = child2.text
+#					field =  tag + ":" + data + ("; " if counter == 2 else ", ")
+#					# regular expressin to remove control characters (\n \r \t) from xml
+#					fields.append(re.sub(r'[\t\n]','',field)) 
+#		metadata_fields = ''.join(fields)
+#		return metadata_fields
+#	
+#	_get_metadata_string.short_description = "Metadata"
 	
 	def _get_metadata_dict(self):
 		'''
@@ -217,6 +336,48 @@ class Metadata(models.Model):
 		return metadata_dict_list
 	
 	_get_metadata_dict.short_description = "Metadata Dictionary List"
+	
+	def _get_metadata_json_dict(self):
+		'''
+		Return a dictionary of metadata elements from JSON field
+		JSON Format:
+		{
+			"table_tags":{
+					"geography":"geographic extent/coverage",
+					"geographic_level":"geographical unit",
+					"domain":"macro domain/topic",
+					"subdomain":"subdomain/subject",
+					"source":"source",
+					"time_period":"begin_year;end_year"
+				},
+			"field_metadata":[
+				{
+					"field_name":"field name",
+					"data_type":"data type",
+					"verbose_name":"human-readable field name",
+					"no_data_value":"no data value",
+					"tags":
+					{
+						"geography":"geographic extent/coverage",
+						"geographic_level":"geographical unit",
+						"domain":"macro domain/topic",
+						"subdomain":"subdomain/subject",
+						"time_period":"begin_year;end_year",
+						"visualization_types":["visualization type"],
+						"geometry":"spatial_table_id"
+					}
+				}
+			]
+		}
+		'''
+		if self.metadata_json != "":
+			metadata_dict = json.loads(self.metadata_json)
+		else:
+			metadata_dict = None
+		return metadata_dict
+	
+	_get_metadata_json_dict.short_descripton = "Metadata JSON Dictionary"
+
 	
 	def __unicode__(self):
 		return self.id	

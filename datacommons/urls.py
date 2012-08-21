@@ -20,6 +20,9 @@ urlpatterns = patterns('',
 	### Upload other lookup tables
 	url(r'^lookuptalbe/format_upload/$','dcmetadata.views.upload_lookup_table_format'),
 	
+	### Convert XML metadata to JSON metadata
+	url(r'^xml2json/$','dcmetadata.views.xml2json'),
+	
 	## Upload source data inventory
 	url(r'^sourcedata/upload/$','dcmetadata.views.upload_sourcedata'),
 	

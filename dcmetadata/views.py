@@ -116,6 +116,63 @@ def upload_sourcedata(request):
         return HttpResponse("Source Data Inventory - Upload complete!")
     except:
         return HttpResponse("Upload Failed!")
+
+# Convert XML metadata to JSON metadata
+def xml2json(request):
+    try:
+        metadata = Metadata.objects.all()
+        
+        for md in metadata:
+            # Build JSON Structure
+            json_metadata = ""
+            json_field_metadata = []
+            
+            metadata_id = md.id
+            print metadata_id
+
+            # Table tags come from "source_data" attributes
+            source_data = SourceDataInventory.objects.get(id=metadata_id)
+            json_table_tags = {"geography":source_data.coverage.name,
+                               "geographic_level":source_data.geography.name,
+                               "domain":source_data.macro_domain.name,
+                               "subdomain":source_data.subject_matter.name,
+                               "source":source_data.source.name,
+                               "time_period":"%d;%d" % (source_data.begin_year if source_data.begin_year != None else 0,source_data.end_year if source_data.end_year != None else 0)
+                              }
+            
+            tree = ElementTree.ElementTree(ElementTree.fromstring(md.metadata))
+            root = tree.getroot()
+            for field in root[0]:   
+                json_field_metadata_tags = {"geography":json_table_tags["geography"],
+                                            "geographic_level":json_table_tags["geographic_level"],
+                                            "domain":"",
+                                            "subdomain":"",
+                                            "time_period":"",
+                                            "visualization_types":[],
+                                            "geometry":""
+                                            }     
+                json_field_metadata_dict = {"field_name":field[0].text,
+                                            "data_type":re.sub(r'[\t\n\r]','',field[1].text) if field[1].text != None else '',
+                                            "verbose_name":re.sub(r'[\t\n\r]','',field[2].text) if field[2].text != None else '',
+                                            "no_data_value":None,
+                                            "tags":json_field_metadata_tags
+                                            }
+                json_field_metadata.append(json_field_metadata_dict)
+                
+            json_root_dict = {"table_tags":json_table_tags,
+                              "field_metadata":json_field_metadata
+                            }
+                            
+            print json_root_dict
+            json_metadata = json.dumps(json_root_dict)
+            
+            output_metadata = Metadata(id=metadata_id,metadata=md.metadata,metadata_json=json_metadata)
+            output_metadata.save()
+            
+        return HttpResponse("XML to JSON - Conversion complete!")
+    except:
+        return HttpResponse("XML to JSON - Conversion Failed!")
+
     
 @render_to("dcmetadata/test_dajaxice.html")
 def test_dajaxice(request):
@@ -133,14 +190,23 @@ def metadata_detail(request,metadata_id):
     metadata_list = metadata._get_metadata_dict()
     metadata_fields = metadata_list[0]
     metadata_other = metadata_list[1]
+    
+    table_metadata = TableMetadata.objects.get(id=metadata_id)
+    metadata_json = table_metadata.metadata
+    metadata_json_dict = table_metadata._get_metadata_dict()
+    table_tags_dict = metadata_json_dict["table_tags"]
+    field_metadata_dict_list = metadata_json_dict["field_metadata"]
+    
     source_data = SourceDataInventory.objects.get(id=metadata_id)
     source_data_name = source_data.file_name
-    
+
     return {'source_app_root':SERVER_APP_ROOT,
             'metadata_id':metadata_id,'metadata_xml':metadata_xml,
             'metadata_fields':metadata_fields,
             'metadata_other':metadata_other,
             'source_data_name':source_data_name,
+            'table_tags_dict':table_tags_dict,
+            'field_metadata_dict_list':field_metadata_dict_list
             }
 
 # Edit Metadata Entry
@@ -150,6 +216,7 @@ def metadata_edit(request,metadata_id):
     form_has_errors = False # Form Validation Error flag
     is_add_new_metadata = False
     metadata_xml = ""
+    metadata_json = ""
     metadata_list = []
     source_data = SourceDataInventory.objects.get(id=metadata_id)
     source_data_name = source_data.file_name
@@ -162,6 +229,10 @@ def metadata_edit(request,metadata_id):
         metadata_list = metadata._get_metadata_dict()
         metadata_fields =  metadata_list[0]
         metadata_other = metadata_list[1]
+        metadata_json = metadata._get_metadata_json_dict()
+        dataset_tags_dict_list = metadata_json_dict["dataset_tags"]["tags"]
+        attribute_tags_dict_list = metadata_json_dict["attribute_tags"]["tags"]
+        fields_metadata_dict_list = metadata_json_dict["fields_metadata"]["fields"]        
         
         # If Metadata exists but no fields info
         # Create empty dictionary list for formset initiate
@@ -171,6 +242,18 @@ def metadata_edit(request,metadata_id):
         # Create empty dictionary list for formset initiate
         if len(metadata_other) == 0:            
             metadata_other = [{"info_name":"","info_value":""}]
+        # If Metadata exists but no dataset tags
+        # Create empty dictionary list for formset initiate
+        if len(dataset_tags_dict_list) == 0:
+            dataset_tags = [{"geography":"","geographic_level":"","domain":"","sub_domain":"","source":"","time_period":""}]
+        # If Metadata exists but no attribute tags
+        # Create empty dictionary list for formset initiate
+        if len(attribute_tags_dict_list) == 0:
+            attribute_tags = [{"domain":"","sub_domain":"","time_period":"","visualization_type":"","geometry":""}]
+        # If Metadata exists but no fields metadata
+        # Create empty dictionary list for formset initiate
+        if len(fields_metadata_dict_list) == 0:
+            fields_metadata = [{"field_name":"","data_type":"","description":""}]
         
     except:
         # If metadata not exist, Create new instance of Metadata model
@@ -179,7 +262,9 @@ def metadata_edit(request,metadata_id):
         # Create empty dictionary list for formset initiate
         metadata_fields = [{"field_name":"","data_type":"","description":"","tags":""}]
         metadata_other = [{"info_name":"","info_value":""}]
-      
+        dataset_tags = [{"geography":"","geographic_level":"","domain":"","sub_domain":"","source":"","time_period":""}]
+        attribute_tags = [{"domain":"","sub_domain":"","time_period":"","visualization_type":"","geometry":""}]
+        fields_metadata = [{"field_name":"","data_type":"","description":""}]
         
     if request.method == 'POST':
         # Read metadata from uploaded file
@@ -199,9 +284,12 @@ def metadata_edit(request,metadata_id):
                 for xls_cell in xls_sheet.row(header_row):
                     if (xls_cell.value != None) and (xls_cell.value != ""):
                         metadata_fields.append({"field_name":xls_cell.value,"data_type":"","description":"","tags":""})
+                        fields_metadata.append({"field_name":xls_cell.value,"data_type":"","description":""})
             
             metadata_fields_formset = MetadataFieldsFormset(initial=metadata_fields,prefix='metadata_fields_form')
-            metadata_other_formset = MetadataOtherFormset(initial=metadata_other,prefix='metadata_other_form')              
+            metadata_other_formset = MetadataOtherFormset(initial=metadata_other,prefix='metadata_other_form')
+            attribute_tags_formset = MetadataAttributeTagFormset(initial=attribute_tags,prefix='attribute_tags_form')
+            fields_metadata_formset = FieldsMetadataFormset(initial=fields_metadata,prefix='fields_metadata_form')
             
             return {'file_form':upload_form,
                     'source_app_root':SERVER_APP_ROOT,
@@ -211,6 +299,9 @@ def metadata_edit(request,metadata_id):
                     'metadata_fields_formset':metadata_fields_formset,
                     'metadata_other_formset':metadata_other_formset,
                     'metadata_xml':metadata_xml,
+                    'attribute_tags_formset':attribute_tags_formset,
+                    'fields_metadata_formset':fields_metadata_formset,
+                    'metadata_json':metadata_json,
                     'form_has_errors':form_has_errors,
             }            
         else:
@@ -219,11 +310,29 @@ def metadata_edit(request,metadata_id):
             et_element_fields =  ElementTree.SubElement(et_root,"fields")
             et_element_other =  ElementTree.SubElement(et_root,"other_metadata")
             
+            # Build JSON Structure
+            json_root_dict = {"dataset_tags":{"tags":""},"attribute_tags":{"tags":""},"fields_metadata":{"fields":""}}
+            json_dataset_tags = []
+            json_attribute_tags = []
+            json_fields_metadata = []
+            
+            # dataset tags come from "source_data" attributes
+            json_dataset_tags_dict = {"geography":source_data.coverage,
+                                      "geographic_level":source_data.geography,
+                                      "domain":source_data.macro_domain,
+                                      "sub_domain":source_data.subject_matter,
+                                      "source":source_data.source,
+                                      "time_period":"%d;%d" % (source_data.begin_year,source_data.end_year)}
+            json_dataset_tags.append(json_dataset_tags_dict)
+            
             # Save Fields metadata
             metadata_fields_formset = MetadataFieldsFormset(request.POST,prefix='metadata_fields_form')
             metadata_other_formset = MetadataOtherFormset(request.POST,prefix='metadata_other_form')
+            attribute_tags_formset = MetadataAttributeTagFormset(request.POST,prefix='attribute_tags_form')
+            fields_metadata_formset = FieldsMetadataFormset(request.POST,prefix='fields_metadata_form')
+            
             # If formset data cleaned
-            if metadata_fields_formset.is_valid() and metadata_other_formset.is_valid():
+            if metadata_fields_formset.is_valid() and metadata_other_formset.is_valid() and attribute_tags_formset.is_valid() and fields_metadata_formset.is_valid():
                 fields_data = metadata_fields_formset.cleaned_data          
                 for index,field in enumerate(fields_data):
                     if len(field) > 0:
@@ -251,6 +360,11 @@ def metadata_edit(request,metadata_id):
                     else:
                         # Remove the extra form from formset if the form data is empty
                         metadata_other_formset.forms.pop(index)
+                        
+                attribute_tags_data = attribute_tags_formset.cleaned_data
+                for index,info in enumerate(attribute_tags_data):
+                    if len(info) > 0:
+                        pass
                         
                 metadata.metadata = ElementTree.tostring(et_root)
                 metadata.save()

@@ -15,6 +15,9 @@ from dcmetadata.models import *
 ## Source Data Root Path On Server "Pitondc1"
 #SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\Data\\'
 
+# Choices
+YEAR_CHOICES = tuple((i,i) for i in range (1980,2013))
+
 
 # Custome SourceDataInventory Admin Model Form for CHANGE Page
 class SourceDataInventoryAdminChangeForm(forms.ModelForm):
@@ -124,6 +127,31 @@ class MetadataOtherForm(forms.Form):
     
 # Metadata Other Information Formset
 MetadataOtherFormset = formset_factory(MetadataOtherForm,extra=0)
+
+# Metadata Attribute Tag Form
+class MetadataAttributeTagForm(forms.Form):
+    domain = forms.ModelChoiceField(queryset=MacroDomain.objects.all(),required=False)
+    sub_domain = forms.ModelChoiceField(queryset=SubjectMatter.objects.all(),required=False)
+    begin_year = forms.ChoiceField(widget=forms.Select(),choices = YEAR_CHOICES,required=False)
+    end_year = forms.ChoiceField(widget=forms.Select(),choices = YEAR_CHOICES,required=False)
+    visualization_type = forms.ModelChoiceField(queryset=VisualizationType.objects.all(),required=False)
+    # How geomertry links to spatial dataset (locations) will be determined later
+    geometry = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)
+    
+# Metadata Attribute Tag Formset
+MetadataAttributeTagFormset = formset_factory(MetadataAttributeTagForm,extra=0)
+
+# Fields Metadata Form
+class FieldsMetadataForm(forms.Form):
+    field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+    data_type = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'size':'50'}),required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+    
+    class Meta:
+        fields = ('field_name','data_type','description')
+        
+# Metadata Fields Formset
+FieldsMetadataFormset = formset_factory(FieldsMetadataForm,extra=0)
 
 # File Upload Form
 class FileUploadForm(forms.Form):
