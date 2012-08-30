@@ -165,7 +165,7 @@
 	{% endif %}
 	<div id="MetadataFieldsFormset">
 	<h2>Metadata - Fields</h2>
-		{% for form in metadata_fields_formset.forms %}
+		{% for form in field_metadata_formset.forms %}
             <table id="{{ form.prefix }}-row" class="form-container" border="0" cellpadding="0" cellspacing="5">
                 <tbody>
                     <tr>
@@ -177,18 +177,59 @@
                         <td>{{ form.data_type.errors }}{{ form.data_type }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">{{ form.description.label }}</th>
-                        <td>{{ form.description.errors }}{{ form.description }}</td>
+                        <th scope="row">{{ form.verbose_name.label }}</th>
+                        <td>{{ form.verbose_name.errors }}{{ form.verbose_name }}</td>
                     </tr>
+                    <tr>
+                        <th scope="row">{{ form.no_data_value.label }}</th>
+                        <td>{{ form.no_data_value.errors }}{{ form.no_data_value }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ form.geography.label }}</th>
+                        <td>{{ form.geography.errors }}{{ form.geography }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ form.geographic_level.label }}</th>
+                        <td>{{ form.geographic_level.errors }}{{ form.geographic_level }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ form.domain.label }}</th>
+                        <td>{{ form.domain.errors }}{{ form.domain }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ form.subdomain.label }}</th>
+                        <td>{{ form.subdomain.errors }}{{ form.subdomain }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ form.begin_year.label }}</th>
+                        <td>{{ form.begin_year.errors }}{{ form.begin_year }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ form.end_year.label }}</th>
+                        <td>{{ form.end_year.errors }}{{ form.end_year }}</td>
+                    </tr>
+					<!-- TODO: add multi-choice? -->
+                    <tr>
+                        <th scope="row">{{ form.visualization_types.label }}</th>
+                        <td>{{ form.visualization_types.errors }}{{ form.visualization_types }}</td>
+                    </tr>
+					<!-- TODO: add openfile? -->
+                    <tr>
+                        <th scope="row">{{ form.geometry.label }}</th>
+                        <td>{{ form.geometry.errors }}{{ form.geometry }}</td>
+                    </tr>					
+					<!--
                     <tr>
                         <th scope="row">{{ form.tags.label }}</th>
                         <td>{{ form.tags.errors }}{{ form.tags }}<br/><span class="form-help-text">{{form.tags.help_text}}</span></td>
                     </tr>
+					-->
                 </tbody>
             </table>
 		{% endfor %}
 	</div>
 	<br/><hr><br/>
+<!--
 	<div id="MetadataOtherFormset">
 	<h2>Metadata - Other Information</h2>	
 		{% for form in metadata_other_formset.forms %}
@@ -206,11 +247,14 @@
 			</table>
 		{% endfor %}
 	</div>
+-->
 	<br/><hr><br/>
 	<div class="form-submit-buttons">
 		<p>
-			{{metadata_fields_formset.management_form}}
+			{{field_metadata_formset.management_form}}
+			<!--
 			{{metadata_other_formset.management_form}}
+			-->
             <input type="submit" name="save_continue" value="Save and continue editing" />
 			<input type="submit" name="save" id="save-button" value="Save">
         </p>
@@ -231,12 +275,14 @@
 				prefix: "{{ metadata_fields_formset.prefix }}"
 				}
 			);
+			/*
 			$('#MetadataOtherFormset table').formset(
 				{
 				formCssClass: 'dynamic-other-form',
 				prefix: "{{ metadata_other_formset.prefix }}"
 				}
 			);
+			*/
 		})
 	</script>
 {% endblock %}

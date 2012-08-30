@@ -23,6 +23,15 @@ urlpatterns = patterns('',
 	### Convert XML metadata to JSON metadata
 	url(r'^xml2json/$','dcmetadata.views.xml2json'),
 	
+	### Convert all name to id for foreign keys in table metadata
+	url(r'^fkeyname2id/$','dcmetadata.views.fkeyname2id'),
+	
+	### Convert all id to name for foreign keys in table metadata
+	url(r'^fkeyid2name/$','dcmetadata.views.fkeyid2name'),	
+	
+	### Copy Table Tags from Source Data Inventory
+	url(r'^maketabletags/$','dcmetadata.views.maketabletags'),
+	
 	## Upload source data inventory
 	url(r'^sourcedata/upload/$','dcmetadata.views.upload_sourcedata'),
 	

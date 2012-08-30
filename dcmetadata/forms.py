@@ -15,10 +15,6 @@ from dcmetadata.models import *
 ## Source Data Root Path On Server "Pitondc1"
 #SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\Data\\'
 
-# Choices
-YEAR_CHOICES = tuple((i,i) for i in range (1980,2013))
-
-
 # Custome SourceDataInventory Admin Model Form for CHANGE Page
 class SourceDataInventoryAdminChangeForm(forms.ModelForm):
     upload_file = forms.FileField(required=False)
@@ -93,66 +89,89 @@ class SourceDataInventoryAdminAddForm(forms.ModelForm):
     
     class Meta:
         model = SourceDataInventory
-        
-        
-# Custome Metadata Admin Model Form for CHANGE Page
-class MetadataAdminChangeForm(forms.ModelForm):
-    
-    class Meta:
-        model = Metadata
-        
-# Custom Metadata Admin Model Form for ADD Page
-class MetadataAdminAddForm(forms.ModelForm):
-    
-    class Meta:
-        model = Metadata
 
-# Metadata Field Form
-class MetadataFieldForm(forms.Form):
+# Field Metadata Form
+class FieldMetadataForm(forms.Form):
     field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
     data_type = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'size':'50'}),required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
-    tags = forms.CharField(widget=forms.TextInput(attrs={'size':'100'}),required=False,help_text='Seperate tags with semicolon. (Example: tag1;tag2;)')
+    verbose_name = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)
+    no_data_value = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)
     
-    class Meta:
-        fields = ('field_name','data_type','description','tags')
-        
-# Metadata Fields Formset
-MetadataFieldsFormset = formset_factory(MetadataFieldForm,extra=0)
-
-# Metadata Other Information Form
-class MetadataOtherForm(forms.Form):
-    info_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
-    info_value = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
-    
-# Metadata Other Information Formset
-MetadataOtherFormset = formset_factory(MetadataOtherForm,extra=0)
-
-# Metadata Attribute Tag Form
-class MetadataAttributeTagForm(forms.Form):
+    # Field tags form:
+    geography = forms.ModelChoiceField(queryset=Coverage.objects.all(),required=False)
+    geographic_level = forms.ModelChoiceField(queryset=Geography.objects.all(),required=False)
     domain = forms.ModelChoiceField(queryset=MacroDomain.objects.all(),required=False)
-    sub_domain = forms.ModelChoiceField(queryset=SubjectMatter.objects.all(),required=False)
-    begin_year = forms.ChoiceField(widget=forms.Select(),choices = YEAR_CHOICES,required=False)
-    end_year = forms.ChoiceField(widget=forms.Select(),choices = YEAR_CHOICES,required=False)
-    visualization_type = forms.ModelChoiceField(queryset=VisualizationType.objects.all(),required=False)
-    # How geomertry links to spatial dataset (locations) will be determined later
-    geometry = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)
-    
-# Metadata Attribute Tag Formset
-MetadataAttributeTagFormset = formset_factory(MetadataAttributeTagForm,extra=0)
-
-# Fields Metadata Form
-class FieldsMetadataForm(forms.Form):
-    field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
-    data_type = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'size':'50'}),required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+    subdomain = forms.ModelChoiceField(queryset=SubjectMatter.objects.all(),required=False)
+    begin_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
+    end_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
+    visualization_types = forms.ModelChoiceField(queryset=VisualizationType.objects.all(),required=False)
+    geometry = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)    
     
     class Meta:
-        fields = ('field_name','data_type','description')
-        
-# Metadata Fields Formset
-FieldsMetadataFormset = formset_factory(FieldsMetadataForm,extra=0)
+        fields = ('field_name','data_type','verobse_name','no_data_value')
+
+# Field Metadata Formset
+FieldMetadataFormset = formset_factory(FieldMetadataForm,extra=0)
 
 # File Upload Form
 class FileUploadForm(forms.Form):
     upload_file = forms.FileField(required=False)
+
+## Metadata Field Form
+#class MetadataFieldForm(forms.Form):
+#    field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+#    data_type = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'size':'50'}),required=False)
+#    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+#    tags = forms.CharField(widget=forms.TextInput(attrs={'size':'100'}),required=False,help_text='Seperate tags with semicolon. (Example: tag1;tag2;)')
+#    
+#    class Meta:
+#        fields = ('field_name','data_type','description','tags')
+#
+#          
+## Metadata Fields Formset
+#MetadataFieldsFormset = formset_factory(MetadataFieldForm,extra=0)
+#  
+## Custome Metadata Admin Model Form for CHANGE Page
+#class MetadataAdminChangeForm(forms.ModelForm):
+#    
+#    class Meta:
+#        model = Metadata
+# 
+## Custom Metadata Admin Model Form for ADD Page
+#class MetadataAdminAddForm(forms.ModelForm):
+#    
+#    class Meta:
+#        model = Metadata
+# 
+## Metadata Other Information Form
+#class MetadataOtherForm(forms.Form):
+#    info_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+#    info_value = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+#    
+## Metadata Other Information Formset
+#MetadataOtherFormset = formset_factory(MetadataOtherForm,extra=0)
+# 
+## Metadata Attribute Tag Form
+#class MetadataAttributeTagForm(forms.Form):
+#    domain = forms.ModelChoiceField(queryset=MacroDomain.objects.all(),required=False)
+#    sub_domain = forms.ModelChoiceField(queryset=SubjectMatter.objects.all(),required=False)
+#    begin_year = forms.ChoiceField(widget=forms.Select(),choices = YEAR_CHOICES,required=False)
+#    end_year = forms.ChoiceField(widget=forms.Select(),choices = YEAR_CHOICES,required=False)
+#    visualization_types = forms.ModelChoiceField(queryset=VisualizationType.objects.all(),required=False)
+#    # How geomertry links to spatial dataset (locations) will be determined later
+#    geometry = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)
+#    
+## Metadata Attribute Tag Formset
+#MetadataAttributeTagFormset = formset_factory(MetadataAttributeTagForm,extra=0)
+#
+## Fields Metadata Form
+#class FieldsMetadataForm(forms.Form):
+#    field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+#    data_type = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'size':'50'}),required=False)
+#    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
+#    
+#    class Meta:
+#        fields = ('field_name','data_type','description')
+#        
+## Metadata Fields Formset
+#FieldsMetadataFormset = formset_factory(FieldsMetadataForm,extra=0)

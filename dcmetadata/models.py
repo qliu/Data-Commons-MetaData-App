@@ -1,12 +1,16 @@
 from django.db import models
 from django.contrib import admin
 from django.core import serializers
+from django.db.models.signals import post_save
 
 # Import from general utilities
 from util import *
 
 # Choices
-YEAR_CHOICES = tuple((i,i) for i in range (1980,2013))
+year_choices_list = [(None,"---------"),(0,"No Data")]
+for i in range (1980,2013):
+	year_choices_list.append((i,str(i)))
+YEAR_CHOICES = tuple(year_choices_list)
 
 # Look-up tables:
 ## Macro Domain
@@ -108,7 +112,28 @@ class VisualizationType(models.Model):
 	class Meta:
 		db_table = u'visualization_type'
 
-
+# Handler After SourceDataInventory Model instance being saved
+def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
+	metadata_id = instance.id
+	if len(TableMetadata.objects.filter(id=metadata_id)) == 0:
+		json_metadata = ""
+		json_field_metadata = []
+		json_table_tags = {"geography":instance.coverage.id,
+						   "geographic_level":instance.geography.id,
+						   "domain":instance.macro_domain.id,
+						   "subdomain":instance.subject_matter.id,
+						   "source":instance.source.id,
+						   "time_period":"%d;%d" % (instance.begin_year if instance.begin_year != None else 0,instance.end_year if instance.end_year != None else 0)
+						  }
+		json_field_metadata_tags = {}
+		json_root_dict = {"table_tags":json_table_tags,
+						  "field_metadata":json_field_metadata
+						}            
+		json_metadata = json.dumps(json_root_dict)
+		
+		output_metadata = TableMetadata(id=metadata_id,metadata=json_metadata)
+		output_metadata.save()
+		
 # Source Data Inventory Model
 class SourceDataInventory(models.Model):
 	"""
@@ -127,7 +152,7 @@ class SourceDataInventory(models.Model):
 	format = models.ForeignKey('Format',null=True,blank=True)
 	location =  models.CharField(max_length=200)
 	file_size = models.FloatField(default=0,verbose_name='File Size',null=True, blank=True)
-	metadata = models.ForeignKey('Metadata',null=True,blank=True)
+	metadata = models.ForeignKey('TableMetadata',null=True,blank=True)
 	
 	def __unicode__(self):
 		'''
@@ -171,10 +196,9 @@ class SourceDataInventory(models.Model):
 		'''
 		Return HTML link for view and edit metadata associated with record
 		'''
-		try:
-			metadata = Metadata.objects.get(id=self.id)
+		if self.metadata != None:
 			return '<a href="%s/dcmetadata/metadata/%d/" target="_blank">View</a> <a href="%s/dcmetadata/metadata/%d/edit/" target="_blank">Edit</a>' % (SERVER_APP_ROOT,self.id,SERVER_APP_ROOT,self.id)
-		except:
+		else:
 			return '<a href="%s/dcmetadata/metadata/%d/edit/" target="_blank">Add</a>' % (SERVER_APP_ROOT,self.id)
 	
 	_get_metadata_link.allow_tags = True
@@ -199,6 +223,8 @@ class SourceDataInventory(models.Model):
 	class Meta:
 		db_table = u'source_data_inventory'
 
+# Add Table Tags to TableMetadata After SourceDataInventory Model instance being saved
+post_save.connect(post_save_handler_add_tabletags, sender=SourceDataInventory)
 
 # Dataset Metadata Model
 class DatasetMetadata(models.Model):
@@ -283,104 +309,104 @@ class TableMetadata(models.Model):
 		db_table = u'table_metadata'
 
 	
-
-# Metadata Model
-class Metadata(models.Model):
-	metadata = models.TextField(verbose_name='Original Metadata in XML')
-	metadata_json = models.TextField(verbose_name='Original Metadata in JSON')
-	
-#	def _get_metadata_string(self):
+# This metadata model is for XML metadata collection and has been abandoned.
+## Metadata Model
+#class Metadata(models.Model):
+#	metadata = models.TextField(verbose_name='Original Metadata in XML')
+#	metadata_json = models.TextField(verbose_name='Original Metadata in JSON')
+#	
+##	def _get_metadata_string(self):
+##		'''
+##		Return list of fields from metadata field as a stirng
+##		'''
+##		fields = []
+##		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
+##		root = tree.getroot()
+##		for child in root:
+##			for child1 in child:
+##				for (counter,child2) in enumerate(child1):
+##					tag = child2.tag
+##					data = child2.text
+##					field =  tag + ":" + data + ("; " if counter == 2 else ", ")
+##					# regular expressin to remove control characters (\n \r \t) from xml
+##					fields.append(re.sub(r'[\t\n]','',field)) 
+##		metadata_fields = ''.join(fields)
+##		return metadata_fields
+##	
+##	_get_metadata_string.short_description = "Metadata"
+#	
+#	def _get_metadata_dict(self):
 #		'''
-#		Return list of fields from metadata field as a stirng
+#		Return a dictionary list of metadata elements
 #		'''
-#		fields = []
+#		metadata_dict_list = []
+#		field_dict_list = []
+#		other_dict_list = []
 #		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
 #		root = tree.getroot()
-#		for child in root:
-#			for child1 in child:
-#				for (counter,child2) in enumerate(child1):
-#					tag = child2.tag
-#					data = child2.text
-#					field =  tag + ":" + data + ("; " if counter == 2 else ", ")
-#					# regular expressin to remove control characters (\n \r \t) from xml
-#					fields.append(re.sub(r'[\t\n]','',field)) 
-#		metadata_fields = ''.join(fields)
-#		return metadata_fields
+#		# get the tag-value pair for metadata fields
+#		for field in root[0]:
+#			field_dict_list.append({field[0].tag:re.sub(r'[\t\n\r]','',field[0].text),
+#									field[1].tag:re.sub(r'[\t\n\r]','',field[1].text) if field[1].text != None else '',
+#									field[2].tag:re.sub(r'[\t\n\r]','',field[2].text) if field[2].text != None else '',
+#									field[3].tag:re.sub(r'[\t\n\r]','',field[3].text) if field[3].text != None else '',}
+#									)# regular expressin to remove control characters (\n \r \t) from xml
+#		metadata_dict_list.append(field_dict_list)
+#		# get the tag-value pair for other metadata information
+#		for other in root[1]:
+#			other_dict_list.append({other[0].tag:re.sub(r'[\t\n\r]','',other[0].text) if other[0].text != None else '',
+#									other[1].tag:re.sub(r'[\t\n\r]','',other[1].text) if other[1].text != None else ''}
+#									)# regular expressin to remove control characters (\n \r \t) from xml
+#		metadata_dict_list.append(other_dict_list)
+#
+#		return metadata_dict_list
 #	
-#	_get_metadata_string.short_description = "Metadata"
-	
-	def _get_metadata_dict(self):
-		'''
-		Return a dictionary list of metadata elements
-		'''
-		metadata_dict_list = []
-		field_dict_list = []
-		other_dict_list = []
-		tree = ElementTree.ElementTree(ElementTree.fromstring(self.metadata))
-		root = tree.getroot()
-		# get the tag-value pair for metadata fields
-		for field in root[0]:
-			field_dict_list.append({field[0].tag:re.sub(r'[\t\n\r]','',field[0].text),
-									field[1].tag:re.sub(r'[\t\n\r]','',field[1].text) if field[1].text != None else '',
-									field[2].tag:re.sub(r'[\t\n\r]','',field[2].text) if field[2].text != None else '',
-									field[3].tag:re.sub(r'[\t\n\r]','',field[3].text) if field[3].text != None else '',}
-									)# regular expressin to remove control characters (\n \r \t) from xml
-		metadata_dict_list.append(field_dict_list)
-		# get the tag-value pair for other metadata information
-		for other in root[1]:
-			other_dict_list.append({other[0].tag:re.sub(r'[\t\n\r]','',other[0].text) if other[0].text != None else '',
-									other[1].tag:re.sub(r'[\t\n\r]','',other[1].text) if other[1].text != None else ''}
-									)# regular expressin to remove control characters (\n \r \t) from xml
-		metadata_dict_list.append(other_dict_list)
-
-		return metadata_dict_list
-	
-	_get_metadata_dict.short_description = "Metadata Dictionary List"
-	
-	def _get_metadata_json_dict(self):
-		'''
-		Return a dictionary of metadata elements from JSON field
-		JSON Format:
-		{
-			"table_tags":{
-					"geography":"geographic extent/coverage",
-					"geographic_level":"geographical unit",
-					"domain":"macro domain/topic",
-					"subdomain":"subdomain/subject",
-					"source":"source",
-					"time_period":"begin_year;end_year"
-				},
-			"field_metadata":[
-				{
-					"field_name":"field name",
-					"data_type":"data type",
-					"verbose_name":"human-readable field name",
-					"no_data_value":"no data value",
-					"tags":
-					{
-						"geography":"geographic extent/coverage",
-						"geographic_level":"geographical unit",
-						"domain":"macro domain/topic",
-						"subdomain":"subdomain/subject",
-						"time_period":"begin_year;end_year",
-						"visualization_types":["visualization type"],
-						"geometry":"spatial_table_id"
-					}
-				}
-			]
-		}
-		'''
-		if self.metadata_json != "":
-			metadata_dict = json.loads(self.metadata_json)
-		else:
-			metadata_dict = None
-		return metadata_dict
-	
-	_get_metadata_json_dict.short_descripton = "Metadata JSON Dictionary"
-
-	
-	def __unicode__(self):
-		return self.id	
-	
-	class Meta:
-		db_table = u'metadata'
+#	_get_metadata_dict.short_description = "Metadata Dictionary List"
+#	
+#	def _get_metadata_json_dict(self):
+#		'''
+#		Return a dictionary of metadata elements from JSON field
+#		JSON Format:
+#		{
+#			"table_tags":{
+#					"geography":"geographic extent/coverage",
+#					"geographic_level":"geographical unit",
+#					"domain":"macro domain/topic",
+#					"subdomain":"subdomain/subject",
+#					"source":"source",
+#					"time_period":"begin_year;end_year"
+#				},
+#			"field_metadata":[
+#				{
+#					"field_name":"field name",
+#					"data_type":"data type",
+#					"verbose_name":"human-readable field name",
+#					"no_data_value":"no data value",
+#					"tags":
+#					{
+#						"geography":"geographic extent/coverage",
+#						"geographic_level":"geographical unit",
+#						"domain":"macro domain/topic",
+#						"subdomain":"subdomain/subject",
+#						"time_period":"begin_year;end_year",
+#						"visualization_types":["visualization type"],
+#						"geometry":"spatial_table_id"
+#					}
+#				}
+#			]
+#		}
+#		'''
+#		if self.metadata_json != "":
+#			metadata_dict = json.loads(self.metadata_json)
+#		else:
+#			metadata_dict = None
+#		return metadata_dict
+#	
+#	_get_metadata_json_dict.short_descripton = "Metadata JSON Dictionary"
+#
+#	
+#	def __unicode__(self):
+#		return self.id	
+#	
+#	class Meta:
+#		db_table = u'metadata'

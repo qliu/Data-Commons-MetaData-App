@@ -75,15 +75,15 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
 admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)
 
 
-# Metadata Admin
-class MetadataAdmin(admin.ModelAdmin):
-    fields = ['id','metadata']
-    readonly_fields = ['id']
-    list_display = ('id','_get_metadata_string','metadata')
-    
-    # By defualt use the Change page form
-    form = MetadataAdminChangeForm
-    def get_form(self,request,obj=None,**kwargs):
-        if not obj: # obj is None, this is ADD page, then use the Add page form
-            self.form = MetadataAdminAddForm
-        return super(MetadataAdmin,self).get_form(request,obj,**kwargs)
+## Metadata Admin
+#class MetadataAdmin(admin.ModelAdmin):
+#    fields = ['id','metadata']
+#    readonly_fields = ['id']
+#    list_display = ('id','_get_metadata_string','metadata')
+#    
+#    # By defualt use the Change page form
+#    form = MetadataAdminChangeForm
+#    def get_form(self,request,obj=None,**kwargs):
+#        if not obj: # obj is None, this is ADD page, then use the Add page form
+#            self.form = MetadataAdminAddForm
+#        return super(MetadataAdmin,self).get_form(request,obj,**kwargs)
