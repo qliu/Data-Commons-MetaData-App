@@ -12,6 +12,9 @@ urlpatterns = patterns('dcmetadata.views',
 	url(r'^metadata/(?P<metadata_id>\d+)/edit/$','metadata_edit'),
 	url(r'^metadata/(?P<metadata_id>\d+)/delete_confirm/$','metadata_delete_confirm'),
 	url(r'^metadata/(?P<metadata_id>\d+)/delete/$','metadata_delete'),
+	
+	# Admin AJAX URLs
+	url(r'^admin/ajax_get_subjectmatter/','ajax_get_subjectmatter'),
 
     # Examples:
     # url(r'^$', 'datacommons.views.home', name='home'),

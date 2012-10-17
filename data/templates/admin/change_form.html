@@ -5,35 +5,85 @@
 
 {% block extrahead %}{{ block.super }}
 {% url 'admin:jsi18n' as jsi18nurl %}
-<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
-	<style type="text/css">
+<script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/'}}"></script>
+<!-- JQUERY 1.7.2 -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- Prototype -->
+<!-- TEMP COMMENT OFF
+<script type="text/javascript" src="{{STATIC_RUL}}js/third_party/prototype-1.7.js"></script>
+-->
+<!-- Scripts to enable Tab key in textarea -->
+<script type="text/javascript">//<![CDATA[ 
+	$(window).load(function(){
+		$("textarea").keydown(function(e) {
+			if (e.keyCode === 9) { // tab was pressed
+				// get caret position/selection
+				var start = this.selectionStart;
+				end = this.selectionEnd;
 
-		form textarea {
-			display: inline-block;
-		}
-		form select {
-			display: inline-block;
-		}
+				var $this = $(this);
 
-		#metadata-block {
-			width: 200px;
-			height: 24px;
-			display: block;
-			float:right;
-			margin-right:5%;
-			margin-bottom:5px;
-		}
-		
-		.view-metadata-link {
-			padding-left:20px;
-			background:url({{ MEDIA_URL }}images/icon_metadata.gif) no-repeat left center;
-		}
-		
-		.add-metadata-link {
-			padding-left:20px;
-			background:url({{ MEDIA_URL }}images/icon_metadata_add.png) no-repeat left center;
-		}
-	</style>
+				// set textarea value to: text before caret + tab + text after caret
+				$this.val($this.val().substring(0, start) + "\t" + $this.val().substring(end));
+
+				// put caret at right position again
+				this.selectionStart = this.selectionEnd = start + 1;
+
+				// prevent the focus lose
+				return false;
+			}
+		});
+	});//]]>  
+</script>
+<!-- Scripts to get SubjectMatters choice value based on selected MacroDomain -->
+<!-- TEMP COMMENT OFF
+<script type="text/javascript">
+	function get_subjectmatter(){
+		alert("test");
+		new Ajax.Request('/dcmetadata/admin/ajax_get_subjectmatter/',{
+			method:'post',
+			parameters: $H({'macrodomain':$('id_macro_domain').getValue()}),
+			onSuccess: function(transport){
+				var e=$('id_subject_matter');
+				if(transport.responseText)
+					e.update(transport.responseText);
+			}
+		});
+	}
+</script>
+-->
+<style type="text/css">
+
+	form textarea {
+		display: inline-block;
+	}
+	form select {
+		display: inline-block;
+	}
+
+	#metadata-block {
+		width: 200px;
+		height: 24px;
+		display: block;
+		float:right;
+		margin-right:5%;
+		margin-bottom:5px;
+	}
+	
+	#id_upload_file{
+		width: 600px;
+	}
+	
+	.view-metadata-link {
+		padding-left:20px;
+		background:url({{ MEDIA_URL }}images/icon_metadata.gif) no-repeat left center;
+	}
+	
+	.add-metadata-link {
+		padding-left:20px;
+		background:url({{ MEDIA_URL }}images/icon_metadata_add.png) no-repeat left center;
+	}
+</style>
 {{ media }}
 {% endblock %}
 

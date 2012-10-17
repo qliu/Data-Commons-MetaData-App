@@ -150,13 +150,15 @@
 	-->
 	<br/><hr><br/>
 	<form id="myFileUpload" action="." method="post" >{% csrf_token %}
-		Read Metadata from file:
+		Do you want to upload Metadata from file?
+		<!--
 		{% if file_form %}
 			{{file_form.upload_file}}
 			Header in Row: <input type="text" id="header-row-input" name="header_row" value="1"/><br/>
 			File Location: <input type="text" name="upload_file_location"/>
 		{% endif %}
-		&nbsp;&nbsp;<input type="submit" name="upload_file_submit" value="Upload"/>
+		-->
+		&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="upload_file_submit" value="Yes"/>
 	</form>
 	<br/><hr><br/>
 	<form id="myDynamicForm" method="post" action="">{% csrf_token %}
@@ -200,6 +202,11 @@
                         <th scope="row">{{ form.subdomain.label }}</th>
                         <td>{{ form.subdomain.errors }}{{ form.subdomain }}</td>
                     </tr>
+					<tr>
+                        <th scope="row">{{ form.year.label }}</th>
+                        <td>{{ form.year.errors }}{{ form.year }}</td>
+                    </tr>
+					<!--
                     <tr>
                         <th scope="row">{{ form.begin_year.label }}</th>
                         <td>{{ form.begin_year.errors }}{{ form.begin_year }}</td>
@@ -208,6 +215,7 @@
                         <th scope="row">{{ form.end_year.label }}</th>
                         <td>{{ form.end_year.errors }}{{ form.end_year }}</td>
                     </tr>
+					-->
 					<!-- TODO: add multi-choice? -->
                     <tr>
                         <th scope="row">{{ form.visualization_types.label }}</th>

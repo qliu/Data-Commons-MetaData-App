@@ -17,7 +17,7 @@ DATABASES = {
     # Local Database
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'datacommons',                      # Or path to database file if using sqlite3.
+        'NAME': 'datacommons2',                      # Or path to database file if using sqlite3.
         'USER': 'qliu',                      # Not used with sqlite3.
         'PASSWORD': 'postgres',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.

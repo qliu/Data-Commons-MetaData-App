@@ -18,8 +18,12 @@ from dcmetadata.models import *
 # Custome SourceDataInventory Admin Model Form for CHANGE Page
 class SourceDataInventoryAdminChangeForm(forms.ModelForm):
     upload_file = forms.FileField(required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':3}),required=False)
     location = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+    title = forms.CharField(widget=forms.TextInput(attrs={'size':'50'}),required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':6}),required=False)
+    data_consideration = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':6}),required=False)
+    process_notes = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':10}),required=False)
+#    macro_domain = forms.ModelChoiceField(queryset=MacroDomain.objects.all(),widget=forms.Select(attrs={'onchange':'get_subjectmatter();'}))
 
     def save(self, commit=True):
         model = super(SourceDataInventoryAdminChangeForm, self).save(commit=False)
@@ -56,8 +60,13 @@ class SourceDataInventoryAdminChangeForm(forms.ModelForm):
         
 # Custome SourceDataInventory Admin Model Form for ADD page
 class SourceDataInventoryAdminAddForm(forms.ModelForm):
-    upload_file = forms.FileField(required=True)
-    location = forms.CharField(widget=forms.TextInput(attrs={'size':'50'}))
+    upload_file = forms.FileField(required=False)
+    location = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+    title = forms.CharField(widget=forms.TextInput(attrs={'size':'50'}),required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':6}),required=False)
+    data_consideration = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':6}),required=False)
+    process_notes = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':10}),required=False)
+#    macro_domain = forms.ModelChoiceField(queryset=MacroDomain.objects.all(),widget=forms.Select(attrs={'onchange':'get_subjectmatter();'})) 
 
     def save(self, commit=True):
         model = super(SourceDataInventoryAdminAddForm, self).save(commit=False)
@@ -102,10 +111,11 @@ class FieldMetadataForm(forms.Form):
     geographic_level = forms.ModelChoiceField(queryset=Geography.objects.all(),required=False)
     domain = forms.ModelChoiceField(queryset=MacroDomain.objects.all(),required=False)
     subdomain = forms.ModelChoiceField(queryset=SubjectMatter.objects.all(),required=False)
-    begin_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
-    end_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
+    year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
+#    begin_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
+#    end_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
     visualization_types = forms.ModelChoiceField(queryset=VisualizationType.objects.all(),required=False)
-    geometry = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)    
+    geometry = forms.ModelChoiceField(queryset=SpatialTable.objects.all(),required=False)    
     
     class Meta:
         fields = ('field_name','data_type','verobse_name','no_data_value')

@@ -26,6 +26,7 @@ class MacroDomain(models.Model):
 		
 	class Meta:
 		db_table = u'inventory_macrodomain'
+		ordering = ['name']
 		
 ## Subject Matter
 class SubjectMatter(models.Model):
@@ -34,12 +35,14 @@ class SubjectMatter(models.Model):
 	'''	
 #	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
+	macrodomain = models.ForeignKey('MacroDomain')
 	
 	def __unicode__(self):
 		return self.name
 		
 	class Meta:
 		db_table = u'inventory_subjectmatter'
+		ordering = ['name']
 		
 ## Geography
 class Geography(models.Model):
@@ -54,6 +57,7 @@ class Geography(models.Model):
 		
 	class Meta:
 		db_table = u'inventory_geography'
+		ordering = ['name']
 		
 ## Coverage
 class Coverage(models.Model):
@@ -68,6 +72,7 @@ class Coverage(models.Model):
 		
 	class Meta:
 		db_table = u'inventory_coverage'
+		ordering = ['name']
 		
 ## Format
 class Format(models.Model):
@@ -83,6 +88,7 @@ class Format(models.Model):
 		
 	class Meta:
 		db_table = u'inventory_format'
+		ordering = ['name']
 		
 ## Source
 class Source(models.Model):
@@ -97,6 +103,7 @@ class Source(models.Model):
 	
 	class Meta:
 		db_table = u'inventory_source'
+		ordering = ['name']
 
 ## Visualization Type
 class VisualizationType(models.Model):
@@ -111,28 +118,52 @@ class VisualizationType(models.Model):
 	
 	class Meta:
 		db_table = u'visualization_type'
+		ordering = ['name']
+		
+# Spatial Table Model
+class SpatialTable(models.Model):
+	'''
+	Store Spatial table ID and name that can be linked to field goemetry
+	'''
+	id = models.IntegerField(primary_key=True)
+	name = models.CharField(max_length=200)
+
+	def __unicode__(self):
+		return self.name
+
+	class Meta:
+		db_table = u'spatial_table'
+		ordering = ['name']
 
 # Handler After SourceDataInventory Model instance being saved
 def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
 	metadata_id = instance.id
 	if len(TableMetadata.objects.filter(id=metadata_id)) == 0:
-		json_metadata = ""
 		json_field_metadata = []
-		json_table_tags = {"geography":instance.coverage.id,
-						   "geographic_level":instance.geography.id,
-						   "domain":instance.macro_domain.id,
-						   "subdomain":instance.subject_matter.id,
-						   "source":instance.source.id,
-						   "time_period":"%d;%d" % (instance.begin_year if instance.begin_year != None else 0,instance.end_year if instance.end_year != None else 0)
-						  }
-		json_field_metadata_tags = {}
-		json_root_dict = {"table_tags":json_table_tags,
-						  "field_metadata":json_field_metadata
-						}            
-		json_metadata = json.dumps(json_root_dict)
+	else:
+		table_metadata = TableMetadata.objects.get(id=metadata_id)
+		metadata_json = table_metadata.metadata
+		metadata_json_dict = table_metadata._get_metadata_dict()
+		json_field_metadata = metadata_json_dict["field_metadata"]
 		
-		output_metadata = TableMetadata(id=metadata_id,metadata=json_metadata)
-		output_metadata.save()
+	json_table_tags = {"title":instance.title,
+					   "geography":instance.coverage.id,
+					   "geographic_level":instance.geography.id,
+					   "domain":instance.macro_domain.id,
+					   "subdomain":instance.subject_matter.id,
+					   "source":instance.source.id,
+					   "year":instance.year,
+					   "geometry":instance.geometry.id,
+					   "description":instance.description,
+					   "data_consideration":instance.data_consideration,
+#						   "time_period":"%d;%d" % (instance.begin_year if instance.begin_year != None else 0,instance.end_year if instance.end_year != None else 0)
+					  }
+		
+	json_root_dict = {"table_tags":json_table_tags,
+					  "field_metadata":json_field_metadata}            
+	json_metadata = json.dumps(json_root_dict)
+	output_metadata = TableMetadata(id=metadata_id,metadata=json_metadata)
+	output_metadata.save()
 		
 # Source Data Inventory Model
 class SourceDataInventory(models.Model):
@@ -141,11 +172,12 @@ class SourceDataInventory(models.Model):
 	"""	
 #	id = models.IntegerField(primary_key=True)
 	file_name = models.CharField(max_length=200, verbose_name='File Name')
-	description = models.CharField(max_length=200, null=True, blank=True)
+	title = models.CharField(max_length=200, null=True, blank=True)
 	macro_domain = models.ForeignKey('MacroDomain',verbose_name='Macro Domain')
 	subject_matter = models.ForeignKey('SubjectMatter',verbose_name='Subject Matter')
-	begin_year = models.IntegerField(verbose_name='Begin Year',choices=YEAR_CHOICES,null=True)
-	end_year = models.IntegerField(verbose_name='End Year',choices=YEAR_CHOICES,null=True)
+	year = models.IntegerField(verbose_name='Year',choices=YEAR_CHOICES,null=True)
+#	begin_year = models.IntegerField(verbose_name='Begin Year',choices=YEAR_CHOICES,null=True)
+#	end_year = models.IntegerField(verbose_name='End Year',choices=YEAR_CHOICES,null=True)
 	geography = models.ForeignKey('Geography')
 	coverage = models.ForeignKey('Coverage')
 	source = models.ForeignKey('Source')
@@ -153,6 +185,10 @@ class SourceDataInventory(models.Model):
 	location =  models.CharField(max_length=200)
 	file_size = models.FloatField(default=0,verbose_name='File Size',null=True, blank=True)
 	metadata = models.ForeignKey('TableMetadata',null=True,blank=True)
+	geometry = models.ForeignKey('SpatialTable',verbose_name='Spatial Table')
+	description = models.CharField(max_length=500, null=True, blank=True)
+	data_consideration = models.CharField(max_length=500, null=True, blank=True)
+	process_notes = models.CharField(max_length=5000, null=True, blank=True)
 	
 	def __unicode__(self):
 		'''
@@ -160,28 +196,28 @@ class SourceDataInventory(models.Model):
 		'''
 		return self.file_name
 	
-	def _get_year_range(self):
-		'''
-		Return year range from begin_year to end_year
-		'''
-		begin_year = self.begin_year
-		end_year = self.end_year
-		if begin_year != None and end_year != None:
-			if begin_year <= end_year:
-				return '%d-%d' % (begin_year, end_year)
-			else:
-				return 'Invalid Year Range'
-		else:
-			return 'No Data'
-		
-	_get_year_range.short_description = "Dates"
-	_get_year_range.admin_order_field = "begin_year"
+#	def _get_year_range(self):
+#		'''
+#		Return year range from begin_year to end_year
+#		'''
+#		begin_year = self.begin_year
+#		end_year = self.end_year
+#		if begin_year != None and end_year != None:
+#			if begin_year <= end_year:
+#				return '%d-%d' % (begin_year, end_year)
+#			else:
+#				return 'Invalid Year Range'
+#		else:
+#			return 'No Data'
+#		
+#	_get_year_range.short_description = "Dates"
+#	_get_year_range.admin_order_field = "begin_year"
 	
-	def is_within_year_range(self,year):
-		'''
-		Return True if year is within year range
-		'''
-		return self.begin_year <= year and year <= self.end_year
+#	def is_within_year_range(self,year):
+#		'''
+#		Return True if year is within year range
+#		'''
+#		return self.begin_year <= year and year <= self.end_year
 	
 	def _get_file_size(self):
 		'''
@@ -205,19 +241,19 @@ class SourceDataInventory(models.Model):
 	_get_metadata_link.short_description = "Metadata"
 	
 	
-	def _get_time_period(self):
-		'''
-		Return time period in the format (begin_year;end_year)
-		'''
-		begin_year = self.begin_year
-		end_year = self.end_year
-		if begin_year != None and end_year != None:
-			if begin_year <= end_year:
-				return '%d;%d' % (begin_year, end_year)
-			else:
-				return 'Invalid Time Period'
-		else:
-			return None
+#	def _get_time_period(self):
+#		'''
+#		Return time period in the format (begin_year;end_year)
+#		'''
+#		begin_year = self.begin_year
+#		end_year = self.end_year
+#		if begin_year != None and end_year != None:
+#			if begin_year <= end_year:
+#				return '%d;%d' % (begin_year, end_year)
+#			else:
+#				return 'Invalid Time Period'
+#		else:
+#			return None
 	
 	
 	class Meta:
@@ -267,12 +303,17 @@ class TableMetadata(models.Model):
 		JSON Format:
 		{
 			"table_tags":{
+					"title":"title",
 					"geography":"geographic extent/coverage",
 					"geographic_level":"geographical unit",
 					"domain":"macro domain/topic",
 					"subdomain":"subdomain/subject",
 					"source":"source",
-					"time_period":"begin_year;end_year"
+					"year":"YYYY",
+					"geometry":"spatial_table_id",
+					"description":"description",
+					"data_consideration":"data_consideration"
+					#"time_period":"begin_year;end_year"
 				},
 			"field_metadata":[
 				{
@@ -286,7 +327,8 @@ class TableMetadata(models.Model):
 						"geographic_level":"geographical unit",
 						"domain":"macro domain/topic",
 						"subdomain":"subdomain/subject",
-						"time_period":"begin_year;end_year",
+						year":"YYYY",
+						#"time_period":"begin_year;end_year",
 						"visualization_types":["visualization type"],
 						"geometry":"spatial_table_id"
 					}
@@ -307,7 +349,6 @@ class TableMetadata(models.Model):
 
 	class Meta:
 		db_table = u'table_metadata'
-
 	
 # This metadata model is for XML metadata collection and has been abandoned.
 ## Metadata Model

@@ -10,6 +10,14 @@ from util import *
 from dcmetadata.models import *
 from dcmetadata.forms import *
 
+# AJAX Admin get Subject Matter on selected Macro Domain
+def ajax_get_subjectmatter(request):
+    print "#" * 100
+    if request.is_ajax() and request.method == 'POST':
+        macrodomain_id = int(request.POST.get('macrodomain',''))
+        subjectmatters = SubjectMatter.objects.filter(macrodomain=macrodomain_id)
+    return HttpResponse(subjectmatters,mimetype="text/plain")
+
 # Test
 def test(request):
     print "*" * 100
@@ -68,11 +76,13 @@ def upload_sourcedata(request):
                 str_year = row[5]
                 list_year = str_year.split('-')
                 if str_year != "" and str_year != "?" and str_year != "NA":
-                    begin_year = int(list_year[0])
-                    end_year = int(list_year[1 if len(list_year)==2 else 0])
+                    year = int(list_year[0])
+#                    begin_year = int(list_year[0])
+#                    end_year = int(list_year[1 if len(list_year)==2 else 0])
                 else:
-                    begin_year = None
-                    end_year = None
+                    year = None
+#                    begin_year = None
+#                    end_year = None
                 # get file location
                 file_location = row[10].replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)                
                 # get file size
@@ -104,8 +114,9 @@ def upload_sourcedata(request):
                     description=row[2],
                     macro_domain=MacroDomain.objects.get(name=CleanNullValue(row[3])),
                     subject_matter=SubjectMatter.objects.get(name=CleanNullValue(row[4])),
-                    begin_year=begin_year,
-                    end_year=end_year,
+                    year=year,
+#                    begin_year=begin_year,
+#                    end_year=end_year,
                     geography=Geography.objects.get(name=CleanNullValue(row[6])),
                     coverage=Coverage.objects.get(name=CleanNullValue(row[7])),
                     source=Source.objects.get(name=CleanNullValue(row[8])),
@@ -134,7 +145,8 @@ def maketabletags(request):
                                    "domain":sd.macro_domain.name,
                                    "subdomain":sd.subject_matter.name,
                                    "source":sd.source.name,
-                                   "time_period":"%d;%d" % (sd.begin_year if sd.begin_year != None else 0,sd.end_year if sd.end_year != None else 0)
+                                   "year":sd.year
+#                                   "time_period":"%d;%d" % (sd.begin_year if sd.begin_year != None else 0,sd.end_year if sd.end_year != None else 0)
                                   }
                 json_field_metadata_tags = {}
                 json_root_dict = {"table_tags":json_table_tags,
@@ -168,7 +180,8 @@ def xml2json(request):
                                "domain":source_data.macro_domain.name,
                                "subdomain":source_data.subject_matter.name,
                                "source":source_data.source.name,
-                               "time_period":"%d;%d" % (source_data.begin_year if source_data.begin_year != None else 0,source_data.end_year if source_data.end_year != None else 0)
+                               "year":source_data.year
+#                               "time_period":"%d;%d" % (source_data.begin_year if source_data.begin_year != None else 0,source_data.end_year if source_data.end_year != None else 0)
                               }
             
             tree = ElementTree.ElementTree(ElementTree.fromstring(md.metadata))
@@ -178,9 +191,10 @@ def xml2json(request):
                                             "geographic_level":json_table_tags["geographic_level"],
                                             "domain":"",
                                             "subdomain":"",
-                                            "time_period":"",
+                                            "year":"year",
+#                                            "time_period":"",
                                             "visualization_types":[],
-                                            "geometry":""
+                                            "geometry":json_table_tags["geometry"]
                                             }     
                 json_field_metadata_dict = {"field_name":field[0].text,
                                             "data_type":re.sub(r'[\t\n\r]','',field[1].text) if field[1].text != None else '',
@@ -320,12 +334,17 @@ def metadata_edit(request,metadata_id):
     source_data = SourceDataInventory.objects.get(id=metadata_id)
     source_data_name = source_data.file_name
     ## By default, field will inherit table geograhpy, geographic_level, domain, subdomain, and time period
+    table_title = source_data.title
     table_geography = source_data.coverage.id
     table_geographic_level = source_data.geography.id
     table_domain = source_data.macro_domain.id
     table_subdomain = source_data.subject_matter.id
-    table_begin_year = source_data.begin_year
-    table_end_year = source_data.end_year
+    table_year = source_data.year
+    table_geometry = source_data.geometry.id
+    table_description = source_data.description
+    table_data_consideration = source_data.data_consideration
+#    table_begin_year = source_data.begin_year
+#    table_end_year = source_data.end_year
 
     # Get TableMetadata instance
     try:
@@ -335,12 +354,16 @@ def metadata_edit(request,metadata_id):
         field_metadata_dict_list = metadata_json_dict["field_metadata"]
     except:
         table_metadata = TableMetadata(id=metadata_id)
-        table_tags_dict = {"geography":source_data.coverage.id,
+        table_tags_dict = {"title":source_data.title,
+                           "geography":source_data.coverage.id,
         				   "geographic_level":source_data.geography.id,
         				   "domain":source_data.macro_domain.id,
         				   "subdomain":source_data.subject_matter.id,
         				   "source":source_data.source.id,
-        				   "time_period":"%d;%d" % (source_data.begin_year if source_data.begin_year != None else None,source_data.end_year if source_data.end_year != None else None)
+                           "year":source_data.year,
+                           "description":source_data.description,
+                           "data_consideration":source_data.data_consideration
+#        				   "time_period":"%d;%d" % (source_data.begin_year if source_data.begin_year != None else None,source_data.end_year if source_data.end_year != None else None)
         				  }        
         field_metadata_dict_list = []
         metadata_json_dict = {"table_tags":table_tags_dict,
@@ -351,13 +374,17 @@ def metadata_edit(request,metadata_id):
     if source_data.metadata == None and len(field_metadata_dict_list)==0:
         is_add_new_metadata = True
         # Initialize field_metadata_dict structure
-        filed_tags_dict = {"geography":table_geography,
+        filed_tags_dict = {"title":tabel_title,
+                           "geography":table_geography,
                            "geographic_level":table_geographic_level,
                            "domain":table_domain,
                            "subdomain":table_subdomain,
-                           "time_period":"%d;%d" % (table_begin_year,table_end_year),
+                           "year":table_year,
+#                           "time_period":"%d;%d" % (table_begin_year,table_end_year),
                            "visualization_types":"",
-                           "geometry":""
+                           "geometry":table_geometry,
+                           "description":table_description,
+                           "data_consideration":table_data_consideration
                           }
         field_metadata_dict_list = [{"field_name":"",
                                      "data_type":"",
@@ -374,10 +401,11 @@ def metadata_edit(request,metadata_id):
                                      "geographic_level":table_geographic_level,
                                      "domain":table_domain,
                                      "subdomain":table_subdomain,
-                                     "begin_year":table_begin_year,
-                                     "end_year":table_end_year,
+                                     "year":table_year,
+#                                     "begin_year":table_begin_year,
+#                                     "end_year":table_end_year,
                                      "visualization_types":"",
-                                     "geometry":""                                     
+                                     "geometry":table_geometry                                    
                                     }]
     # Elseif field metadata already exists
     else:
@@ -392,8 +420,9 @@ def metadata_edit(request,metadata_id):
                                    "geographic_level":int(field_metadata_dict["tags"]["geographic_level"]) if field_metadata_dict["tags"]["geographic_level"] != None else None,
                                    "domain":int(field_metadata_dict["tags"]["domain"]) if field_metadata_dict["tags"]["domain"] != None else None,
                                    "subdomain":int(field_metadata_dict["tags"]["subdomain"]) if field_metadata_dict["tags"]["subdomain"] != None else None,
-                                   "begin_year":int(field_metadata_dict["tags"]["time_period"].split(";")[0]) if len(field_metadata_dict["tags"]["time_period"].split(";")) > 1 and field_metadata_dict["tags"]["time_period"].split(";")[0] != "None" else "",
-                                   "end_year":int(field_metadata_dict["tags"]["time_period"].split(";")[1]) if len(field_metadata_dict["tags"]["time_period"].split(";")) > 1 and field_metadata_dict["tags"]["time_period"].split(";")[1] != "None" else "",
+                                   "year":int(field_metadata_dict["tags"]["year"]) if field_metadata_dict["tags"]["year"] != None else None,
+#                                   "begin_year":int(field_metadata_dict["tags"]["time_period"].split(";")[0]) if len(field_metadata_dict["tags"]["time_period"].split(";")) > 1 and field_metadata_dict["tags"]["time_period"].split(";")[0] != "None" else "",
+#                                   "end_year":int(field_metadata_dict["tags"]["time_period"].split(";")[1]) if len(field_metadata_dict["tags"]["time_period"].split(";")) > 1 and field_metadata_dict["tags"]["time_period"].split(";")[1] != "None" else "",
                                    "visualization_types":field_metadata_dict["tags"]["visualization_types"],
                                    "geometry":field_metadata_dict["tags"]["geometry"] 
                                    }
@@ -404,53 +433,66 @@ def metadata_edit(request,metadata_id):
         ## Notice this "read metadata form uploaded EXCEL workbook" 
         ## will overwrite all the existing field metadata!
         if 'upload_file_submit' in request.POST:
-            if 'upload_file' in request.POST:
-                upload_file_name = request.POST['upload_file']
-                upload_file_location = request.POST['upload_file_location']
-                header_row = int(request.POST['header_row'])-1
-                file_location = upload_file_location.replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)                
-                file_path = os.path.join(file_location,upload_file_name)
-                
-                # Open xls EXCEL workbook
-                xls_workbook = open_workbook(file_path)
-                
-                xls_sheet = xls_workbook.sheet_by_index(0)
-                # Initialize field_metadata_dict_list
-                field_metadata_dict_list = []
-                # Initialize field_tags_dict
-                filed_tags_dict = {"geography":table_geography,
-                                   "geographic_level":table_geographic_level,
-                                   "domain":table_domain,
-                                   "subdomain":table_subdomain,
-                                   "time_period":"%d;%d" % (table_begin_year,table_end_year),
-                                   "visualization_types":"",
-                                   "geometry":""
-                                  }
-                # Initialize field_metadata_form_list
-                field_metadata_form_list = []
-                # Fill in filed_metadata_dict_list and field_metadata_form_list
-                # with the filed_name read from EXCEL file
-                for xls_cell in xls_sheet.row(header_row):
-                    if (xls_cell.value != None) and (xls_cell.value != ""):
-                        field_metadata_dict_list.append({"field_name":xls_cell.value,
-                                                         "data_type":"",
-                                                         "verbose_name":"",
-                                                         "no_data_value":"",
-                                                         "tags":filed_tags_dict
-                                                        })
-                        field_metadata_form_list.append({"field_name":xls_cell.value,
-                                                         "data_type":"",
-                                                         "verbose_name":"",
-                                                         "no_data_value":"",
-                                                         "geography":table_geography,
-                                                         "geographic_level":table_geographic_level,
-                                                         "domain":table_domain,
-                                                         "subdomain":table_subdomain,
-                                                         "begin_year":table_begin_year,
-                                                         "end_year":table_end_year,
-                                                         "visualization_types":"",
-                                                         "geometry":""                                     
-                                                         })                      
+#            if 'upload_file' in request.POST:
+            upload_file_name = '%s_header.xls' % source_data.file_name
+            file_location = source_data.location
+#                header_row = int(request.POST['header_row'])-1
+#                file_location = upload_file_location.replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)                
+            file_path = os.path.join(file_location,upload_file_name)
+            
+            # Open xls EXCEL workbook
+            xls_workbook = open_workbook(file_path)
+            
+            xls_sheet = xls_workbook.sheet_by_index(0)
+            # Initialize field_metadata_dict_list
+            field_metadata_dict_list = []
+            # Initialize field_tags_dict
+            filed_tags_dict = {"geography":table_geography,
+                               "geographic_level":table_geographic_level,
+                               "domain":table_domain,
+                               "subdomain":table_subdomain,
+                               "year":table_year,
+#                               "time_period":"%d;%d" % (table_begin_year,table_end_year),
+                               "visualization_types":"",
+                               "geometry":table_geometry
+                              }
+            # Initialize field_metadata_form_list
+            field_metadata_form_list = []
+            # Fill in filed_metadata_dict_list and field_metadata_form_list
+            # with the filed_name read from EXCEL file
+            xls_headers = []
+            xls_dataypes = []
+            xls_verbosenames = []
+            xls_fills = []
+            xls_fills.append(xls_headers)
+            xls_fills.append([])
+            xls_fills.append(xls_dataypes)
+            xls_fills.append(xls_verbosenames)
+            for i in [0,2,3]:
+                for (index,xls_cell) in enumerate(xls_sheet.row(i)):
+                    xls_fills[i].append(xls_cell.value)
+            for (i,header) in enumerate(xls_headers):
+                if (header != None) and (header != ""):
+                    field_metadata_dict_list.append({"field_name":header,
+                                                     "data_type":xls_dataypes[i],
+                                                     "verbose_name":xls_verbosenames[i],
+                                                     "no_data_value":"",
+                                                     "tags":filed_tags_dict
+                                                    })
+                    field_metadata_form_list.append({"field_name":header,
+                                                     "data_type":xls_dataypes[i],
+                                                     "verbose_name":xls_verbosenames[i],
+                                                     "no_data_value":"",
+                                                     "geography":table_geography,
+                                                     "geographic_level":table_geographic_level,
+                                                     "domain":table_domain,
+                                                     "subdomain":table_subdomain,
+                                                     "year":table_year,
+#                                                     "begin_year":table_begin_year,
+#                                                     "end_year":table_end_year,
+                                                     "visualization_types":"",
+                                                     "geometry":table_geometry                                  
+                                                     })                      
             
             field_metadata_formset = FieldMetadataFormset(initial=field_metadata_form_list,prefix='metadata_fields_form')
             
@@ -467,16 +509,17 @@ def metadata_edit(request,metadata_id):
             field_metadata_dict_list = []
             # If formset data cleaned
             if field_metadata_formset.is_valid():
-                form_data = field_metadata_formset.cleaned_data          
+                form_data = field_metadata_formset.cleaned_data  
                 for index,field in enumerate(form_data):
                     if len(field) > 0:
                         filed_tags_dict = {"geography":field['geography'].id if field['geography'] != None else None,
                                            "geographic_level":field['geographic_level'].id if field['geographic_level'] != None else None,
                                            "domain":field['domain'].id if field['domain'] != None else None,
                                            "subdomain":field['subdomain'].id if field['subdomain'] != None else None,
-                                           "time_period":"%s;%s" % (field['begin_year'],field['end_year']) if field['begin_year'] != None and field['end_year'] != None else "",
+                                           "year":field['year'] if field['year'] != None else None,
+#                                           "time_period":"%s;%s" % (field['begin_year'],field['end_year']) if field['begin_year'] != None and field['end_year'] != None else "",
                                            "visualization_types":field['visualization_types'] if field['visualization_types'] != None else None,
-                                           "geometry":field['geometry'] if field['geometry'] != None else None
+                                           "geometry":field['geometry'].id if field['geometry'] != None else None
                                           }
                         field_metadata_dict = {"field_name":field['field_name'] if field['field_name'] != None else "",
                                                "data_type":field['data_type'] if field['data_type'] != None else "",
@@ -489,7 +532,7 @@ def metadata_edit(request,metadata_id):
                         # Remove the extra form from formset if the form data is empty
                         field_metadata_formset.forms.pop(index)
                 
-                metadata_json_dict["field_metadata"] = field_metadata_dict_list
+                metadata_json_dict["field_metadata"] = field_metadata_dict_list                
                 metadata_json = json.dumps(metadata_json_dict)
                 
                 output_metadata = TableMetadata(id=metadata_id,metadata=metadata_json)
@@ -527,10 +570,11 @@ def metadata_edit(request,metadata_id):
                                          "geographic_level":table_geographic_level,
                                          "domain":table_domain,
                                          "subdomain":table_subdomain,
-                                         "begin_year":table_begin_year,
-                                         "end_year":table_end_year,
+                                         "year":table_year,
+#                                         "begin_year":table_begin_year,
+#                                         "end_year":table_end_year,
                                          "visualization_types":"",
-                                         "geometry":""                                     
+                                         "geometry":table_geometry                                 
                                         }]
             field_metadata_formset = FieldMetadataFormset(initial=field_metadata_form_list,prefix='metadata_fields_form')           
         return {'file_form':upload_form,

@@ -15,8 +15,9 @@ admin.site.register(MacroDomain, MacroDomainAdmin)
 
 ## Subject Matter Admin
 class SubjectMatterAdmin(admin.ModelAdmin):
-    fields = ['name']
-    list_display = ('id','name')
+    fields = ['name','macrodomain']
+    list_display = ('id','name','macrodomain')
+    list_filter = ['macrodomain']
     
 admin.site.register(SubjectMatter, SubjectMatterAdmin)
 
@@ -55,15 +56,29 @@ class VisualizationTypeAdmin(admin.ModelAdmin):
     
 admin.site.register(VisualizationType, VisualizationTypeAdmin)
 
+## Spatial Table Admin
+class SpatialTableAdmin(admin.ModelAdmin):
+    fields = ['id','name']
+    list_display = ('id','name')
+    
+admin.site.register(SpatialTable, SpatialTableAdmin)
+
 # Customized Admin Form for Source Data Inventory Model
 class SourceDataInventoryAdmin(admin.ModelAdmin):
-    fields = ['upload_file','file_name','format','description','macro_domain','subject_matter',
-    'coverage','geography','begin_year','end_year','source','location']
+    fields = ['upload_file','file_name','format','title','macro_domain','subject_matter',
+        'coverage','geography','year','source','location','geometry',
+        'description','data_consideration','process_notes']    
+#    fields = ['upload_file','file_name','format','description','macro_domain','subject_matter',
+#    'coverage','geography','begin_year','end_year','source','location','cleaning_notes']
     readonly_fields = ['file_name','format']
-    list_display = ('file_name','description','macro_domain','subject_matter',
-    'coverage','geography','_get_year_range','source','format','_get_file_size','_get_metadata_link')
+    list_display = ('file_name','title','macro_domain','subject_matter',
+        'coverage','geography','year','source','format','_get_file_size','_get_metadata_link')    
+#    list_display = ('file_name','description','macro_domain','subject_matter',
+#    'coverage','geography','_get_year_range','source','format','_get_file_size','_get_metadata_link')
     list_filter = ['macro_domain','subject_matter','coverage','geography',
-    'format','source','begin_year','end_year']
+        'format','source','year']    
+#    list_filter = ['macro_domain','subject_matter','coverage','geography',
+#    'format','source','begin_year','end_year']
     
     # By defualt use the Change page form
     form = SourceDataInventoryAdminChangeForm
