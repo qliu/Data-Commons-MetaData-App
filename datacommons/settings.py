@@ -47,11 +47,17 @@ ROOT_PATH = parent_path
 sys.path += [os.path.join(ROOT_PATH, 'lib')]
 
 # Root URLs of Data Commons App
-## changes for server ->
+## use this for LOCALHOST ->
 SERVER_URL = 'localhost:8000'
+ROOT_URL = ''
+APP_SERVER_URL = ''
+## <- use this for LOCALHOST
+
+## use this for SERVER ->
 # SERVER_URL = 'pitondc1.piton.local'
-## <- changes for server
-ROOT_URL = 'datacommons'
+#ROOT_URL = 'datacommons'
+#APP_SERVER_URL = '/datacommons'
+## <- use this for SERVER
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

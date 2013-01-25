@@ -58,11 +58,14 @@ SOURCE_DATA_ROOT_PATH_ORIGIN = 'O:\\'
 # Source Data Root Path On Server "Pitondc1"
 SOURCE_DATA_ROOT_PATH_LOCAL = '\\\\pitondc1\\Departments\\'
 
-## changes for server ->
 # Server App Root
+## use this for LOCALHOST ->
 SERVER_APP_ROOT = ""
+## <- use this for LOCALHOST
+
+## use this for SERVER
 # SERVER_APP_ROOT = "/datacommons"
-## <- changes for server
+## <- use this for SERVER
 
 
 # Decorator to save time returning templates

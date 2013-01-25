@@ -10,6 +10,7 @@ from util import *
 class MacroDomainAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
+    list_per_page = 10
     
 admin.site.register(MacroDomain, MacroDomainAdmin)
 
@@ -18,6 +19,7 @@ class SubjectMatterAdmin(admin.ModelAdmin):
     fields = ['name','macrodomain']
     list_display = ('id','name','macrodomain')
     list_filter = ['macrodomain']
+    list_per_page = 10
     
 admin.site.register(SubjectMatter, SubjectMatterAdmin)
 
@@ -25,6 +27,7 @@ admin.site.register(SubjectMatter, SubjectMatterAdmin)
 class GeographyAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
+    list_per_page = 10
     
 admin.site.register(Geography, GeographyAdmin)
 
@@ -32,6 +35,7 @@ admin.site.register(Geography, GeographyAdmin)
 class CoverageAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
+    list_per_page = 10
     
 admin.site.register(Coverage, CoverageAdmin)
 
@@ -39,6 +43,7 @@ admin.site.register(Coverage, CoverageAdmin)
 class FormatAdmin(admin.ModelAdmin):
     fields = ['name','extension']
     list_display = ('id','name','extension')
+    list_per_page = 10
     
 admin.site.register(Format, FormatAdmin)
 
@@ -46,6 +51,7 @@ admin.site.register(Format, FormatAdmin)
 class SourceAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
+    list_per_page = 10
     
 admin.site.register(Source, SourceAdmin)
 
@@ -53,6 +59,7 @@ admin.site.register(Source, SourceAdmin)
 class VisualizationTypeAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
+    list_per_page = 10
     
 admin.site.register(VisualizationType, VisualizationTypeAdmin)
 
@@ -60,13 +67,30 @@ admin.site.register(VisualizationType, VisualizationTypeAdmin)
 class SpatialTableAdmin(admin.ModelAdmin):
     fields = ['id','name']
     list_display = ('id','name')
+    list_per_page = 10
     
 admin.site.register(SpatialTable, SpatialTableAdmin)
+
+## Tag Admin
+class TagAdmin(admin.ModelAdmin):
+    fields = ['name']
+    list_display = ('id','name')
+    list_per_page = 10
+    
+admin.site.register(Tag,TagAdmin)
+
+## Data Tables Admin
+class DataTableAdmin(admin.ModelAdmin):
+    fields = ['id','table_name']
+    list_display = ('id','table_name')
+    list_per_page = 10
+    
+admin.site.register(DataTable, DataTableAdmin)
 
 # Customized Admin Form for Source Data Inventory Model
 class SourceDataInventoryAdmin(admin.ModelAdmin):
     fields = ['upload_file','file_name','format','title','macro_domain','subject_matter',
-        'coverage','geography','year','source','location','geometry',
+        'coverage','geography','year','source','source_website','location','geometry',
         'description','data_consideration','process_notes']    
 #    fields = ['upload_file','file_name','format','description','macro_domain','subject_matter',
 #    'coverage','geography','begin_year','end_year','source','location','cleaning_notes']
@@ -79,6 +103,7 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
         'format','source','year']    
 #    list_filter = ['macro_domain','subject_matter','coverage','geography',
 #    'format','source','begin_year','end_year']
+    list_per_page = 10
     
     # By defualt use the Change page form
     form = SourceDataInventoryAdminChangeForm
@@ -89,6 +114,31 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
     
 admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)
 
+# Table Metadata Admin
+class TableMetadataAdmin(admin.ModelAdmin):
+    fields = ['metadata']
+    list_display = ['id','metadata']
+    list_per_page = 10
+    
+admin.site.register(TableMetadata,TableMetadataAdmin)
+
+# Admin for Dataset Model
+class DatasetAdmin(admin.ModelAdmin):
+    fields = ['id','nid','name','tables','tags','large_dataset']
+    list_display = ('id','nid','name','_get_str_tables','_get_str_tags','_is_large_dataset','_get_metadata_link')
+    list_filter = ['tags','tables']
+    list_per_page = 10
+    filter_horizontal = ['tables','tags']
+    
+admin.site.register(Dataset,DatasetAdmin)
+
+# Dataset Metadata Admin
+class DatasetMetadataAdmin(admin.ModelAdmin):
+    fields = ['metadata']
+    list_display = ['id','metadata']
+    list_per_page = 10
+    
+admin.site.register(DatasetMetadata,DatasetMetadataAdmin)
 
 ## Metadata Admin
 #class MetadataAdmin(admin.ModelAdmin):

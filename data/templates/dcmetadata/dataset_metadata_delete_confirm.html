@@ -1,0 +1,42 @@
+{% extends "admin/admin_base_site.html" %}
+{% load i18n admin_static admin_modify %}
+{% load custom_tag %}
+
+
+{% block extrahead %}{{ block.super }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{{STATIC_RUL}}admin/css/forms.css"/>{% endblock %}
+
+{% block title %}Are you sure? | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% setting 'APP_SERVER_URL' %}/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">Dcmetadata</a>
+&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/">Datasets</a>
+&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset_id }}/">Dataset ID: {{dataset_id}}</a>
+&rsaquo; Metadata Delete Confirm
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	{% block object-tools %}{% endblock %}
+	<br/><hr><br/>
+	<h1>Dataset ID: {{dataset_id}}</h1>
+	<br/><br/><hr><br/><br/>
+	<h1>Are you sure?</h1>
+	<p>Are you sure you want to delete dataset metadata for <b><a target="_blank" class="sourcedata-link" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset_id}}/">"Dataset ID {{dataset_id}}: {{dataset_name}}"</a></b>?</p>
+	
+	<br/><hr><br/><br/>
+	
+	<form action="../delete/" method="post"> {% csrf_token %}
+		<div>
+			<input type="hidden" name="post" value="yes" />
+			<input type="submit" value="Yes, I'm sure." />
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Cancel" onclick="window.location.href='../'">
+		</div>
+	</form>
+	
+</div>
+{% endblock %}

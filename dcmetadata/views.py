@@ -12,7 +12,6 @@ from dcmetadata.forms import *
 
 # AJAX Admin get Subject Matter on selected Macro Domain
 def ajax_get_subjectmatter(request):
-    print "#" * 100
     if request.is_ajax() and request.method == 'POST':
         macrodomain_id = int(request.POST.get('macrodomain',''))
         subjectmatters = SubjectMatter.objects.filter(macrodomain=macrodomain_id)
@@ -20,12 +19,9 @@ def ajax_get_subjectmatter(request):
 
 # Test
 def test(request):
-    print "*" * 100
     q = 'mdb'
     test_format = Format.objects.extra(
         where=['ext_tsv @@ plainto_tsquery(%s)'],params=[q])
-    print test_format
-    print "*" * 100
 
     return HttpResponse("test done!")
 
@@ -171,7 +167,6 @@ def xml2json(request):
             json_field_metadata = []
             
             metadata_id = md.id
-            print metadata_id
 
             # Table tags come from "source_data" attributes
             source_data = SourceDataInventory.objects.get(id=metadata_id)
@@ -262,7 +257,6 @@ def fkeyid2name(request):
         table_metadata = TableMetadata.objects.all()
         for tm in table_metadata:
             metadata_id = tm.id
-            print "metadata id=%i" % metadata_id
             metadata_json_dict = tm._get_metadata_dict()
             table_tags = metadata_json_dict["table_tags"]
             field_metadata = metadata_json_dict["field_metadata"]
@@ -293,9 +287,348 @@ def fkeyid2name(request):
         return HttpResponse("Foreign Key id to name - Conversion Complete!")
     except:
         return HttpResponse("Foreign Key id to name - Conversion Failed!")
+    
 @render_to("dcmetadata/test_dajaxice.html")
 def test_dajaxice(request):
     return {}
+
+'''-----------------------
+Import data from metadata
+-----------------------'''
+# Import Dataset from Dataset Metadata
+## If dataset already existed, update it with metadata,
+## Else create new dataset.
+def import_dataset(request):
+    try:
+        dataset_metadata_all = DatasetMetadata.objects.all()
+        for dm in dataset_metadata_all:
+            dm_dict = dm._get_metadata_dict()
+            # get_or_create return a tuple of (model,bool)
+            ## where model is the object, bool telss you whether it had to be created or not
+            return_dataset = Dataset.objects.get_or_create(id=dm.id)
+            dataset = return_dataset[0]
+            dataset.nid = dm_dict["nid"]
+            dataset.name = dm_dict["name"]
+            dataset.large_dataset = dm_dict["large_dataset"]
+            dataset.metadata = dm
+            for table_id in dm_dict["tables"]:
+                table = SourceDataInventory.objects.get(id=table_id)
+                dataset.tables.add(table)
+            for tag_name in dm_dict["tags"]:
+                # If tag NOT existed, create new tag
+                return_tag = Tag.objects.get_or_create(name=tag_name)
+                tag = return_tag[0]
+                dataset.tags.add(tag)
+            dataset.save()
+        return HttpResponse("Import Dataset from Dataset Metadata - Dataset Successfully Imported!")
+    except:
+        return HttpResponse("Import Dataset from Dataset Metadata - Import Failed!")
+
+
+# Import Source Data from Data Table Metadata
+def import_sourcedata(request):
+#    try:
+    table_metadata_all = TableMetadata.objects.all()
+    for tm in table_metadata_all:
+        tm_dict = tm._get_metadata_dict()
+        table_dict = tm_dict["table_tags"]
+        return_sourcedata = SourceDataInventory.objects.get_or_create(id=tm.id)
+        sourcedata = return_sourcedata[0]
+        if return_sourcedata[1]:
+            try:
+                return_datatable = DataTable.objects.get_or_create(id=tm.id)
+                datatable = return_datatable[0]
+                if return_datatable[1]:
+                    datatable.name = "New Data Table Imported!"
+                    datatable.save()
+            except:
+                pass
+            
+        sourcedata.title = table_dict["title"]
+        sourcedata.year = table_dict["year"]
+        sourcedata.source_website = table_dict["source_website"]
+        sourcedata.description = table_dict["description"]
+        sourcedata.data_consideration = table_dict["data_consideration"]
+        sourcedata.process_notes = "This source data was imported from table metadata."
+        macro_domain = MacroDomain.objects.get_or_create(id=table_dict["domain"])[0]
+        if MacroDomain.objects.get_or_create(id=table_dict["domain"])[1]:
+            print "NEW DOMAIN IMPORTED!!!"
+            macro_domain.name = "New Domain Imported!"
+            macro_domain.save()
+        sourcedata.macro_domain = macro_domain
+        subject_matter = SubjectMatter.objects.get_or_create(id=table_dict["subdomain"])[0]
+        if SubjectMatter.objects.get_or_create(id=table_dict["subdomain"])[1]:
+            subject_matter.name = "New Subdomain Imported!"
+            subject_domain.save()
+        sourcedata.subject_matter = subject_matter
+        geography = Geography.objects.get_or_create(id=table_dict["geographic_level"])[0]
+        if Geography.objects.get_or_create(id=table_dict["geographic_level"])[1]:
+            geography.name = "New Geographic Level Imported!"
+            geography.save()
+        sourcedata.geography = geography
+        coverage = Coverage.objects.get_or_create(id=table_dict["geography"])[0]
+        if Coverage.objects.get_or_create(id=table_dict["geography"])[1]:
+            coverage.name = "New Geography Imported!"
+            coverage.save()
+        sourcedata.coverage = coverage
+        source = Source.objects.get_or_create(id=table_dict["source"])[0]
+        if Source.objects.get_or_create(id=table_dict["source"])[1]:
+            source.name = "New Source Imported!"
+            source.save()
+        sourcedata.source = source
+        geometry = SpatialTable.objects.get_or_create(id=table_dict["geometry"])[0]
+        if SpatialTable.objects.get_or_create(id=table_dict["geometry"])[1]:
+            geometry.name = "New Spatial Table Imported!"
+            geometry.save()
+        sourcedata.geometry = geometry
+        
+        sourcedata.metadata = tm
+        sourcedata.save()
+        
+    return HttpResponse("Import Source Data from Table Metadata - Source Data Successfully Imported!")
+#    except:
+#        return HttpResponse("Import Source Data from Table Metadata - Import Failed!")
+
+
+'''------------
+Dataset
+------------'''
+# Display Dataset Metadata
+@render_to("dcmetadata/dataset_metadata_detail.html")
+def dataset_metadata_detail(request,dataset_id):
+    dataset = get_object_or_404(Dataset, id=dataset_id)
+    dataset_metadata = get_object_or_404(DatasetMetadata, id=dataset_id)
+    dataset_metadata_dict = dataset_metadata._get_metadata_dict()
+    
+    return {'dataset_id':dataset_id,
+            'dataset':dataset,
+            'dataset_metadata':dataset_metadata_dict,
+            }
+
+# Add Dataset Metadata
+@render_to("dcmetadata/dataset_metadata_edit.html")
+def dataset_metadata_edit(request,dataset_id):
+    # Initial vars
+    form_has_errors = False
+    is_add_new_metadata = False
+    tables = [] # list of dict storing table_id,table_name,table_fields for forms
+    
+    # Initial Dataset metadata
+    dataset = get_object_or_404(Dataset, id=dataset_id)
+    dataset_metadata = get_object_or_404(DatasetMetadata,id=dataset_id)
+    ## If dataset metadata NOT exsit, initial dataset metadata dictionary with
+    ##  dataset attributes.
+    if dataset_metadata.metadata == "{}":
+        is_add_new_metadata =  True
+        dataset_dict = {"nid":dataset.nid if dataset.nid else "",
+                        "name":dataset.name,
+                        "tables":map(int,dataset._get_str_tables().split(",")),
+                        "fields":[],
+                        "display_name":"",
+                        "pkey":[],
+                        "fkeys":[],
+                        "gkey":[],
+                        "tags":dataset._get_str_tags().split(","),
+                        "large_dataset":dataset.large_dataset
+                        }
+    ## If dataset metadata esixts, read the dictionary from database.
+    else:
+        dataset_dict = dataset_metadata._get_metadata_dict()
+        ## Check if dataset_dict has key "fields", since some of the datasets
+        ##  that contains only one table may not have metadata key "fields".
+        if not dataset_dict.has_key("fields") and len(dataset_dict["tables"]) == 1:
+            dataset_dict["fields"] = []
+    
+    # Read fields metadata for each table in the dataset
+    for index,table_id in enumerate(dataset_dict["tables"]):
+        table = get_object_or_404(TableMetadata,id=table_id)
+        table_metadata = table._get_metadata_dict()
+        ## Get spatial table id
+        if index == 0:
+            spatial_table_id = table_metadata["table_tags"]["geometry"]
+        fields = []
+        for field in table_metadata["field_metadata"]:
+            fields.append({"field_name":field["field_name"].lower(),
+                           "verbose_name":field["verbose_name"]
+                          })
+        tables.append({
+                        "table_id":table_id,
+                        "table_name":table_metadata["table_tags"]["title"],
+                        "table_fields":fields
+                      })    
+    # Preparing initial values for Forms and Formset
+    ## Number of forms in formset is decided by the number of tables in dataset
+    num_tables = len(tables)
+    ## Preparing choice values for Form ChoiceField/MultipleChoiceField
+    field_choice_list_main = []
+    field_choice_list_full = []
+    for index,t in enumerate(tables):
+        table_list_separator = "* Table%d: %s" % (t["table_id"],t["table_name"])
+        field_choice_list_full.append((None,table_list_separator))
+        if index == 0:
+            field_choice_list_main.append((None,table_list_separator))
+        for f in t["table_fields"]:
+            table_field_return_value = "%d.%s" % (t["table_id"],f["field_name"])
+            table_field_display_value = "Table%d.[%s]" % (t["table_id"],f["verbose_name"])
+            field_choice_list_full.append((table_field_return_value,table_field_display_value))
+            if index == 0:
+                 field_choice_list_main.append((table_field_return_value,table_field_display_value))
+                
+    # Read fields metadata for spaital table
+    spatial_table = get_object_or_404(TableMetadata,id=spatial_table_id)
+    spatial_table_metadata = spatial_table._get_metadata_dict()
+    fields = []
+    for field in spatial_table_metadata["field_metadata"]:
+        fields.append({"field_name":field["field_name"],
+                       "verbose_name":field["verbose_name"]
+                       })
+    spatial_table_fields = {
+                            "table_id":spatial_table_id,
+                            "table_name":spatial_table_metadata["table_tags"]["title"],
+                            "table_fields":fields
+                            }
+    # Preparing choice values for spatial table
+    field_choice_list_spatial = []
+    table_list_separator = "== Spatial Table ID %d: %s ==" % (spatial_table_fields["table_id"],spatial_table_fields["table_name"])
+    field_choice_list_spatial.append((None,table_list_separator))
+    for f in spatial_table_fields["table_fields"]:
+        table_field_return_value = "%d.%s" % (spatial_table_fields["table_id"],f["field_name"])
+        field_choice_list_spatial.append((table_field_return_value,f["verbose_name"]))        
+    
+    # Handling Forms
+    if request.method == 'POST':
+        dataset_metadata_form = DatasetMetadataForm(request.POST)
+        dataset_metadata_fkey_formset = DatasetMetadataFKeyFormSet(request.POST)
+        
+        ## Initializing DatasetMetadataForm list choices
+        dataset_metadata_form.fields["fields"].choices = field_choice_list_full
+        dataset_metadata_form.fields["display_name"].choices = field_choice_list_full
+        dataset_metadata_form.fields["pkey"].choices = field_choice_list_full
+        dataset_metadata_form.fields["gkey_main"].choices = field_choice_list_main
+        dataset_metadata_form.fields["gkey_spatial"].choices = field_choice_list_spatial
+        ## Initializing DatasetMetadataFKeyFormSet list choices
+        for index,dataset_metadata_fkey_form in enumerate(dataset_metadata_fkey_formset):
+            dataset_metadata_fkey_form.fields["foreign_key"].label = "FKey %d: Foreign Key" % (index+1)
+            dataset_metadata_fkey_form.fields["foreign_key"].choices = field_choice_list_full
+            dataset_metadata_fkey_form.fields["reference_key"].label = "FKey %d: Reference Key" % (index+1)
+            dataset_metadata_fkey_form.fields["reference_key"].choices = field_choice_list_full
+                
+        # If data cleaned
+        if dataset_metadata_form.is_valid() & dataset_metadata_fkey_formset.is_valid():
+            dataset_metadata_form_cleaned_data = dataset_metadata_form.cleaned_data
+            dataset_metadata_fkey_formset_cleaned_data = dataset_metadata_fkey_formset.cleaned_data
+            
+            dataset_dict['fields'] = dataset_metadata_form_cleaned_data["fields"]
+            dataset_dict['display_name'] = dataset_metadata_form_cleaned_data["display_name"]
+            dataset_dict['pkey'] = dataset_metadata_form_cleaned_data["pkey"]
+            dataset_dict['gkey'] = [dataset_metadata_form_cleaned_data["gkey_main"],dataset_metadata_form_cleaned_data["gkey_spatial"]]
+            fkeys = []
+            for fk in dataset_metadata_fkey_formset_cleaned_data:
+                fkeys.append([fk["foreign_key"],fk["reference_key"]])
+            dataset_dict['fkeys'] = fkeys
+            
+            metadata_json = json.dumps(dataset_dict)
+            dataset_metadata.metadata = metadata_json
+            dataset_metadata.save()
+            
+            if is_add_new_metadata:
+                dataset.metadata = dataset_metadata
+                dataset.save()
+            
+        else:
+            form_has_errors = True
+            return {'dataset_id':dataset_id,
+                    'dataset_name':dataset_dict["name"],
+                    'tables':tables,
+                    'dataset_metadata_form':dataset_metadata_form,
+                    'dataset_metadata_fkey_formset':dataset_metadata_fkey_formset,
+                    'form_has_errors':form_has_errors,
+                    'is_add_new_metadata':is_add_new_metadata,
+                    }
+    else:
+        ## Initializing DatasetMetadataFKeyFormSet
+        initial_formset_data = {
+                                'form-TOTAL_FORMS': u'%d' % (num_tables-1),
+                                'form-INITIAL_FORMS': u'0',
+                                'form-MAX_NUM_FORMS': u'%d' % (num_tables-1),
+                                }
+        ## If dataset metadata NOT exist, initialize Form and Formset with NONE value
+        if is_add_new_metadata:
+            dataset_metadata_form = DatasetMetadataForm()
+            dataset_metadata_fkey_formset = DatasetMetadataFKeyFormSet(initial_formset_data,initial=None)
+        ## If dataset metadata exists, initialize Form and Formset with dict value
+        else:
+            dataset_metadata_form_initial_dict = {
+                'fields':dataset_dict["fields"],
+                'display_name':dataset_dict["display_name"],
+                'pkey':dataset_dict["pkey"],
+                'gkey_main':dataset_dict["gkey"][0] if len(dataset_dict["gkey"]) > 0 else None,
+                'gkey_spatial':dataset_dict["gkey"][1] if len(dataset_dict["gkey"]) > 0 else None
+            }
+            dataset_metadata_form = DatasetMetadataForm(dataset_metadata_form_initial_dict)
+            ### Snippet -> Using Django Admin FilteredSelectMultiple widget outside admin site
+            dataset_metadata_form.fields['fields'].widget.attrs['class'] = 'filtered'
+            dataset_metadata_form.fields['pkey'].widget.attrs['class'] = 'filtered'
+            ### <- Snippet
+            ## If FKeys exists:
+            if len(dataset_dict["fkeys"]) > 0:
+                dataset_metadata_fkey_formset_initial_list = []
+                for fk in dataset_dict["fkeys"]:
+                    dataset_metadata_fkey_formset_initial_list.append(
+                        {'foreign_key':fk[0],
+                         'reference_key':fk[1]
+                        })
+                dataset_metadata_fkey_formset = DatasetMetadataFKeyFormSet(initial=dataset_metadata_fkey_formset_initial_list)
+            else:
+                dataset_metadata_fkey_formset = DatasetMetadataFKeyFormSet(initial_formset_data,initial=None)
+            
+        ## Initializing DatasetMetadataForm list choices
+        dataset_metadata_form.fields["fields"].choices = field_choice_list_full
+        dataset_metadata_form.fields["display_name"].choices = field_choice_list_full
+        dataset_metadata_form.fields["pkey"].choices = field_choice_list_full
+        dataset_metadata_form.fields["gkey_main"].choices = field_choice_list_main
+        dataset_metadata_form.fields["gkey_spatial"].choices = field_choice_list_spatial
+        ## Initializing DatasetMetadataFKeyFormSet list choices
+        for index,dataset_metadata_fkey_form in enumerate(dataset_metadata_fkey_formset):
+            dataset_metadata_fkey_form.fields["foreign_key"].label = "FKey %d: Foreign Key" % (index+1)
+            dataset_metadata_fkey_form.fields["foreign_key"].choices = field_choice_list_full
+            dataset_metadata_fkey_form.fields["reference_key"].label = "FKey %d: Reference Key" % (index+1)
+            dataset_metadata_fkey_form.fields["reference_key"].choices = field_choice_list_full
+
+    if 'save' in request.POST:
+        # Redirect to Metadata detail page
+        return HttpResponseRedirect('%s/admin/dcmetadata/dataset/%s/' % (SERVER_APP_ROOT,dataset_id))
+    else:
+        return {'dataset_id':dataset_id,
+                'dataset_name':dataset_dict["name"],
+                'tables':tables,
+                'dataset_metadata_form':dataset_metadata_form,
+                'dataset_metadata_fkey_formset':dataset_metadata_fkey_formset,
+                'form_has_errors':form_has_errors,
+                'is_add_new_metadata':is_add_new_metadata,
+                }
+                
+# Delete Dataset Metadata Entry
+## Dataset Metadata entry delete confirm
+@render_to("dcmetadata/dataset_metadata_delete_confirm.html")
+def dataset_metadata_delete_confirm(request,dataset_id):
+    dataset = get_object_or_404(Dataset, id=dataset_id)
+    dataset_name = dataset.name
+
+    return {'dataset_id':dataset_id,
+            'dataset_name':dataset_name
+            }
+
+## Delete Dataset Metadata entry
+def dataset_metadata_delete(request,dataset_id):
+    dataset = get_object_or_404(Dataset, id=dataset_id)
+    dataset_metadata = get_object_or_404(DatasetMetadata, id=dataset_id)
+    dataset_metadata.metadata = "{}"
+    dataset.metadata = None
+    dataset.save()
+    dataset_metadata.save()
+    return HttpResponseRedirect('%s/admin/dcmetadata/dataset/' % SERVER_APP_ROOT)
+
 
 '''------------
 Metadata
@@ -305,15 +638,14 @@ Metadata
 @render_to("dcmetadata/metadata_detail.html")
 def metadata_detail(request,metadata_id):    
     table_metadata = TableMetadata.objects.get(id=metadata_id)
-    metadata_json = table_metadata.metadata
     metadata_json_dict = table_metadata._get_metadata_dict()
     table_tags_dict = metadata_json_dict["table_tags"]
     field_metadata_dict_list = metadata_json_dict["field_metadata"]
     
     source_data = SourceDataInventory.objects.get(id=metadata_id)
-    source_data_name = source_data.file_name
+    source_data_name = source_data.title
 
-    return {'source_app_root':SERVER_APP_ROOT,
+    return {
             'metadata_id':metadata_id,
             'source_data_name':source_data_name,
             'table_tags_dict':table_tags_dict,
@@ -334,15 +666,12 @@ def metadata_edit(request,metadata_id):
     source_data = SourceDataInventory.objects.get(id=metadata_id)
     source_data_name = source_data.file_name
     ## By default, field will inherit table geograhpy, geographic_level, domain, subdomain, and time period
-    table_title = source_data.title
     table_geography = source_data.coverage.id
     table_geographic_level = source_data.geography.id
     table_domain = source_data.macro_domain.id
     table_subdomain = source_data.subject_matter.id
     table_year = source_data.year
     table_geometry = source_data.geometry.id
-    table_description = source_data.description
-    table_data_consideration = source_data.data_consideration
 #    table_begin_year = source_data.begin_year
 #    table_end_year = source_data.end_year
 
@@ -360,6 +689,7 @@ def metadata_edit(request,metadata_id):
         				   "domain":source_data.macro_domain.id,
         				   "subdomain":source_data.subject_matter.id,
         				   "source":source_data.source.id,
+                           "source_website":source_data.source_website,
                            "year":source_data.year,
                            "description":source_data.description,
                            "data_consideration":source_data.data_consideration
@@ -374,7 +704,7 @@ def metadata_edit(request,metadata_id):
     if source_data.metadata == None and len(field_metadata_dict_list)==0:
         is_add_new_metadata = True
         # Initialize field_metadata_dict structure
-        filed_tags_dict = {"title":tabel_title,
+        filed_tags_dict = {
                            "geography":table_geography,
                            "geographic_level":table_geographic_level,
                            "domain":table_domain,
@@ -383,8 +713,6 @@ def metadata_edit(request,metadata_id):
 #                           "time_period":"%d;%d" % (table_begin_year,table_end_year),
                            "visualization_types":"",
                            "geometry":table_geometry,
-                           "description":table_description,
-                           "data_consideration":table_data_consideration
                           }
         field_metadata_dict_list = [{"field_name":"",
                                      "data_type":"",
@@ -498,7 +826,6 @@ def metadata_edit(request,metadata_id):
             
             
             return {'file_form':upload_form,
-                    'source_app_root':SERVER_APP_ROOT,
                     'is_add_new_metadata':is_add_new_metadata,
                     'source_data_name':source_data_name,
                     'metadata_id':metadata_id,
@@ -546,7 +873,6 @@ def metadata_edit(request,metadata_id):
                 form_has_errors = True
                 if 'save' in request.POST:
                     return {'file_form':upload_form,
-                            'source_app_root':SERVER_APP_ROOT,
                             'is_add_new_metadata':is_add_new_metadata,
                             'source_data_name':source_data_name,
                             'metadata_id':metadata_id,
@@ -578,7 +904,6 @@ def metadata_edit(request,metadata_id):
                                         }]
             field_metadata_formset = FieldMetadataFormset(initial=field_metadata_form_list,prefix='metadata_fields_form')           
         return {'file_form':upload_form,
-                'source_app_root':SERVER_APP_ROOT,
                 'is_add_new_metadata':is_add_new_metadata,
                 'source_data_name':source_data_name,
                 'metadata_id':metadata_id,

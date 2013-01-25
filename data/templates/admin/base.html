@@ -1,11 +1,21 @@
-{% load admin_static %}{% load url from future %}<!DOCTYPE html>
+{% load admin_static %}{% load url from future %}{% load smart_if %}{% load custom_filter %}<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 <title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/base.css" >
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/forms.css" />
 <link href="{{ MEDIA_URL }}css/third_party/JQuery/default.css" rel="stylesheet" type="text/css" media="screen" />
-{% block extrastyle %}{% endblock %}
+{% block extrastyle %}
+<style type="text/css">
+	.github-link {
+		padding: 10px 10px 10px 35px;
+		background: url("https://a248.e.akamai.net/assets.github.com/images/modules/dashboard/octofication.png?8211dc5c") 0 50% no-repeat #DCF7DD;
+		border: 1px solid #BBD2BC;
+		border-top-color: #D1EAD2;
+		border-radius: 5px;
+	}
+</style>
+{% endblock %}
 <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% static "admin/css/ie.css" %}{% endblock %}" /><![endif]-->
 {% block extrahead %}{% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
@@ -70,7 +80,13 @@
     </div>
     <!-- END Content -->
 	</div>
-    {% block footer %}<div id="footer"></div>{% endblock %}
+    {% block footer %}
+	<div id="footer">
+			<div class="github-link">
+				<h3>We are on <a href="https://github.com/qliu/Data-Commons-MetaData-App" target="_blank">GitHub</a>.</h3>
+			</div>
+	</div>
+	{% endblock %}
 </div>
 <!-- END Container -->
 		<!-- Bottom Javascript -->

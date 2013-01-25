@@ -1,6 +1,7 @@
 {% extends "admin/admin_base_site.html" %}
 {% load i18n admin_static admin_modify %}
 {% load custom_filter %}
+{% load custom_tag %}
 
 {% block extrahead %}
 	{{ block.super }}
@@ -109,8 +110,8 @@
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-<a href="{{ source_app_root }}/admin/">{% trans 'Home' %}</a>
-&rsaquo; <a href="{{ source_app_root }}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
+<a href="{% setting 'APP_SERVER_URL' %}/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
 &rsaquo; Metadata ID: {{metadata_id}}
 </div>
 <br/><hr><br/>
@@ -120,7 +121,7 @@
 <div id="content-main">
 	<h1>Metadata ID: {{metadata_id}}</h1>
 	<br/>
-	<h3>Source Data: &nbsp;" <a target="_blank" class="sourcedata-link" href="{{ source_app_root }}/admin/dcmetadata/sourcedatainventory/{{ metadata_id }}/">{{ source_data_name }}</a> "</h3>
+	<h3>Source Data: &nbsp;" <a target="_blank" class="sourcedata-link" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/{{ metadata_id }}/">{{ source_data_name }}</a> "</h3>
 	<div id="metadata_tools">
 		<a class="edit-link" href="edit">Edit Metadata</a>
 		<a class="delete-link" href="delete_confirm">Delete Metadata</a>

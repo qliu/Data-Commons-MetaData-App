@@ -1,5 +1,6 @@
 {% extends "admin/admin_base_site.html" %}
 {% load i18n admin_static admin_modify %}
+{% load custom_tag %}
 
 
 {% block extrahead %}{{ block.super }}{% endblock %}
@@ -10,9 +11,9 @@
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-<a href="{{ source_app_root }}/admin/">{% trans 'Home' %}</a>
-&rsaquo; <a href="{{ source_app_root }}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
-&rsaquo; <a href="{{ source_app_root }}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
+<a href="{% setting 'APP_SERVER_URL' %}/admin/">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
+&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
 &rsaquo; Delete Confirm
 </div>
 {% endblock %}

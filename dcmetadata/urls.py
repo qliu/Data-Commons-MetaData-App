@@ -7,11 +7,21 @@ admin.autodiscover()
 
 urlpatterns = patterns('dcmetadata.views',
 
-	# Metadata URLs
+	# Table Metadata URLs
 	url(r'^metadata/(?P<metadata_id>\d+)/$','metadata_detail'),
 	url(r'^metadata/(?P<metadata_id>\d+)/edit/$','metadata_edit'),
 	url(r'^metadata/(?P<metadata_id>\d+)/delete_confirm/$','metadata_delete_confirm'),
 	url(r'^metadata/(?P<metadata_id>\d+)/delete/$','metadata_delete'),
+	
+	# Dataset URLs
+	url(r'^dataset/metadata/(?P<dataset_id>\d+)/$','dataset_metadata_detail'),
+	url(r'^dataset/metadata/(?P<dataset_id>\d+)/edit/$','dataset_metadata_edit'),
+	url(r'^dataset/metadata/(?P<dataset_id>\d+)/delete_confirm/$','dataset_metadata_delete_confirm'),
+	url(r'^dataset/metadata/(?P<dataset_id>\d+)/delete/$','dataset_metadata_delete'),
+	
+	# Import Data from Metadata URLs
+	url(r'^import/dataset/','import_dataset'),
+	url(r'^import/sourcedata/','import_sourcedata'),
 	
 	# Admin AJAX URLs
 	url(r'^admin/ajax_get_subjectmatter/','ajax_get_subjectmatter'),

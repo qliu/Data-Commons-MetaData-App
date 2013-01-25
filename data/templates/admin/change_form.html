@@ -2,6 +2,8 @@
 {% load i18n admin_static admin_modify %}
 {% load url from future %}
 {% load admin_urls %}
+{% load smart_if %}
+{% load custom_tag %}
 
 {% block extrahead %}{{ block.super }}
 {% url 'admin:jsi18n' as jsi18nurl %}
@@ -65,9 +67,18 @@
 		width: 200px;
 		height: 24px;
 		display: block;
-		float:right;
-		margin-right:5%;
-		margin-bottom:5px;
+		float: right;
+		margin-right: 5%;
+		margin-bottom: 5px;
+	}
+	
+	#prev-next-block{
+		width: 200px;
+		height: 24px;
+		display: block;
+		float: right;
+		margin-bottom: 15px;
+		margin-top: -15px;
 	}
 	
 	#id_upload_file{
@@ -82,6 +93,18 @@
 	.add-metadata-link {
 		padding-left:20px;
 		background:url({{ MEDIA_URL }}images/icon_metadata_add.png) no-repeat left center;
+	}
+	
+	.prev-record-link {
+		padding-left:20px;
+		background:url({{ MEDIA_URL }}images/icon_prev.png) no-repeat left center;
+		background-size: 25% Auto;
+	}
+	
+	.next-record-link {
+		padding-right:20px;
+		background:url({{ MEDIA_URL }}images/icon_next.png) no-repeat right center;
+		background-size: 37% Auto;
 	}
 </style>
 {{ media }}
@@ -102,15 +125,27 @@
 &rsaquo; {% if add %}{% trans 'Add' %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
 </div>
 <br/><hr><br/>
+{% if original.id %}
+<div id="prev-next-block">
+{% if original.get_previous_record_id != -1 and original.id > 0 %}
+<a class="prev-record-link" title="Privious" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_previous_record_id}}">Previous</a>
+{% endif %}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{% if original.get_next_record_id != -1 and original.id > 0 %}
+<a class="next-record-link" title="Next" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_next_record_id}}">Next</a>
+{% endif %}
+</div>
+{% endif %}
 {% endblock %}
 {% endif %}
-
 {% block content %}
 {% url 'admin:index' as admin_url %}
+{% if original.id %}
 {% if original.metadata %}
-	<div id="metadata-block"><a class="view-metadata-link" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata/metadata/{{ original.id }}/">Metadata</a></div>
+	<div id="metadata-block"><a class="view-metadata-link" title="View Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}{% setting 'APP_SERVER_URL' %}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/">Metadata</a></div>
 {% else %}
-	<div id="metadata-block"><a class="add-metadata-link" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata/metadata/{{ original.id }}/edit">Add Metadata</a></div>
+	<div id="metadata-block"><a class="add-metadata-link" title="Add Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}{% setting 'APP_SERVER_URL' %}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/edit">Add Metadata</a></div>
+{% endif %}
 {% endif %}
 <div id="content-main">
 {% block object-tools %}
@@ -123,7 +158,6 @@
   </ul>
 {% endif %}{% endif %}
 {% endblock %}
-
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
 <div>
 {% if is_popup %}<input type="hidden" name="_popup" value="1" />{% endif %}

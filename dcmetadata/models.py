@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from django.core import serializers
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,post_delete
 
 # Import from general utilities
 from util import *
@@ -11,6 +11,8 @@ year_choices_list = [(None,"---------"),(0,"No Data")]
 for i in range (1980,2013):
 	year_choices_list.append((i,str(i)))
 YEAR_CHOICES = tuple(year_choices_list)
+
+BOOL_CHOICES = ((1,"Yes"),(0,"No"))
 
 # Look-up tables:
 ## Macro Domain
@@ -66,6 +68,7 @@ class Coverage(models.Model):
 	'''	
 #	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
+	geotable = models.ForeignKey('SpatialTable',verbose_name='Spatial Table')
 	
 	def __unicode__(self):
 		return self.name
@@ -134,6 +137,21 @@ class SpatialTable(models.Model):
 	class Meta:
 		db_table = u'spatial_table'
 		ordering = ['name']
+		
+# Tags Model
+class Tag(models.Model):
+	'''
+	Store tags for dataset
+	'''
+#	id = models.IntegerField(primary_key=True)
+	name = models.CharField(max_length=100)
+	
+	def __unicode__(self):
+		return self.name
+	
+	class Meta:
+		db_table = u'dataset_tag'
+		ordering = ['name']
 
 # Handler After SourceDataInventory Model instance being saved
 def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
@@ -141,29 +159,39 @@ def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
 	if len(TableMetadata.objects.filter(id=metadata_id)) == 0:
 		json_field_metadata = []
 	else:
-		table_metadata = TableMetadata.objects.get(id=metadata_id)
-		metadata_json = table_metadata.metadata
-		metadata_json_dict = table_metadata._get_metadata_dict()
-		json_field_metadata = metadata_json_dict["field_metadata"]
-		
-	json_table_tags = {"title":instance.title,
-					   "geography":instance.coverage.id,
-					   "geographic_level":instance.geography.id,
-					   "domain":instance.macro_domain.id,
-					   "subdomain":instance.subject_matter.id,
-					   "source":instance.source.id,
-					   "year":instance.year,
-					   "geometry":instance.geometry.id,
-					   "description":instance.description,
-					   "data_consideration":instance.data_consideration,
-#						   "time_period":"%d;%d" % (instance.begin_year if instance.begin_year != None else 0,instance.end_year if instance.end_year != None else 0)
-					  }
-		
-	json_root_dict = {"table_tags":json_table_tags,
-					  "field_metadata":json_field_metadata}            
-	json_metadata = json.dumps(json_root_dict)
-	output_metadata = TableMetadata(id=metadata_id,metadata=json_metadata)
-	output_metadata.save()
+		try:
+			sourcedata = SourceDataInventory.objects.get(id=metadata_id)
+			table_metadata = TableMetadata.objects.get(id=metadata_id)
+			metadata_json = table_metadata.metadata
+			metadata_json_dict = table_metadata._get_metadata_dict()
+			json_field_metadata = metadata_json_dict["field_metadata"]
+		except:
+			pass;
+
+	try:
+		sourcedata = SourceDataInventory.objects.get(id=metadata_id)
+	
+		json_table_tags = {"title":instance.title,
+						   "geography":instance.coverage.id,
+						   "geographic_level":instance.geography.id,
+						   "domain":instance.macro_domain.id,
+						   "subdomain":instance.subject_matter.id,
+						   "source":instance.source.id,
+						   "source_website":instance.source_website,
+						   "year":instance.year,
+						   "geometry":instance.geometry.id,
+						   "description":instance.description,
+						   "data_consideration":instance.data_consideration,
+	#						   "time_period":"%d;%d" % (instance.begin_year if instance.begin_year != None else 0,instance.end_year if instance.end_year != None else 0)
+						  }
+			
+		json_root_dict = {"table_tags":json_table_tags,
+						  "field_metadata":json_field_metadata}            
+		json_metadata = json.dumps(json_root_dict)
+		output_metadata = TableMetadata(id=metadata_id,metadata=json_metadata)
+		output_metadata.save()
+	except:
+		pass;
 		
 # Source Data Inventory Model
 class SourceDataInventory(models.Model):
@@ -171,21 +199,22 @@ class SourceDataInventory(models.Model):
 	Inventory of the source data.
 	"""	
 #	id = models.IntegerField(primary_key=True)
-	file_name = models.CharField(max_length=200, verbose_name='File Name')
+	file_name = models.CharField(max_length=200, verbose_name='File Name',null=True)
 	title = models.CharField(max_length=200, null=True, blank=True)
-	macro_domain = models.ForeignKey('MacroDomain',verbose_name='Macro Domain')
-	subject_matter = models.ForeignKey('SubjectMatter',verbose_name='Subject Matter')
+	macro_domain = models.ForeignKey('MacroDomain',verbose_name='Domain',null=True)
+	subject_matter = models.ForeignKey('SubjectMatter',verbose_name='Subdomain',null=True)
 	year = models.IntegerField(verbose_name='Year',choices=YEAR_CHOICES,null=True)
 #	begin_year = models.IntegerField(verbose_name='Begin Year',choices=YEAR_CHOICES,null=True)
 #	end_year = models.IntegerField(verbose_name='End Year',choices=YEAR_CHOICES,null=True)
-	geography = models.ForeignKey('Geography')
-	coverage = models.ForeignKey('Coverage')
-	source = models.ForeignKey('Source')
+	geography = models.ForeignKey('Geography',verbose_name='Geographic Level',null=True)
+	coverage = models.ForeignKey('Coverage',verbose_name='Geography',null=True)
+	source = models.ForeignKey('Source',null=True)
+	source_website = models.URLField(max_length=5000,null=True,blank=True)
 	format = models.ForeignKey('Format',null=True,blank=True)
-	location =  models.CharField(max_length=200)
+	location =  models.CharField(max_length=200,null=True)
 	file_size = models.FloatField(default=0,verbose_name='File Size',null=True, blank=True)
 	metadata = models.ForeignKey('TableMetadata',null=True,blank=True)
-	geometry = models.ForeignKey('SpatialTable',verbose_name='Spatial Table')
+	geometry = models.ForeignKey('SpatialTable',verbose_name='Spatial Table',null=True)
 	description = models.CharField(max_length=500, null=True, blank=True)
 	data_consideration = models.CharField(max_length=500, null=True, blank=True)
 	process_notes = models.CharField(max_length=5000, null=True, blank=True)
@@ -194,7 +223,27 @@ class SourceDataInventory(models.Model):
 		'''
 		Return file name as default for inventory entry
 		'''
-		return self.file_name
+		return self.title
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if SourceDataInventory.objects.filter(id__lt=self.id):
+			previous_id = SourceDataInventory.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if SourceDataInventory.objects.filter(id__gt=self.id):
+			next_id = SourceDataInventory.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
 	
 #	def _get_year_range(self):
 #		'''
@@ -233,7 +282,7 @@ class SourceDataInventory(models.Model):
 		Return HTML link for view and edit metadata associated with record
 		'''
 		if self.metadata != None:
-			return '<a href="%s/dcmetadata/metadata/%d/" target="_blank">View</a> <a href="%s/dcmetadata/metadata/%d/edit/" target="_blank">Edit</a>' % (SERVER_APP_ROOT,self.id,SERVER_APP_ROOT,self.id)
+			return '<a href="%s/dcmetadata/metadata/%d/" target="_blank">View</a> | <a href="%s/dcmetadata/metadata/%d/edit/" target="_blank">Edit</a>' % (SERVER_APP_ROOT,self.id,SERVER_APP_ROOT,self.id)
 		else:
 			return '<a href="%s/dcmetadata/metadata/%d/edit/" target="_blank">Add</a>' % (SERVER_APP_ROOT,self.id)
 	
@@ -258,39 +307,22 @@ class SourceDataInventory(models.Model):
 	
 	class Meta:
 		db_table = u'source_data_inventory'
+		ordering = ['title']
 
 # Add Table Tags to TableMetadata After SourceDataInventory Model instance being saved
 post_save.connect(post_save_handler_add_tabletags, sender=SourceDataInventory)
 
-# Dataset Metadata Model
-class DatasetMetadata(models.Model):
+# Data Table Model
+class DataTable(models.Model):
 	id = models.IntegerField(primary_key=True)
-	metadata = models.TextField(verbose_name='Original Dataset Metadata in JSON')
-	
-	def _get_metadata_dict(self):
-		'''
-		Return a dictionary of metadata elements from JSON field
-		JSON Format:
-		{
-			"name":"dataset name",
-			"tables":[core table, related tables],
-			"fields":["table_name.field_name"]
-		}
-		'''
-		if self.metadata != "":
-			metadata_dict = json.loads(self.metadata)
-		else:
-			metadata_dict = None
-		return metadata_dict
-	
-	_get_metadata_dict.short_descripton = "Metadata Dictionary"
+	db_table = models.TextField(verbose_name='Database Table')
+	table_name =  models.TextField(verbose_name='Table Name',null=True)
 	
 	def __unicode__(self):
-		return self.id	
-
+		return u"%s" % self.id
+	
 	class Meta:
-		db_table = u'dataset_metadata'
-
+		db_table = u'data_tables'
 
 # Table Metadata Model
 class TableMetadata(models.Model):
@@ -303,12 +335,13 @@ class TableMetadata(models.Model):
 		JSON Format:
 		{
 			"table_tags":{
-					"title":"title",
+					"description":"title",
 					"geography":"geographic extent/coverage",
 					"geographic_level":"geographical unit",
 					"domain":"macro domain/topic",
 					"subdomain":"subdomain/subject",
 					"source":"source",
+					"source_website":"source websit URL",
 					"year":"YYYY",
 					"geometry":"spatial_table_id",
 					"description":"description",
@@ -345,11 +378,213 @@ class TableMetadata(models.Model):
 	_get_metadata_dict.short_descripton = "Metadata Dictionary"
 	
 	def __unicode__(self):
-		return self.id	
+		return u"%s" % self.id	
 
 	class Meta:
 		db_table = u'table_metadata'
+
+# Handler After Dataset Model instance being saved
+def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
+	metadata_id = instance.id
+	# If metadata not existed
+	if len(DatasetMetadata.objects.filter(id=metadata_id)) == 0:
+## The code below doesn't work for ManyToMany model field 
+##  since the relations are cached before actually stored in the database 
+##  which happens after this post_save function.
+## The initialization of the dataset metadata dictionary 
+##  will be implemented in "dataset_edit()" in views.py.
+#		json_metadata_dict = {"nid":instance.nid,
+#							"name":instance.name,
+#							"tables":map(int,instance._get_str_tables().split(",")),
+#							"fields":[],
+#							"display_name":"",
+#							"pkey":[],
+#							"fkeys":[],
+#							"gkey":[],
+#							"tags":instance._get_str_tags().split(","),
+#							"large_dataset":instance.large_dataset
+#							}
+		json_metadata_dict = {}
+		json_metadata = json.dumps(json_metadata_dict)
+		output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
+		output_metadata.save()		
+	else:
+		## If dataset already existed, update metadata
+		try:
+			dataset = Dataset.objects.get(id=instance.id)
+			dataset_metadata = DatasetMetadata.objects.get(id=metadata_id)
+			metadata_json = dataset_metadata.metadata
+			json_metadata_dict = dataset_metadata._get_metadata_dict()
+			json_metadata_dict["nid"] = instance.nid
+			json_metadata_dict["name"] = instance.name
+			json_metadata_dict["tags"] = instance._get_str_tags().split(",")
+			json_metadata_dict["large_dataset"] = instance.large_dataset
+			# If tables changed, overwrite with new tables from instance, and reset all the fileds and keys values
+			if len(set(json_metadata_dict["tables"]) & set(map(int,instance._get_str_tables().split(",")))) != len(map(int,dataset._get_str_tables().split(","))):
+				json_metadata_dict["tables"] = map(int,instance._get_str_tables().split(","))			
+				json_metadata_dict["fields"] = []
+				json_metadata_dict["display_name"] = ""
+				json_metadata_dict["pkey"] = []
+				json_metadata_dict["fkeys"] = []
+				json_metadata_dict["gkey"] = []
+			json_metadata = json.dumps(json_metadata_dict)
+			output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
+			output_metadata.save()			
+		## If metadata existed, but dataset NOT existed,
+		### which means this post_save signal was sent by importing dataset from metadata,
+		### Nothing should be done to metadata after new Dataset Model instance was created
+		except:
+			pass;
 	
+# Delete Dataset Metadata after Dataset instance being deleted
+def post_delete_handler_delete_datasetmetadata(sender,instance=True,**kwargs):
+	metadata_id = instance.id
+	try:
+		dataset_metadata = DatasetMetadata.objects.get(id=metadata_id)
+		dataset_metadata.delete()
+	except:
+		pass
+
+# Dataset Model
+class Dataset(models.Model):
+	'''
+	Dataset for DataEngine Application
+	'''
+	id = models.IntegerField(primary_key=True)
+	nid = models.IntegerField(null=True,blank=True)
+	name = models.CharField(max_length=500)
+	tables = models.ManyToManyField('SourceDataInventory')
+	tags = models.ManyToManyField('Tag',null=True,blank=True)
+	large_dataset = models.IntegerField(choices=BOOL_CHOICES,default=0)
+	metadata = models.ForeignKey('DatasetMetadata',null=True,blank=True)
+	
+	def __unicode__(self):
+		'''
+		Return dataset name as default
+		'''
+		return self.name
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
+	
+	def _get_str_tables(self):
+		'''
+		Display tables in comma-seperated string
+		'''
+		if self.tables.count() > 0:
+			table_ids = []
+			for table in self.tables.all():
+				table_ids.append(table.id)
+			txt_tables = ",".join(map(str,table_ids))
+		else:
+			txt_tables = ''
+		return txt_tables
+	
+	_get_str_tables.short_description = "Tables"
+	
+	def _get_str_tags(self):
+		'''
+		Display tags in comma-seperated string
+		'''
+		if self.tags.count() > 0:
+			tags = []
+			for tag in self.tags.all():
+				tags.append(tag.name)
+			txt_tags = ",".join(tags)
+		else:
+			txt_tags = ''
+		return txt_tags
+	
+	_get_str_tags.short_description = "Tags"
+	
+	def _is_large_dataset(self):
+		'''
+		Return Yes or No for Large_dataset flag
+		'''
+		if self.large_dataset == 1:
+			is_large_dataset = 'Yes'
+		elif self.large_dataset == 0:
+			is_large_dataset = 'No'
+		else:
+			is_large_dataset = ''
+		return is_large_dataset
+	
+	_is_large_dataset.short_description = "Is Large Dataset?"
+	
+	def _get_metadata_link(self):
+		'''
+		Return HTML link for view and edit metadata associated with record
+		'''
+		if self.metadata != None:
+			return '<a href="%s/dcmetadata/dataset/metadata/%d/" target="_blank">View</a> | <a href="%s/dcmetadata/dataset/metadata/%d/edit/" target="_blank">Edit</a>' % (SERVER_APP_ROOT,self.id,SERVER_APP_ROOT,self.id)
+		else:
+			return '<a href="%s/dcmetadata/dataset/metadata/%d/edit/" target="_blank">Add</a>' % (SERVER_APP_ROOT,self.id)	
+	
+	_get_metadata_link.short_description = "Metadata"
+	_get_metadata_link.allow_tags = True	
+	
+	class Meta:
+		db_table = u'dataset'
+		ordering = ['name']
+	
+# Add Table Tags to TableMetadata After Dataset Model instance being saved
+post_save.connect(post_save_handler_add_datasetmetadataheader, sender=Dataset)
+# Delete Dataset Metadata after Dataset Model instance being deleted
+post_delete.connect(post_delete_handler_delete_datasetmetadata, sender=Dataset)
+
+# Dataset Metadata Model
+class DatasetMetadata(models.Model):
+	id = models.IntegerField(primary_key=True)
+	metadata = models.TextField(verbose_name='Original Dataset Metadata in JSON')
+	
+	def _get_metadata_dict(self):
+		'''
+		Return a dictionary of metadata elements from JSON field
+		JSON Format:
+		{
+			"nid":"node id",
+			"name":"dataset name",
+			"tables":[core table id, related table ids],
+			"fields":["table_id.field_name"],
+			"display_name":"table_id.field_name",
+			"pkey":["table_id.field_name"],
+			"fkeys":[["table_id.field_name","reference_table_id.field_name"]],
+			"gkey":["table_id.field_name","spatial_table_id.field_name"],
+			"tags":["tag"],
+			"large_dataset":1/0
+		}
+		'''
+		if self.metadata != "":
+			metadata_dict = json.loads(self.metadata)
+		else:
+			metadata_dict = None
+		return metadata_dict
+	
+	_get_metadata_dict.short_descripton = "Metadata Dictionary"
+	
+	def __unicode__(self):
+		return u"%s" % self.id	
+
+	class Meta:
+		db_table = u'dataset_metadata'
+
 # This metadata model is for XML metadata collection and has been abandoned.
 ## Metadata Model
 #class Metadata(models.Model):

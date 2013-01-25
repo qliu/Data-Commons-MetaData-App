@@ -2,7 +2,10 @@ from django.contrib import admin
 from django import forms
 from django.forms.widgets import *
 from django.db import models
-from django.forms.formsets import formset_factory
+from django.forms.formsets import formset_factory, BaseFormSet
+
+# Snippet import to use the admin FilterSelectMultiple widget in normal forms
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 # Import from general utilities
 from util import *
@@ -18,7 +21,7 @@ from dcmetadata.models import *
 # Custome SourceDataInventory Admin Model Form for CHANGE Page
 class SourceDataInventoryAdminChangeForm(forms.ModelForm):
     upload_file = forms.FileField(required=False)
-    location = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=True)
+    location = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'size':'50'}),required=False)
     title = forms.CharField(widget=forms.TextInput(attrs={'size':'50'}),required=False)
     description = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':6}),required=False)
     data_consideration = forms.CharField(widget=forms.Textarea(attrs={'cols':60,'rows':6}),required=False)
@@ -126,7 +129,98 @@ FieldMetadataFormset = formset_factory(FieldMetadataForm,extra=0)
 # File Upload Form
 class FileUploadForm(forms.Form):
     upload_file = forms.FileField(required=False)
+    
+# Dataset Form
+class DatasetForm(forms.ModelForm):
+#    id = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'size':'10'}),required=True)
+#    nid = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'size':'10'}),required=True)
 
+    class Meta:
+        model = Dataset
+        widgets = {
+                    "id": forms.TextInput(attrs={'size':'10'}),
+                    "nid": forms.TextInput(attrs={'size':'10'}),
+        }
+    
+# Dataset Metadata Form
+class DatasetMetadataForm(forms.Form):
+    fields = forms.MultipleChoiceField()
+    display_name = forms.ChoiceField()
+    pkey = forms.MultipleChoiceField()
+    gkey_main  = forms.ChoiceField()
+    gkey_spatial = forms.ChoiceField()
+    
+    def clean(self):
+        '''
+        Check that selected value is not "None" which is form list seperator
+        '''
+        if any(self.errors):
+            # Validiating the form unless each field is valid on its own
+            return
+        cleaned_data = self.cleaned_data
+        fields = cleaned_data["fields"]
+        display_name = cleaned_data["display_name"]
+        gkey_main = cleaned_data["gkey_main"]
+        gkey_spatial = cleaned_data["gkey_spatial"]
+        pkey = cleaned_data["pkey"]
+        form_has_error = False
+        msg = "Table title is selected! Please select a field instead."
+        if "None" in fields:
+            self._errors["fields"] = self.error_class([msg])
+            form_has_error = True
+        if display_name == "None":
+            self._errors["display_name"] = self.error_class([msg])
+            form_has_error = True
+        if gkey_main == "None":
+            self._errors["gkey_main"] = self.error_class([msg])
+            form_has_error = True
+        if gkey_spatial == "None":
+            print "gkey SPATIAL ERROR"
+            self._errors["gkey_spatial"] = self.error_class([msg])
+            form_has_error = True
+        if "None" in pkey:
+            self._errors["pkey"] = self.error_class([msg])
+            form_has_error = True
+        if form_has_error:
+            raise forms.ValidationError("Table title is selected!")
+        
+        return cleaned_data
+        
+    
+## Dataset Metadata Foreign Key Formset
+class DatasetMetadataFKeyForm(forms.Form):
+    foreign_key = forms.ChoiceField()
+    reference_key = forms.ChoiceField()
+    
+## Set BaseDatasetMetadataFKeyFormSet with custom formset valication
+class BaseDatasetMetadataFKeyFormSet(BaseFormSet):
+    def clean(self):
+        '''
+        Check that selected value is not "None" which is form list seperator,
+            and that foreign_key and reference_key are from different tables
+        '''
+        if any(self.errors):
+            # Validating the formset unless each form is valid on its own
+            return
+        for i in range(0,self.total_form_count()):
+            form = self.forms[i]
+            fk = form.cleaned_data['foreign_key']
+            rk = form.cleaned_data['reference_key']
+            if fk == "None" or rk == "None":
+                if fk == "None":
+                    form._errors["foreign_key"] = form.error_class(["Table title is selected! Please select a foreign key instead."])
+                if rk == "None":
+                    form._errors["reference_key"] = form.error_class(["Table title is selected! Please select a reference key instead."])
+                raise forms.ValidationError("Key is NONE")                
+            else:
+                if fk[:fk.find('.')] == rk[:rk.find('.')]:
+                    form._errors["foreign_key"] = form.error_class(["Foreign Key and Reference Key must from different tables."])
+                    form._errors["reference_key"] = form.error_class(["Foreign Key and Reference Key must from different tables."])
+                    raise forms.ValidationError("Foreign Key and Reference Key from same table")
+        
+
+DatasetMetadataFKeyFormSet = formset_factory(DatasetMetadataFKeyForm,extra=0,formset=BaseDatasetMetadataFKeyFormSet)
+    
 ## Metadata Field Form
 #class MetadataFieldForm(forms.Form):
 #    field_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size':'50'}),required=True)
