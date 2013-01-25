@@ -81,8 +81,8 @@ admin.site.register(Tag,TagAdmin)
 
 ## Data Tables Admin
 class DataTableAdmin(admin.ModelAdmin):
-    fields = ['id','table_name']
-    list_display = ('id','table_name')
+    fields = ['id','table_name','db_table']
+    list_display = ('id','table_name','db_table')
     list_per_page = 10
     
 admin.site.register(DataTable, DataTableAdmin)
@@ -95,12 +95,11 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
 #    fields = ['upload_file','file_name','format','description','macro_domain','subject_matter',
 #    'coverage','geography','begin_year','end_year','source','location','cleaning_notes']
     readonly_fields = ['file_name','format']
-    list_display = ('file_name','title','macro_domain','subject_matter',
-        'coverage','geography','year','source','format','_get_file_size','_get_metadata_link')    
-#    list_display = ('file_name','description','macro_domain','subject_matter',
-#    'coverage','geography','_get_year_range','source','format','_get_file_size','_get_metadata_link')
-    list_filter = ['macro_domain','subject_matter','coverage','geography',
-        'format','source','year']    
+    list_display = ('title','macro_domain','subject_matter',
+        'coverage','geography','year','source','_get_metadata_link')     
+#    list_display = ('file_name','title','macro_domain','subject_matter',
+#        'coverage','geography','year','source','format','_get_file_size','_get_metadata_link')
+    list_filter = ['macro_domain','subject_matter','coverage','geography','source','year']    
 #    list_filter = ['macro_domain','subject_matter','coverage','geography',
 #    'format','source','begin_year','end_year']
     list_per_page = 10

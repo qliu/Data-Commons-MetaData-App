@@ -45,6 +45,17 @@ class SourceDataInventoryAdminChangeForm(forms.ModelForm):
             # Get the format for the file extension from lookup table "Format"
             try:
                 # Full-text search on column Format
+                ## Need PostgreSQL Setup:
+                ## 1. Add a column to hold a tsvector
+                ##    ALTER TABLE inventory_format ADD COLUMN ext_tsv tsvector;
+                ## 2. Add a trigger to update the ext_tsv column whenever a record is inserted or updated
+                ##    CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON inventory_format FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger(ext_tsv, 'pg_catalog.english', extension);
+                ## 3. Create an index on ext_tsv to make searches more efficient
+                ##    CREATE INDEX inventory_format_ext_tsv ON inventory_format USING gin(ext_tsv);
+                ## 4. If there is already rechords in the inventory_format table, update the ext_tsv for those records
+                ##    UPDATE inventory_format SET ext_tsv=to_tsvector(extension);
+                ## 5. SQL example
+                ##    SLECT extension FROM inventory_format WHERE ext_tsv @@ plainto_tsquery('serch words');
                 q = upload_file_extension
                 model.format = Format.objects.extra(
                     where=['ext_tsv @@ plainto_tsquery(%s)'],params=[q])[0]

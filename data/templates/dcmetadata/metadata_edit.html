@@ -148,6 +148,7 @@
 	<br/><hr><br/>
 	Metadata XML:<br/><br/> <p>{{ metadata_xml }}</p>
 	-->
+	{% if not is_geography_table %}
 	<br/><hr><br/>
 	<form id="myFileUpload" action="." method="post" >{% csrf_token %}
 		Do you want to upload Metadata from file?
@@ -160,6 +161,7 @@
 		-->
 		&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="upload_file_submit" value="Yes"/>
 	</form>
+	{% endif %}
 	<br/><hr><br/>
 	<form id="myDynamicForm" method="post" action="">{% csrf_token %}
 	{% if form_has_errors %}

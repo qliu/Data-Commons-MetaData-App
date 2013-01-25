@@ -54,7 +54,7 @@ APP_SERVER_URL = ''
 ## <- use this for LOCALHOST
 
 ## use this for SERVER ->
-# SERVER_URL = 'pitondc1.piton.local'
+#SERVER_URL = 'pitondc1.piton.local'
 #ROOT_URL = 'datacommons'
 #APP_SERVER_URL = '/datacommons'
 ## <- use this for SERVER

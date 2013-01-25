@@ -524,9 +524,11 @@ ul.messagelist {
 ul.messagelist li {
     font-size: 12px;
     display: block;
+	width: 75%;
     padding: 4px 5px 4px 25px;
     margin: 0 0 3px 0;
     border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
     color: #666;
     background: #ffc url(datacommons/../../../images/icon_success.gif) 5px .3em no-repeat;
 }

@@ -64,7 +64,7 @@ SERVER_APP_ROOT = ""
 ## <- use this for LOCALHOST
 
 ## use this for SERVER
-# SERVER_APP_ROOT = "/datacommons"
+#SERVER_APP_ROOT = "/datacommons"
 ## <- use this for SERVER
 
 

@@ -658,13 +658,14 @@ def metadata_edit(request,metadata_id):
     # Initial vars
     form_has_errors = False # Form Validation Error flag
     is_add_new_metadata = False
+    is_geography_table = False
     field_metadata_form_list = []
     upload_form = FileUploadForm()
     metadata_json = ""
     
     # Get SourceDataInventory instance
     source_data = SourceDataInventory.objects.get(id=metadata_id)
-    source_data_name = source_data.file_name
+    source_data_name = source_data.title
     ## By default, field will inherit table geograhpy, geographic_level, domain, subdomain, and time period
     table_geography = source_data.coverage.id
     table_geographic_level = source_data.geography.id
@@ -674,6 +675,10 @@ def metadata_edit(request,metadata_id):
     table_geometry = source_data.geometry.id
 #    table_begin_year = source_data.begin_year
 #    table_end_year = source_data.end_year
+
+    # If is spatial table, disable upload metadata from header file
+    if source_data.macro_domain.name == "Geography":
+        is_geography_table = True
 
     # Get TableMetadata instance
     try:
@@ -827,6 +832,7 @@ def metadata_edit(request,metadata_id):
             
             return {'file_form':upload_form,
                     'is_add_new_metadata':is_add_new_metadata,
+                    'is_geography_table':is_geography_table,
                     'source_data_name':source_data_name,
                     'metadata_id':metadata_id,
                     'field_metadata_formset':field_metadata_formset,
@@ -874,6 +880,7 @@ def metadata_edit(request,metadata_id):
                 if 'save' in request.POST:
                     return {'file_form':upload_form,
                             'is_add_new_metadata':is_add_new_metadata,
+                            'is_geography_table':is_geography_table,
                             'source_data_name':source_data_name,
                             'metadata_id':metadata_id,
                             'field_metadata_formset':field_metadata_formset,
@@ -905,10 +912,11 @@ def metadata_edit(request,metadata_id):
             field_metadata_formset = FieldMetadataFormset(initial=field_metadata_form_list,prefix='metadata_fields_form')           
         return {'file_form':upload_form,
                 'is_add_new_metadata':is_add_new_metadata,
+                'is_geography_table':is_geography_table,
                 'source_data_name':source_data_name,
                 'metadata_id':metadata_id,
                 'field_metadata_formset':field_metadata_formset,
-                'form_has_errors':form_has_errors}  
+                'form_has_errors':form_has_errors} 
 
 # Delete Metadata Entry
 ## Metadata entry delete confirm

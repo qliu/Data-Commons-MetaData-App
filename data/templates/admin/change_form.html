@@ -37,23 +37,6 @@
 		});
 	});//]]>  
 </script>
-<!-- Scripts to get SubjectMatters choice value based on selected MacroDomain -->
-<!-- TEMP COMMENT OFF
-<script type="text/javascript">
-	function get_subjectmatter(){
-		alert("test");
-		new Ajax.Request('/dcmetadata/admin/ajax_get_subjectmatter/',{
-			method:'post',
-			parameters: $H({'macrodomain':$('id_macro_domain').getValue()}),
-			onSuccess: function(transport){
-				var e=$('id_subject_matter');
-				if(transport.responseText)
-					e.update(transport.responseText);
-			}
-		});
-	}
-</script>
--->
 <style type="text/css">
 
 	form textarea {
@@ -142,9 +125,9 @@
 {% url 'admin:index' as admin_url %}
 {% if original.id %}
 {% if original.metadata %}
-	<div id="metadata-block"><a class="view-metadata-link" title="View Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}{% setting 'APP_SERVER_URL' %}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/">Metadata</a></div>
+	<div id="metadata-block"><a class="view-metadata-link" title="View Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/">Metadata</a></div>
 {% else %}
-	<div id="metadata-block"><a class="add-metadata-link" title="Add Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}{% setting 'APP_SERVER_URL' %}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/edit">Add Metadata</a></div>
+	<div id="metadata-block"><a class="add-metadata-link" title="Add Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/edit">Add Metadata</a></div>
 {% endif %}
 {% endif %}
 <div id="content-main">

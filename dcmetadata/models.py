@@ -23,6 +23,26 @@ class MacroDomain(models.Model):
 #	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
 	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id	
+	
 	def __unicode__(self):
 		return self.name
 		
@@ -39,12 +59,32 @@ class SubjectMatter(models.Model):
 	name = models.CharField(max_length=50)
 	macrodomain = models.ForeignKey('MacroDomain')
 	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
+	
 	def __unicode__(self):
-		return self.name
+		return "%s - %s" % (self.macrodomain.name,self.name)
 		
 	class Meta:
 		db_table = u'inventory_subjectmatter'
-		ordering = ['name']
+		ordering = ['macrodomain','name']
 		
 ## Geography
 class Geography(models.Model):
@@ -53,6 +93,26 @@ class Geography(models.Model):
 	'''	
 #	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50)
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
 	
 	def __unicode__(self):
 		return self.name
@@ -70,6 +130,26 @@ class Coverage(models.Model):
 	name = models.CharField(max_length=50)
 	geotable = models.ForeignKey('SpatialTable',verbose_name='Spatial Table')
 	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
+	
 	def __unicode__(self):
 		return self.name
 		
@@ -86,6 +166,26 @@ class Format(models.Model):
 	name = models.CharField(max_length=20)
 	extension = models.CharField(max_length=50)
 	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
+	
 	def __unicode__(self):
 		return self.name
 		
@@ -100,6 +200,26 @@ class Source(models.Model):
 	'''
 #	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=200)
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
 	
 	def __unicode__(self):
 		return self.name
@@ -116,6 +236,26 @@ class VisualizationType(models.Model):
 #	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=200)
 	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
+	
 	def __unicode__(self):
 		return self.name
 	
@@ -130,7 +270,27 @@ class SpatialTable(models.Model):
 	'''
 	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=200)
-
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
+	
 	def __unicode__(self):
 		return self.name
 
@@ -145,6 +305,26 @@ class Tag(models.Model):
 	'''
 #	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=100)
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
 	
 	def __unicode__(self):
 		return self.name
@@ -318,6 +498,26 @@ class DataTable(models.Model):
 	db_table = models.TextField(verbose_name='Database Table')
 	table_name =  models.TextField(verbose_name='Table Name',null=True)
 	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
+	
 	def __unicode__(self):
 		return u"%s" % self.id
 	
@@ -328,6 +528,26 @@ class DataTable(models.Model):
 class TableMetadata(models.Model):
 	id = models.IntegerField(primary_key=True)
 	metadata = models.TextField(verbose_name='Original Table Metadata in JSON')
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id
 	
 	def _get_metadata_dict(self):
 		'''
@@ -553,6 +773,26 @@ post_delete.connect(post_delete_handler_delete_datasetmetadata, sender=Dataset)
 class DatasetMetadata(models.Model):
 	id = models.IntegerField(primary_key=True)
 	metadata = models.TextField(verbose_name='Original Dataset Metadata in JSON')
+	
+	def get_previous_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__lt=self.id):
+			previous_id = Dataset.objects.filter(id__lt=self.id).order_by('-id')[0].id
+		else:
+			previous_id = -1
+		return previous_id
+	
+	def get_next_record_id(self):
+		'''
+		Return the ID of previous record in the table
+		'''
+		if Dataset.objects.filter(id__gt=self.id):
+			next_id = Dataset.objects.filter(id__gt=self.id).order_by('id')[0].id
+		else:
+			next_id = -1
+		return next_id	
 	
 	def _get_metadata_dict(self):
 		'''
