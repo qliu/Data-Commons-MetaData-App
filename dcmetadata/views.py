@@ -389,6 +389,10 @@ def import_sourcedata(request):
 #    except:
 #        return HttpResponse("Import Source Data from Table Metadata - Import Failed!")
 
+# Help Document page of PyQt4 GUI tool for uploading Excel table to database
+@render_to("dcmetadata/db_upload_help_doc.html")
+def db_upload_help_doc(request):
+    return {}
 
 '''------------
 Dataset
@@ -772,6 +776,9 @@ def metadata_edit(request,metadata_id):
 #                header_row = int(request.POST['header_row'])-1
 #                file_location = upload_file_location.replace(SOURCE_DATA_ROOT_PATH_ORIGIN,SOURCE_DATA_ROOT_PATH_LOCAL)                
             file_path = os.path.join(file_location,upload_file_name)
+            if not os.path.exists(file_path):
+                upload_file_name = '%s_header.xlsx' % source_data.file_name              
+                file_path = os.path.join(file_location,upload_file_name)
             
             # Open xls EXCEL workbook
             xls_workbook = open_workbook(file_path)

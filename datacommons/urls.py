@@ -37,6 +37,9 @@ urlpatterns = patterns('',
 	
 	# Data Commons MetaData App URLs
 	url(r'^dcmetadata/',include('dcmetadata.urls')),
+	
+	# Help Document page of PyQt4 GUI tool for uploading Excel table to database
+	url(r'^db_upload_help_doc/$','dcmetadata.views.db_upload_help_doc'),	
 
     # Examples:
     # url(r'^$', 'datacommons.views.home', name='home'),

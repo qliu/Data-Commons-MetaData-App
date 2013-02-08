@@ -1,0 +1,122 @@
+{% extends "admin/admin_base_site.html" %}
+{% load i18n admin_static admin_modify %}
+{% load custom_tag %}
+
+{% block title %}DB Upload Help Document | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
+
+{% block extrahead %}
+	{{ block.super }}
+		<!-- CSS -->
+		<style type="text/css">
+		h3 {
+			text-decoration: underline;
+		}
+		.help-block {
+			display: block;
+			margin-left: 5%;
+		}
+		</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% setting 'APP_SERVER_URL' %}/admin/">{% trans 'Home' %}</a>
+&rsaquo; DB Upload Help Documents
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	{% block object-tools %}{% endblock %}
+	<br/><hr><br/>
+	<h1>DB Upload Tool - Help Document</h1>
+	<div class="help-block">
+		<h2>Content</h2>
+		<ul>
+		<li><a href="#about"><h3>About DB Upload Tool</h3></a></li>
+		<li><a href="#format"><h3>File Format</h3></a></li>
+		<li><a href="#naming"><h3>File Naming Conventions</h3></a></li>
+		<li><a href="#upload"><h3>Upload File</h3></a></li>
+		</ul>
+	</div>
+	<br/><hr><br/>
+	<a id="about"><h3>About DB Upload Tool</h3></a>
+	<div class="help-block">
+		<p>This is a GUI tool for uploading Excel files to Data Engine database.</p>
+	</div>
+	<br/><hr>
+	<a id="format"><h3>File Format:</h3></a>
+	<div class="help-block">
+		<p>
+			Acceptable Excel file formats are:
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;<b>"*.xlsx"</b> - Excel Workbook (Excel 2003+)
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;<b>"*.xls"</b> - Excel 97-2003 Workbook
+		</p>
+	</div>
+	<br/><hr>
+	<a id="naming"><h3>File Naming Conventions:</h3></a>
+	<div class="help-block">
+		<p>
+			File name: "<b>geogunit_geogcoverage_subject_year.xls</b>" or "<b>geogunit_geogcoverage_subject_year.xlsx</b>"<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;e.g. "<b>county_state_acs5yrpopulationbyrace_2010.xls</b>"
+		</p>
+		<p>
+			<b> - geogunit</b>: geographic unit that each record in the dataset/table represents<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;e.g. tract, block group, block, zip code, school, school district, neighborhood, etc.<br/>
+			<b> - geogcoverage</b>: geographic coverage of the dataset/table<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;e.g. Colorado State, Denver, Children's Corridor<br/>
+			<b> - subject</b>: subject of the dataset/table<br/>&nbsp;&nbsp;&nbsp;&nbsp;e.g.  "acs5yrpopulationbysexandage" - "ACS 5-year population by sex and age"<br/>
+			<b> - year</b>:<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;A dataset/table usually contains annual data.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;The year indicates the calendar year that data was collected for.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;However, there are some exceptions.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;Education data, for instance, especially school performance data are collected from the fall semester in the current year through the summer in the next year.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;In this case, year in table name represents the year of the fall semester that the academic year begins with.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;e.g. "school_state_csaptotals_2010": School CSAP performance data for the year 2010 to 2011.
+		</p>
+	</div>
+	<br/><hr>
+	<a id="upload"><h3>Upload File</h3></a>
+	<div class="help-block">
+		<h3>Before Upload</h3>
+		<div class="help-block">
+			<p>
+				<u>Make sure you have the following files under the <b>same directory</b>:</u><br/>
+				<b> - File to upload:</b> "your_path/your_file<b>.xls</b>" or </b> "your_path/your_file<b>.xlsx</b>"<br/>
+				<b> - Header file to create database table structure:</b> "your_path/your_file<b>_header.xls</b>" or "your_path/your_file<b>_header.xlsx</b>"<br/>
+				<b> - CSV file to store the table data:</b> "your_path/your_file.<b>csv</b>"<br/>
+			</p>
+			<p>
+				<u><b>How to prepare the files:</b></u>
+			</p>
+			<p>
+				<b> - Excel file to upload:</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Excel table with <b>column names</b> in the <b>first row</b>.<br/>
+				<b> - Header file:</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Excel table with:<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><b>column name</b></u> in the <b>1st row</b>.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><b>data type</b></u> in the <b>2nd row</b>.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>e.g.</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Text data - "<b>character varying(length)</b>"<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Integer - "<b>integer</b>"<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Double - "<b>double precision</b>"<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Geometry - "<b>geometry</b>"<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><b>general data type in metadata</b></u> in the <b>3rd row</b>.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g. Text, Integer, Double, Geometry<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><b>human-readable column name in metadata</b></u> in the <b>4th row</b>.<br/>
+				<b> - CSV file:</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Open the Excel file you want to upload;<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Delete the first row that has column names in it;<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Save the file as CSV(Comma delimited)(*.csv) file.<br/>
+				<b> - Make sure you save all the three files under the same directory(folder).</b>
+			</p>
+		</div>
+		<h3>Upload File using the DB Upload Tool</h3>
+		<div class="help-block">
+			<p>Click <b>File -> Open...</b></p>
+			<p>Open the Excel file you want to upload</p>
+			<p>Click <b>Upload File -> Upload</b></p>
+		</div>
+	</div>
+</div>
+{% endblock %}
