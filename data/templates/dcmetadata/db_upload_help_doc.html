@@ -15,19 +15,21 @@
 			display: block;
 			margin-left: 5%;
 		}
+		.help-block li {
+			font-size: 13px;
+		}		
 		</style>
 {% endblock %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/admin/">{% trans 'Home' %}</a>
+<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
 &rsaquo; DB Upload Help Documents
 </div>
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-	{% block object-tools %}{% endblock %}
 	<br/><hr><br/>
 	<h1>DB Upload Tool - Help Document</h1>
 	<div class="help-block">
@@ -37,6 +39,12 @@
 		<li><a href="#format"><h3>File Format</h3></a></li>
 		<li><a href="#naming"><h3>File Naming Conventions</h3></a></li>
 		<li><a href="#upload"><h3>Upload File</h3></a></li>
+		<ul>
+			<li><a href="#before_upload"><h3>Before Upload<h3></a></li>
+			<li><a href="#file_upload"><h3>Upload File using the DB Upload Tool<h3></a></li>
+			<li><a href="#after_upload"><h3>After Upload - Add Metadata<h3></a></li>
+		</ul>
+		<li><a href="#errors"><h3>Errors</h3></a></li>
 		</ul>
 	</div>
 	<br/><hr><br/>
@@ -50,7 +58,7 @@
 		<p>
 			Acceptable Excel file formats are:
 			<br/>&nbsp;&nbsp;&nbsp;&nbsp;<b>"*.xlsx"</b> - Excel Workbook (Excel 2003+)
-			<br/>&nbsp;&nbsp;&nbsp;&nbsp;<b>"*.xls"</b> - Excel 97-2003 Workbook
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;<b>"*.xls"</b>&nbsp;&nbsp; - Excel 97-2003 Workbook
 		</p>
 	</div>
 	<br/><hr>
@@ -78,7 +86,7 @@
 	<br/><hr>
 	<a id="upload"><h3>Upload File</h3></a>
 	<div class="help-block">
-		<h3>Before Upload</h3>
+		<a id="before_upload"><h3>Before Upload</h3></a>
 		<div class="help-block">
 			<p>
 				<u>Make sure you have the following files under the <b>same directory</b>:</u><br/>
@@ -111,11 +119,62 @@
 				<b> - Make sure you save all the three files under the same directory(folder).</b>
 			</p>
 		</div>
-		<h3>Upload File using the DB Upload Tool</h3>
+		<a id="file_upload"><h3>Upload File using the DB Upload Tool</h3></a>
 		<div class="help-block">
 			<p>Click <b>File -> Open...</b></p>
 			<p>Open the Excel file you want to upload</p>
 			<p>Click <b>Upload File -> Upload</b></p>
+		</div>
+		<a id="after_upload"><h3>After Upload - Add Metadata</h3></a>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Metadata stores the information about the table and the dataset. Click <b><a href="https://docs.google.com/document/d/1Xqemy6zKeP3Ju4izwVLkhj81wMTAVKjruwD_x79ff2w/edit?usp=sharing" target="_blank">HERE</a></b> for the Documentation of Metadata.
+		</p>
+		<div class="help-block">
+			<p><u><b>Add Table Metadata:</b></u></p>
+			<p>
+				<b> - Add table entry:</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;After you have successfully uploaded the table to the database, the application will show you a link to our Metadata Admin site.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;By clicking the link "<a href="http://pitondc1.piton.local/datacommons/admin/dcmetadata/sourcedatainventory/add/" target="_blank">add metadata</a>" 
+				you will be directed to the web page to add a new table entry by adding information about the table you just uploaded.
+			</p>
+			<p>
+				<b> - Add metadata for the table:</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;After you have finished adding the table entry, you will the new table entry from the "<a href="http://pitondc1.piton.local/datacommons/admin/dcmetadata/sourcedatainventory/" target="_blank">Source data inventory</a>" page.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Open the table entry you just added. You will see an "<u>Add Metadata</u>" link on the top right.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Click the link to add metadata for the table.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;If you have the "header" file ready under the same folder of you data table, you can import the metadata from the header file by clicking the "Yes" button on the top.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Otherwise, you may manually add metadata for each field in the table.
+			</p>
+			<p><u><b>Add Dataset Metadata:</b></u></p>
+			<p>
+				<b> - Add dataset entry:</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;After you have added the table entry and the table metadata, you can add a dataset that utilizes the table you just added.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Go to the "<a href="http://pitondc1.piton.local/datacommons/admin/dcmetadata/dataset/" target="_blank">Dataset</a>" page, and click the link "<a href="http://pitondc1.piton.local/datacommons/admin/dcmetadata/dataset/add/" target="_blank">Add dataset</a>" to add a dataset entry.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;* <b><u>Important!</u> Please keep the dataset ID consistent with the table ID of the main content table in the dataset.</b>
+			<p>
+				<b> - Add metadata for dataset:</b><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;After you have added the dataset entry, you will find the new dataset entry from the "<a href="http://pitondc1.piton.local/datacommons/admin/dcmetadata/dataset/" target="_blank">Dataset</a>" page.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Open the dataset entry you just added. You will see an "<u>Add Metadata</u>" link on the top right.<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;Click the link to add metadata for the dataset.<br/>
+			</p>
+		</div>
+		<br/><hr><br/>
+		<a id="errors"><h3>Errors</h3></a>
+		<div class="help-block">
+			<p><u><b>DataError:</b></u></p>
+			<p>
+				<b> - "invalid input syntax for ..."</b><br/>
+				<ul>
+					<li>
+						<p>Data value does not match data type</p>
+						Go to header file and check the data type for the column and value appeared in the error message.
+					</li>
+					<li>
+						<p>Special character in the value</p>
+						Make sure numeric data type contains numbers only. Remove any special character for NULL/unabailabe/suppressed data, such as "X","/","---",etc.
+					</li>
+				</ul>
+			</p>			
 		</div>
 	</div>
 </div>

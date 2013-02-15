@@ -6,6 +6,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('dcmetadata.views',
+	# Home page URL
+	url(r'^home/$','home'),
 
 	# Table Metadata URLs
 	url(r'^metadata/(?P<metadata_id>\d+)/$','metadata_detail'),

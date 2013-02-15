@@ -10,6 +10,9 @@ from util import *
 from dcmetadata.models import *
 from dcmetadata.forms import *
 
+'''-----------------------
+TEST functions
+-----------------------'''
 # AJAX Admin get Subject Matter on selected Macro Domain
 def ajax_get_subjectmatter(request):
     if request.is_ajax() and request.method == 'POST':
@@ -392,6 +395,14 @@ def import_sourcedata(request):
 # Help Document page of PyQt4 GUI tool for uploading Excel table to database
 @render_to("dcmetadata/db_upload_help_doc.html")
 def db_upload_help_doc(request):
+    return {}
+
+'''-----------------------
+Home Page
+-----------------------'''
+# Home page
+@render_to("dcmetadata/home.html")
+def home(request):
     return {}
 
 '''------------

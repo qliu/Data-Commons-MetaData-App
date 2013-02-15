@@ -1,8 +1,9 @@
 {% extends "admin/admin_base_site.html" %}
 {% load i18n %}
 {% load url from future %}
+{% load custom_tag %}
 
-{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></div>{% endblock %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a></div>{% endblock %}
 
 {% block content %}
 

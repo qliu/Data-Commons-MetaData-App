@@ -337,7 +337,14 @@ class Tag(models.Model):
 def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
 	metadata_id = instance.id
 	if len(TableMetadata.objects.filter(id=metadata_id)) == 0:
+		# If Add new table
 		json_field_metadata = []
+		# Add table name to DataTalbe lookup
+		try:
+			data_table = DataTable.objects.get(db_table=instance.file_name)
+		except:
+			data_table = DataTable(id=metadata_id,db_table=instance.file_name,table_name=instance.title)
+			data_table.save()
 	else:
 		try:
 			sourcedata = SourceDataInventory.objects.get(id=metadata_id)
@@ -580,7 +587,7 @@ class TableMetadata(models.Model):
 						"geographic_level":"geographical unit",
 						"domain":"macro domain/topic",
 						"subdomain":"subdomain/subject",
-						year":"YYYY",
+						"year":"YYYY",
 						#"time_period":"begin_year;end_year",
 						"visualization_types":["visualization type"],
 						"geometry":"spatial_table_id"
