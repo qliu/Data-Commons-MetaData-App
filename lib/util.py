@@ -67,6 +67,10 @@ SERVER_APP_ROOT = ""
 #SERVER_APP_ROOT = "/datacommons"
 ## <- use this for SERVER
 
+# Admin email
+ADMIN_EMAIL_ADDRESS = "dataenginemetadata@gmail.com"
+TO_EMAIL_ADDRESS = "dataenginemetadata+admin@gmail.com"
+
 
 # Decorator to save time returning templates
 def render_to(template):

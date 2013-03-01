@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib import admin
 from django.core import serializers
 from django.db.models.signals import post_save,post_delete
+from django.core.mail import send_mail
 
 # Import from general utilities
 from util import *
@@ -336,8 +337,11 @@ class Tag(models.Model):
 # Handler After SourceDataInventory Model instance being saved
 def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
 	metadata_id = instance.id
+	is_add_new_table = False
+	data_status = ""
 	if len(TableMetadata.objects.filter(id=metadata_id)) == 0:
 		# If Add new table
+		is_add_new_table = True
 		json_field_metadata = []
 		# Add table name to DataTalbe lookup
 		try:
@@ -377,6 +381,19 @@ def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
 		json_metadata = json.dumps(json_root_dict)
 		output_metadata = TableMetadata(id=metadata_id,metadata=json_metadata)
 		output_metadata.save()
+		# Send admin email alert when source data added/changed
+		email_content = {"subject":"[DataEngine_Metadata]",
+						 "message":"",
+						 "from": ADMIN_EMAIL_ADDRESS,
+						 "to": [TO_EMAIL_ADDRESS]
+						}
+		if is_add_new_table:
+			data_status = "Added"
+		else:
+			data_status = "Changed"
+		email_content["subject"] += "Source Data %s - %s (id:%d)" % (data_status,instance.title, instance.id)
+		email_content["message"] = "This is a notification that source data %s (id:%d) has been %s." % (instance.title,instance.id,data_status)
+		send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])
 	except:
 		pass;
 		
@@ -613,6 +630,12 @@ class TableMetadata(models.Model):
 # Handler After Dataset Model instance being saved
 def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
 	metadata_id = instance.id
+	# Send admin email alert when source data added/changed
+	email_content = {"subject":"[DataEngine_Metadata]",
+					 "message":"",
+					 "from": ADMIN_EMAIL_ADDRESS,
+					 "to": [TO_EMAIL_ADDRESS]
+					}	
 	# If metadata not existed
 	if len(DatasetMetadata.objects.filter(id=metadata_id)) == 0:
 ## The code below doesn't work for ManyToMany model field 
@@ -634,7 +657,11 @@ def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
 		json_metadata_dict = {}
 		json_metadata = json.dumps(json_metadata_dict)
 		output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
-		output_metadata.save()		
+		output_metadata.save()
+		# Send email notification
+		email_content["subject"] += "New Dataset Added - %s (id:%d)" % (instance.name, instance.id)
+		email_content["message"] = "This is a notification that new dataset %s (id:%d) has been added." % (instance.name,instance.id)
+		send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])
 	else:
 		## If dataset already existed, update metadata
 		try:
@@ -642,7 +669,7 @@ def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
 			dataset_metadata = DatasetMetadata.objects.get(id=metadata_id)
 			metadata_json = dataset_metadata.metadata
 			json_metadata_dict = dataset_metadata._get_metadata_dict()
-			json_metadata_dict["nid"] = instance.nid
+			json_metadata_dict["nid"] = instance.nid if instance.nid else ""
 			json_metadata_dict["name"] = instance.name
 			json_metadata_dict["tags"] = instance._get_str_tags().split(",")
 			json_metadata_dict["large_dataset"] = instance.large_dataset
@@ -656,7 +683,11 @@ def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
 				json_metadata_dict["gkey"] = []
 			json_metadata = json.dumps(json_metadata_dict)
 			output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
-			output_metadata.save()			
+			output_metadata.save()
+			# Send email notification
+			email_content["subject"] += "Dataset Changed - %s (id:%d)" % (instance.name, instance.id)
+			email_content["message"] = "This is a notification that dataset %s (id:%d) has been changed." % (instance.name,instance.id)
+			send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])				
 		## If metadata existed, but dataset NOT existed,
 		### which means this post_save signal was sent by importing dataset from metadata,
 		### Nothing should be done to metadata after new Dataset Model instance was created
