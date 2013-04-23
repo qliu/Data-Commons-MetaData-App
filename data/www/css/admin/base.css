@@ -119,11 +119,13 @@ dd {
 form {
     margin: 0;
     padding: 0;
+    width: 100% !important;
 }
 
 #changelist-form {
     margin: 0;
     padding: 0;
+    width: 90% !important;
 }
 
 fieldset {

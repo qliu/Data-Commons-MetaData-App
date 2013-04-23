@@ -1,16 +1,21 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static %}
+{% load i18n admin_static %}{% load custom_tag %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static 'admin/css/dashboard.css' %}" />{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
 {% block bodyclass %}dashboard{% endblock %}
 
-{% block breadcrumbs %}{% endblock %}
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
+        {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+    <br/><hr><br/>
+{% endblock %}
 
 {% block content %}
-<hr><br/><br/>
 <div id="content-main">
 
 {% if app_list %}

@@ -69,7 +69,12 @@ SERVER_APP_ROOT = ""
 
 # Admin email
 ADMIN_EMAIL_ADDRESS = "dataenginemetadata@gmail.com"
-TO_EMAIL_ADDRESS = "dataenginemetadata+admin@gmail.com"
+TO_EMAIL_ADDRESS = ["liu.qing.1984@gmail.com"]
+TO_DE_ADMIN_EMAIL_ADDRESS = ["liu.qing.1984@gmail.com"]
+## use this for SERVER
+#TO_EMAIL_ADDRESS = ["dataenginemetadata+admin@gmail.com","kfranks@piton.org"]
+#TO_DE_ADMIN_EMAIL_ADDRESS = ["dataenginemetadata+admin@gmail.com","jnewcomer@piton.org","kfranks@piton.org"]
+## <- use this for SERVER
 
 
 # Decorator to save time returning templates

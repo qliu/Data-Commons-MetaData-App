@@ -16,7 +16,7 @@
 }
 
 .change-list .filtered {
-    min-height: 400px;
+    min-height: 350px;
 }
 
 .change-list .filtered {
@@ -84,7 +84,7 @@
 /* TOOLBAR */
 
 #changelist #toolbar {
-    padding: 3px;
+    padding: 3px 0px 3px 3px;
     border-bottom: 1px solid #ddd;
     background: #e1e1e1 url(datacommons/../../../images/nav-bg.gif) top left repeat-x;
     color: #666;
@@ -111,9 +111,9 @@
     right: 0;
     z-index: 1000;
     width: 10%;
-    border-left: 1px solid #ddd;
+    border: 2px solid #ddd;
     background: #efefef;
-    margin: 0;
+    margin-right: -3px;
 }
 
 #changelist-filter h2 {
