@@ -686,7 +686,7 @@ a.deletelink:hover {
 }
 
 .object-tools li:hover {
-    background: url(datacommons/../../../images/tool-left_over.gif) 0 0 no-repeat;
+    background: url(datacommons/../../../images/tool-left_over.jpg) 0 0 no-repeat;
 }
 
 .object-tools a:link, .object-tools a:visited {
@@ -699,7 +699,7 @@ a.deletelink:hover {
 }
 
 .object-tools a:hover, .object-tools li:hover a {
-    background: #487909 url(datacommons/../../../images/tool-right_over.gif) 100% 0 no-repeat;
+    background: #487909 url(datacommons/../../../images/tool-right_over.jpg) 100% 0 no-repeat;
 }
 
 .object-tools a.viewsitelink, .object-tools a.golink {
@@ -708,7 +708,7 @@ a.deletelink:hover {
 }
 
 .object-tools a.viewsitelink:hover, .object-tools a.golink:hover {
-    background: #487909 url(datacommons/../../../images/tooltag-arrowright_over.gif) top right no-repeat;
+    background: #487909 url(datacommons/../../../images/tooltag-arrowright_over.jpg) top right no-repeat;
 }
 
 .object-tools a.addlink {
@@ -717,7 +717,7 @@ a.deletelink:hover {
 }
 
 .object-tools a.addlink:hover {
-    background: #487909 url(datacommons/../../../images/tooltag-add_over.gif) top right no-repeat;
+    background: #487909 url(datacommons/../../../images/tooltag-add_over.jpg) top right no-repeat;
 }
 
 /* OBJECT HISTORY */

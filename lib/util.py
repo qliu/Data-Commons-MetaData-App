@@ -15,6 +15,9 @@ import os
 import csv
 import json
 
+# Import Settings attributes
+from datacommons.settings import SERVER_URL,ROOT_URL,APP_SERVER_URL
+
 # Import Regular Expression operations
 import re
 
