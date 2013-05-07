@@ -478,6 +478,7 @@ input[type=text], input[type=password], textarea, select, .vTextField {
 
 .module {
     border: 1px solid #ccc;
+	border-right-width: 3px;
     margin-bottom: 5px;
     background: white;
 }
