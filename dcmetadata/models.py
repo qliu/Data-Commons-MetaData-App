@@ -408,8 +408,6 @@ class SourceDataInventory(models.Model):
 	macro_domain = models.ForeignKey('MacroDomain',verbose_name='Domain',null=True)
 	subject_matter = models.ForeignKey('SubjectMatter',verbose_name='Subdomain',null=True)
 	year = models.IntegerField(verbose_name='Year',choices=YEAR_CHOICES,null=True)
-#	begin_year = models.IntegerField(verbose_name='Begin Year',choices=YEAR_CHOICES,null=True)
-#	end_year = models.IntegerField(verbose_name='End Year',choices=YEAR_CHOICES,null=True)
 	geography = models.ForeignKey('Geography',verbose_name='Geographic Level',null=True)
 	coverage = models.ForeignKey('Coverage',verbose_name='Geography',null=True)
 	source = models.ForeignKey('Source',null=True)
@@ -449,29 +447,6 @@ class SourceDataInventory(models.Model):
 			next_id = -1
 		return next_id
 	
-#	def _get_year_range(self):
-#		'''
-#		Return year range from begin_year to end_year
-#		'''
-#		begin_year = self.begin_year
-#		end_year = self.end_year
-#		if begin_year != None and end_year != None:
-#			if begin_year <= end_year:
-#				return '%d-%d' % (begin_year, end_year)
-#			else:
-#				return 'Invalid Year Range'
-#		else:
-#			return 'No Data'
-#		
-#	_get_year_range.short_description = "Dates"
-#	_get_year_range.admin_order_field = "begin_year"
-	
-#	def is_within_year_range(self,year):
-#		'''
-#		Return True if year is within year range
-#		'''
-#		return self.begin_year <= year and year <= self.end_year
-	
 	def _get_file_size(self):
 		'''
 		Return human readable presentation of file size in bytes
@@ -492,23 +467,7 @@ class SourceDataInventory(models.Model):
 	
 	_get_metadata_link.allow_tags = True
 	_get_metadata_link.short_description = "Metadata"
-	
-	
-#	def _get_time_period(self):
-#		'''
-#		Return time period in the format (begin_year;end_year)
-#		'''
-#		begin_year = self.begin_year
-#		end_year = self.end_year
-#		if begin_year != None and end_year != None:
-#			if begin_year <= end_year:
-#				return '%d;%d' % (begin_year, end_year)
-#			else:
-#				return 'Invalid Time Period'
-#		else:
-#			return None
-	
-	
+
 	class Meta:
 		db_table = u'source_data_inventory'
 		ordering = ['title']

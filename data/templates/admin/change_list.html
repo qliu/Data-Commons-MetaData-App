@@ -1,62 +1,53 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static admin_list %}
-{% load url from future %}
-{% load admin_urls %}
-{% load custom_tag %}
+{% load i18n admin_static admin_list %}{% load url from future %}{% load admin_urls %}{% load custom_tag %}
 
 {% block extrastyle %}
-  {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/changelists.css"/>
-  {% if cl.formset %}
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/forms.css"/>
-  {% endif %}
+	{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/changelists.css"/>
+	{% if cl.formset %}
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/forms.css"/>
+	{% endif %}
 	<style type="text/css">
-
 		form textarea {
 			display: inline-block;
 		}
 		form select {
 			display: inline-block;
 		}
-
 	</style>
-  {% if cl.formset or action_form %}
-    {% url 'admin:jsi18n' as jsi18nurl %}
-    <script type="text/javascript" src="{{ jsi18nurl|default:'../../jsi18n/' }}"></script>
-  {% endif %}
-  {{ media.css }}
-  {% if not actions_on_top and not actions_on_bottom %}
-    <style>
-      #changelist table thead th:first-child {width: inherit}
-    </style>
-  {% endif %}
+	{% if cl.formset or action_form %}
+		{% url 'admin:jsi18n' as jsi18nurl %}
+		<script type="text/javascript" src="{{ jsi18nurl|default:'../../jsi18n/' }}"></script>
+	{% endif %}
+	{{ media.css }}
+	{% if not actions_on_top and not actions_on_bottom %}
+		<style>
+			#changelist table thead th:first-child {width: inherit}
+		</style>
+	{% endif %}
 {% endblock %}
 
 {% block extrahead %}
-{{ block.super }}
-{{ media.js }}
-{% if action_form %}{% if actions_on_top or actions_on_bottom %}
-<script type="text/javascript">
-(function($) {
-    $(document).ready(function($) {
-        $("tr input.action-select").actions();
-    });
-})(django.jQuery);
-</script>
-{% endif %}{% endif %}
+	{{ block.super }}
+	{{ media.js }}
+	{% if action_form %}{% if actions_on_top or actions_on_bottom %}
+		<script type="text/javascript">
+		(function($) {
+			$(document).ready(function($) {
+				$("tr input.action-select").actions();
+			});
+		})(django.jQuery);
+		</script>
+	{% endif %}{% endif %}
 {% endblock %}
 
 {% block bodyclass %}change-list{% endblock %}
 
 {% if not is_popup %}
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-&rsaquo; <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">App:{{ app_label|capfirst|escape }} Administration</a>
-&rsaquo; {{ cl.opts.verbose_name_plural|capfirst }}
-</div>
-<br/><hr><br/>
-{% endblock %}
+	{% block breadcrumbs %}
+		&rsaquo; <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">App:{{ app_label|capfirst|escape }} Administration</a>
+		&rsaquo; {{ cl.opts.verbose_name_plural|capfirst }}
+	{% endblock %}
 {% endif %}
 
 {% block coltype %}flex{% endblock %}

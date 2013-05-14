@@ -126,9 +126,7 @@ class FieldMetadataForm(forms.Form):
     domain = forms.ModelChoiceField(queryset=MacroDomain.objects.all(),required=False)
     subdomain = forms.ModelChoiceField(queryset=SubjectMatter.objects.all(),required=False)
     year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
-#    begin_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
-#    end_year = forms.ChoiceField(widget=forms.Select(),choices=YEAR_CHOICES,required=False)
-    visualization_types = forms.ModelChoiceField(queryset=VisualizationType.objects.all(),required=False)
+    visualization_types = forms.ModelMultipleChoiceField(queryset=VisualizationType.objects.all(),required=False)
     geometry = forms.ModelChoiceField(queryset=SpatialTable.objects.all(),required=False)    
     
     class Meta:

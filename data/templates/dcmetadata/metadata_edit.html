@@ -1,273 +1,215 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static admin_modify %}
-{% load custom_tag %}
+{% load i18n admin_static admin_modify %}{% load custom_tag %}
 
-{% block extrahead %}
+{% block extrastyle %}
 	{{ block.super }}
+	<!-- JQUERY 1.7.2 -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!-- Customized JS -->
+	<!-- JQuery Dynamic Formset -->
+	<script src="{{MEDIA_URL}}js/custom/jquery.formset.js" type="text/javascript"></script>
+	<link href="{{ MEDIA_URL }}css/third_party/JQuery/default.css" rel="stylesheet" type="text/css" media="screen" />
 	
-		<!-- JQUERY 1.7.2 -->
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<!-- Customized JS -->
-		<!-- JQuery Dynamic Formset -->
-		<script src="{{MEDIA_URL}}js/custom/jquery.formset.js" type="text/javascript"></script>
-		<link href="{{ MEDIA_URL }}css/third_party/JQuery/default.css" rel="stylesheet" type="text/css" media="screen" />
+	<!-- CSS -->
+	<style type="text/css">
+		.form-container table{
+			border-collapse: seperate;
+		}
+		.delete-link{
+			float:right;
+			padding-left:18px;
+			margin-right:10%;
+			background:url({{ MEDIA_URL }}images/icon_delete.gif) no-repeat left center;
+		}
+		.form-submit-buttons{
+			float:left;
+		}
+		#save-button{
+			border:2px solid #487909;
+			background: url({{ MEDIA_URL }}images/default-bg.gif) bottom repeat-x;
+			font-weight: bold;
+			color:white;
+		}
 		
-		<!-- CSS -->
-		<style type="text/css">
-			.form-container table{
-				border-collapse: seperate;
-			}
-			.delete-link{
-				float:right;
-				padding-left:18px;
-				margin-right:10%;
-				background:url({{ MEDIA_URL }}images/icon_delete.gif) no-repeat left center;
-			}
-			.form-submit-buttons{
-				float:left;
-			}
-			#save-button{
-				border:2px solid #487909;
-				background: url({{ MEDIA_URL }}images/default-bg.gif) bottom repeat-x;
-				font-weight: bold;
-				color:white;
-			}
-			
-			.form-help-text{
-				float:right;
-				margin-left:10px;
-				padding-left:20px;
-				background:url({{ MEDIA_URL }}images/icon_hint.png) no-repeat left center;
-				display: block;
-				-webkit-margin-before: 0px;
-				-webkit-margin-after: 0px;
-				-webkit-margin-start: 0px;
-				-webkit-margin-end: 0px;
-				height: 18px !important;
-				margin-top:3px !important;
-				margin-bottom: -30px !important;
-			}
-			.add-row {
-				padding-left:18px;
-				background:url({{ MEDIA_URL }}images/add.png) no-repeat left center;
-			}
-			.delete-row {
-				float:right;
-				display:block;
-				margin-left:4px;
-				margin-top:10px;
-				padding-left:18px;
-				background:url({{ MEDIA_URL }}images/delete.png) no-repeat left center;
-			}
-			#header-row-input{
-				width:30px;
-			}
-			.dynamic-fields-form th {
-				text-align:right;
-				font-weight:bold;
-			}
-			.dynamic-fields-form td span img {
-				vertical-align:middle;
-				border:0;
-			}
-			
-			.dynamic-other-form th {
-				text-align:right;
-				font-weight:bold;
-			}
-			.dynamic-other-form td span img {
-				vertical-align:middle;
-				border:0;
-			}
-			
-			table{
-				border: 0px solid;
-				border-bottom-width: 1px;
-				padding: 10px;
-				margin: 20px;
-			}
-			
-			.errornote{
-				font-size: 12px !important;
-				display: block;
-				padding: 4px 5px 4px 25px;
-				margin: 0 0 3px 0;
-				border: 1px solid red;
-				color: red;
-				background: #FFC url({{ MEDIA_URL }}images/icon_error.png) 5px .3em no-repeat;
-				line-height: 14px;
-			}
-			
-			.errorlist li{
-				font-size: 12px !important;
-				display: block;
-				padding: 4px 5px 4px 25px;
-				margin: 0 0 3px 0;
-				border: 1px solid red;
-				color: white;
-				background: red url({{ MEDIA_URL }}images/icon_errormsg.png) 5px .3em no-repeat;
-				line-height: 14px;
-			}
-			
-			ul{
-				display: block;
-				-webkit-margin-before: 0px;
-				-webkit-margin-after: 0px;
-				-webkit-margin-start: 0px;
-				-webkit-margin-end: 0px;
-				-webkit-padding-start: 0px;
-				margin-top: -23px !important;
-			}
-		</style>
+		.form-help-text{
+			float:right;
+			margin-left:10px;
+			padding-left:20px;
+			background:url({{ MEDIA_URL }}images/icon_hint.png) no-repeat left center;
+			display: block;
+			-webkit-margin-before: 0px;
+			-webkit-margin-after: 0px;
+			-webkit-margin-start: 0px;
+			-webkit-margin-end: 0px;
+			height: 18px !important;
+			margin-top:3px !important;
+			margin-bottom: -30px !important;
+		}
+		.add-row {
+			padding-left:18px;
+			background:url({{ MEDIA_URL }}images/add.png) no-repeat left center;
+		}
+		.delete-row {
+			float:right;
+			display:block;
+			margin-left:4px;
+			margin-top:10px;
+			padding-left:18px;
+			background:url({{ MEDIA_URL }}images/delete.png) no-repeat left center;
+		}
+		#header-row-input{
+			width:30px;
+		}
+		.dynamic-fields-form th {
+			text-align:right;
+			font-weight:bold;
+		}
+		.dynamic-fields-form td span img {
+			vertical-align:middle;
+			border:0;
+		}
+		
+		.dynamic-other-form th {
+			text-align:right;
+			font-weight:bold;
+		}
+		.dynamic-other-form td span img {
+			vertical-align:middle;
+			border:0;
+		}
+		
+		table{
+			border: 0px solid;
+			border-bottom-width: 1px;
+			padding: 10px;
+			margin: 20px;
+		}
+		
+		.errornote{
+			font-size: 12px !important;
+			display: block;
+			padding: 4px 5px 4px 25px;
+			margin: 0 0 3px 0;
+			border: 1px solid red;
+			color: red;
+			background: #FFC url({{ MEDIA_URL }}images/icon_error.png) 5px .3em no-repeat;
+			line-height: 14px;
+		}
+		
+		.errorlist li{
+			font-size: 12px !important;
+			display: block;
+			padding: 4px 5px 4px 25px;
+			margin: 0 0 3px 0;
+			border: 1px solid red;
+			color: white;
+			background: red url({{ MEDIA_URL }}images/icon_errormsg.png) 5px .3em no-repeat;
+			line-height: 14px;
+		}
+		
+		ul{
+			display: block;
+			-webkit-margin-before: 0px;
+			-webkit-margin-after: 0px;
+			-webkit-margin-start: 0px;
+			-webkit-margin-end: 0px;
+			-webkit-padding-start: 0px;
+			margin-top: -23px !important;
+		}
+	</style>
 {% endblock %}
 
-{% block title %}Metadata ID {{metadata_id}} | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
+{% block current_title %}Metadata ID {{metadata_id}}{% endblock %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
-&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
-{% if not is_add_new_metadata %}
-&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
-&rsaquo; Edit Metadata
-{% else %}
-&rsaquo; Add Metadata for Source Data ID: {{ metadata_id }}
-{% endif %}
-</div>
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
+	{% if not is_add_new_metadata %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
+		&rsaquo; Edit Metadata
+	{% else %}
+		&rsaquo; Add Metadata for Source Data ID: {{ metadata_id }}
+	{% endif %}
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-	<br/><hr><br/>
 	<h1>Metadata ID: {{metadata_id}}</h1>
 	<br/>
 	<h3>Source Data: &nbsp" <a target="_blank" class="sourcedata-link" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/{{ metadata_id }}/">{{ source_data_name }}</a> "</h3>
-	<!--
-	<br/><hr><br/>
-	Metadata XML:<br/><br/> <p>{{ metadata_xml }}</p>
-	-->
 	{% if not is_geography_table %}
-	<br/><hr><br/>
-	<form id="myFileUpload" action="." method="post" >{% csrf_token %}
-		Do you want to upload Metadata from file?
-		<!--
-		{% if file_form %}
-			{{file_form.upload_file}}
-			Header in Row: <input type="text" id="header-row-input" name="header_row" value="1"/><br/>
-			File Location: <input type="text" name="upload_file_location"/>
-		{% endif %}
-		-->
-		&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="upload_file_submit" value="Yes"/>
-	</form>
+		<br/><hr><br/>
+		<form id="myFileUpload" action="." method="post" >{% csrf_token %}
+			Do you want to upload Metadata from file?
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="upload_file_submit" value="Yes"/>
+		</form>
 	{% endif %}
 	<br/><hr><br/>
 	<form id="myDynamicForm" method="post" action="">{% csrf_token %}
-	{% if form_has_errors %}
-	<p class="errornote">Please correct the errors below.</p>
-	{% endif %}
-	<div id="MetadataFieldsFormset">
-	<h2>Metadata - Fields</h2>
-		{% for form in field_metadata_formset.forms %}
-            <table id="{{ form.prefix }}-row" class="form-container" border="0" cellpadding="0" cellspacing="5">
-                <tbody>
-                    <tr>
-                        <th scope="row">{{ form.field_name.label }}</th>
-                        <td>{{ form.field_name.errors }}{{ form.field_name }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.data_type.label }}</th>
-                        <td>{{ form.data_type.errors }}{{ form.data_type }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.verbose_name.label }}</th>
-                        <td>{{ form.verbose_name.errors }}{{ form.verbose_name }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.no_data_value.label }}</th>
-                        <td>{{ form.no_data_value.errors }}{{ form.no_data_value }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.geography.label }}</th>
-                        <td>{{ form.geography.errors }}{{ form.geography }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.geographic_level.label }}</th>
-                        <td>{{ form.geographic_level.errors }}{{ form.geographic_level }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.domain.label }}</th>
-                        <td>{{ form.domain.errors }}{{ form.domain }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.subdomain.label }}</th>
-                        <td>{{ form.subdomain.errors }}{{ form.subdomain }}</td>
-                    </tr>
-					<tr>
-                        <th scope="row">{{ form.year.label }}</th>
-                        <td>{{ form.year.errors }}{{ form.year }}</td>
-                    </tr>
-					<!--
-                    <tr>
-                        <th scope="row">{{ form.begin_year.label }}</th>
-                        <td>{{ form.begin_year.errors }}{{ form.begin_year }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{{ form.end_year.label }}</th>
-                        <td>{{ form.end_year.errors }}{{ form.end_year }}</td>
-                    </tr>
-					-->
-					<!-- TODO: add multi-choice? -->
-                    <tr>
-                        <th scope="row">{{ form.visualization_types.label }}</th>
-                        <td>{{ form.visualization_types.errors }}{{ form.visualization_types }}</td>
-                    </tr>
-					<!-- TODO: add openfile? -->
-                    <tr>
-                        <th scope="row">{{ form.geometry.label }}</th>
-                        <td>{{ form.geometry.errors }}{{ form.geometry }}</td>
-                    </tr>					
-					<!--
-                    <tr>
-                        <th scope="row">{{ form.tags.label }}</th>
-                        <td>{{ form.tags.errors }}{{ form.tags }}<br/><span class="form-help-text">{{form.tags.help_text}}</span></td>
-                    </tr>
-					-->
-                </tbody>
-            </table>
-		{% endfor %}
-	</div>
-	<br/><hr><br/>
-<!--
-	<div id="MetadataOtherFormset">
-	<h2>Metadata - Other Information</h2>	
-		{% for form in metadata_other_formset.forms %}
-			<table id="{{form.prefix}}-row" class="form-container" border="0" cellpadding="0" cellspacing="5">
-				<tbody>
-					<tr>
-						<th scope="row">{{ form.info_name.label }}</th>
-						<td>{{ form.info_name.errors }}{{ form.info_name }}</td>
-					</tr>
-					<tr>
-						<th scope="row">{{ form.info_value.label }}</th>
-						<td>{{ form.info_value.errors }}{{ form.info_value }}</td>
-					</tr>
-				</tbody>
-			</table>
-		{% endfor %}
-	</div>
--->
-	<br/><hr><br/>
-	<div class="form-submit-buttons">
-		<p>
-			{{field_metadata_formset.management_form}}
-			<!--
-			{{metadata_other_formset.management_form}}
-			-->
-            <input type="submit" name="save_continue" value="Save and continue editing" />
-			<input type="submit" name="save" id="save-button" value="Save">
-        </p>
-	</div>
+		{% if form_has_errors %}
+			<p class="errornote">Please correct the errors below.</p>
+		{% endif %}
+		<div id="MetadataFieldsFormset">
+			<h2>Metadata - Fields</h2>
+			{% for form in field_metadata_formset.forms %}
+				<table id="{{ form.prefix }}-row" class="form-container" border="0" cellpadding="0" cellspacing="5">
+					<tbody>
+						<tr>
+							<th scope="row">{{ form.field_name.label }}</th>
+							<td>{{ form.field_name.errors }}{{ form.field_name }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.data_type.label }}</th>
+							<td>{{ form.data_type.errors }}{{ form.data_type }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.verbose_name.label }}</th>
+							<td>{{ form.verbose_name.errors }}{{ form.verbose_name }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.no_data_value.label }}</th>
+							<td>{{ form.no_data_value.errors }}{{ form.no_data_value }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.geography.label }}</th>
+							<td>{{ form.geography.errors }}{{ form.geography }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.geographic_level.label }}</th>
+							<td>{{ form.geographic_level.errors }}{{ form.geographic_level }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.domain.label }}</th>
+							<td>{{ form.domain.errors }}{{ form.domain }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.subdomain.label }}</th>
+							<td>{{ form.subdomain.errors }}{{ form.subdomain }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.year.label }}</th>
+							<td>{{ form.year.errors }}{{ form.year }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.visualization_types.label }}</th>
+							<td>{{ form.visualization_types.errors }}{{ form.visualization_types }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.geometry.label }}</th>
+							<td>{{ form.geometry.errors }}{{ form.geometry }}</td>
+						</tr>					
+					</tbody>
+				</table>
+			{% endfor %}
+		</div>
+		{{field_metadata_formset.management_form}}
+		<br/><hr><br/>
+		<div class="form-submit-buttons">
+			<p>
+				<input type="submit" name="save_continue" value="Save and continue editing" />
+				<input type="submit" name="save" id="save-button" value="Save">
+			</p>
+		</div>
 	</form>
 	{% if not is_add_new_metadata %}
 		<a class="delete-link" href="../delete_confirm">Delete Metadata</a>
@@ -277,21 +219,14 @@
 
 {% block bottom_javascript %}
 	<script type="text/javascript">
+		<!-- JavaScript for Dynamic Formset -->
 		$(function(){
 			$('#MetadataFieldsFormset table').formset(
 				{
 				formCssClass: 'dynamic-fields-form',
-				prefix: "{{ metadata_fields_formset.prefix }}"
+				prefix: "{{ field_metadata_formset.prefix}}"
 				}
 			);
-			/*
-			$('#MetadataOtherFormset table').formset(
-				{
-				formCssClass: 'dynamic-other-form',
-				prefix: "{{ metadata_other_formset.prefix }}"
-				}
-			);
-			*/
 		})
 	</script>
 {% endblock %}

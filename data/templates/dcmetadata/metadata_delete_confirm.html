@@ -1,33 +1,20 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static admin_modify %}
-{% load custom_tag %}
-
-
-{% block extrahead %}{{ block.super }}{% endblock %}
-
-{% block title %}Are you sure? | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
-
+{% load i18n admin_static admin_modify %}{% load custom_tag %}
+{% block current_title %}Are you sure?{% endblock %}
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
-&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
-&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
-&rsaquo; Delete Confirm
-</div>
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
+	&rsaquo; Delete Confirm
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-	{% block object-tools %}{% endblock %}
-	<br/><hr><br/>
-	<h1>Metadata ID: {{metadata_id}}</h1>
-	<br/><br/><hr><br/><br/>
-	<h1>Are you sure?</h1>
-	<p>Are you sure you want to delete metadata <b>"Metadata ID: {{metadata_id}}"</b> for source data "<b>{{ source_data_name }}</b>"?</p>
-	
+	<h1>Delete Source Data Metadata ID: {{metadata_id}}</h1>
+	<p>Are you sure you want to delete metadata of Source Data (ID= {{metadata_id}}): "
+		<b><a target="_blank" class="sourcedata-link" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/{{metadata_id}}/">{{ source_data_name }}</a> "</b>?
+	</p>
 	<br/><hr><br/><br/>
-	
 	<form action="../delete/" method="post"> {% csrf_token %}
 		<div>
 			<input type="hidden" name="post" value="yes" />
@@ -35,6 +22,5 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Cancel" onclick="window.location.href='../'">
 		</div>
 	</form>
-	
 </div>
 {% endblock %}

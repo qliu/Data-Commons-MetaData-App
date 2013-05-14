@@ -1,97 +1,113 @@
-{% load admin_static %}{% load url from future %}{% load smart_if %}{% load custom_filter %}{% load custom_tag %}<!DOCTYPE html>
+{% load i18n %}{% load admin_static %}{% load url from future %}{% load smart_if %}{% load custom_filter %}{% load custom_tag %}
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<!-- HEAD -->
 <head>
-<title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/base.css" >
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/forms.css" />
-<link ref="shortcut icon" href="{{ MEDIA_URL }}images/favicon.ico">
-<link rel="icon" type="image/png" href="{{ MEDIA_URL }}images/favicon.png"/>
-<link href="{{ MEDIA_URL }}css/third_party/JQuery/default.css" rel="stylesheet" type="text/css" media="screen" />
-{% block extrastyle %}
-<style type="text/css">
-	.github-link {
-		padding: 10px 10px 10px 35px;
-		background: url("https://a248.e.akamai.net/assets.github.com/images/modules/dashboard/octofication.png?8211dc5c") 0 50% no-repeat #DCF7DD;
-		border: 1px solid #BBD2BC;
-		border-top-color: #D1EAD2;
-		border-radius: 5px;
-	}
-</style>
-{% endblock %}
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% static "admin/css/ie.css" %}{% endblock %}" /><![endif]-->
-{% block extrahead %}{% endblock %}
-{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+	<!-- Title -->
+	<title>{% block title %}{% endblock %}</title>
+	<!-- FavIcon -->
+	<link ref="shortcut icon" href="{{ MEDIA_URL }}images/favicon.ico">
+	<link rel="icon" type="image/png" href="{{ MEDIA_URL }}images/favicon.png"/>
+	<!-- Base Style -->
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/base.css" >
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin/forms.css" />
+	<link href="{{ MEDIA_URL }}css/third_party/JQuery/default.css" rel="stylesheet" type="text/css" media="screen" />
+	<!-- Extra Style -->
+	{% block extrastyle %}{% endblock %}
+	<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% static "admin/css/ie.css" %}{% endblock %}" /><![endif]-->
+	{% block extrahead %}{% endblock %}
+	{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
 </head>
-{% load i18n %}
 
+<!-- BODY -->
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
-
-<!-- Container -->
-<div id="container">
-
-    {% if not is_popup %}
-    <!-- Header -->
-    <div id="header">
-        <div id="branding">
-        {% block branding %}{% endblock %}
-        </div>
-        {% if user.is_active and user.is_staff %}
-        <div id="user-tools">
-            {% trans 'Welcome,' %}
-            <strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</strong>.
-            {% block userlinks %}
-                {% url 'django-admindocs-docroot' as docsroot %}
-                {% if docsroot %}
-                    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
-                {% endif %}
-                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
-                <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
-            {% endblock %}
-        </div>
-        {% endif %}
-        {% block nav-global %}{% endblock %}
-    </div>
-    <!-- END Header -->
-	<div id="page">
-    {% block breadcrumbs %}
-    <div class="breadcrumbs">
-    <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-    {% if title %} &rsaquo; {{ title }}{% endif %}
-    </div>
-    {% endblock %}
-    {% endif %}
-
-    {% block messages %}
-        {% if messages %}
-        <ul class="messagelist">{% for message in messages %}
-          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}</ul>
-        {% endif %}
-    {% endblock messages %}
-
-    <!-- Content -->
-    <div id="content" class="{% block coltype %}colM{% endblock %}">
-        {% block pretitle %}{% endblock %}
-        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
-        {% block content %}
-        {% block object-tools %}{% endblock %}
-        {{ content }}
-        {% endblock %}
-        {% block sidebar %}{% endblock %}
-        <br class="clear" />
-    </div>
-    <!-- END Content -->
-	</div>
-    {% block footer %}
-	<div id="footer">
-			<div class="github-link">
-				<h3>We are on <a href="https://github.com/qliu/Data-Commons-MetaData-App" target="_blank">GitHub</a>.</h3>
+	<!-- Container -->
+	<div id="container">
+		{% if not is_popup %}
+			<!-- Header -->
+			<div id="header">
+				<!-- Branding -->
+				<div id="branding">{% block branding %}{% endblock %}</div>
+				<!-- User Tools -->
+				<div id="user-tools">
+					{% if user.is_active %}
+					<!-- Logged-in User -->
+						{% trans 'Hello,' %}
+						<!-- User Account -->
+						<strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</strong>.
+						{% block userlinks %}
+							{% if user.is_staff %}
+							<!-- Staff -->
+								{% url 'django-admindocs-docroot' as docsroot %}
+								{% if docsroot %}
+									<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+								{% endif %}
+								<a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+							{% endif %}
+							 <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+						{% endblock %}
+					{% else %}
+					<!-- Visitor -->	
+						<strong>Sign in / Register</strong>
+					{% endif %}
+				</div>
+				{% block nav-global %}{% endblock %}
 			</div>
+			
+			<!-- Page -->
+			<div id="page">
+				<!-- Breadcrumbs -->
+				<div class="breadcrumbs">
+					<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
+					{% block breadcrumbs %}{% endblock %}
+					<!--
+					{% if title %} &rsaquo; {{ title }}{% endif %}
+					-->
+					<hr>
+				</div>
+		{% endif %}<!-- Content for Non-Popup Window Only, Ends Here -->
+				<!-- Message -->
+				{% block messages %}
+					{% if messages %}
+						<ul class="messagelist">
+							{% for message in messages %}
+							<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				{% endblock messages %}
+				
+				<!-- Content -->
+				<div id="content" class="{% block coltype %}colM{% endblock %}">
+					<!-- Pre-title -->
+					{% block pretitle %}{% endblock %}
+					<!-- Content Title -->
+					{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+					<!-- Content -->
+					{% block content %}
+						<!-- Object Tools -->
+						{% block object-tools %}{% endblock %}
+						<!-- Content -->
+						{{ content }}
+					{% endblock %}
+					<!--- Side Bar -->
+					{% block sidebar %}{% endblock %}
+					<br class="clear" />
+				</div>
+			</div>
+			
+			<!-- Footer -->
+			{% block footer %}
+				<!-- GitHub Link -->
+				<div id="footer">
+					<div class="github-link">
+						<h3>We are on <a href="https://github.com/qliu/Data-Commons-MetaData-App" target="_blank">GitHub</a>.</h3>
+					</div>
+				</div>
+			{% endblock %}
 	</div>
-	{% endblock %}
-</div>
-<!-- END Container -->
-		<!-- Bottom Javascript -->
-		{% block bottom_javascript %} {% endblock bottom_javascript %}
+
+	<!-- Bottom Javascript -->
+	{% block bottom_javascript %} {% endblock bottom_javascript %}
 </body>
 </html>

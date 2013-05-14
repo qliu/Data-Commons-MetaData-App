@@ -859,3 +859,11 @@ table#change-history tbody th {
     color: #666;
 }
 
+/* GitHub footer */
+.github-link {
+	padding: 10px 10px 10px 35px;
+	background: url("https://a248.e.akamai.net/assets.github.com/images/modules/dashboard/octofication.png?8211dc5c") 0 50% no-repeat #DCF7DD;
+	border: 1px solid #BBD2BC;
+	border-top-color: #D1EAD2;
+	border-radius: 5px;
+}

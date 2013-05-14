@@ -1,96 +1,91 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static admin_modify %}
-{% load url from future %}
-{% load admin_urls %}
-{% load smart_if %}
-{% load custom_tag %}
+{% load i18n admin_static admin_modify %}{% load url from future %}{% load admin_urls %}{% load smart_if %}{% load custom_tag %}
+{% block extrastyle %}
+	<style type="text/css">
 
-{% block extrahead %}{{ block.super }}
-{% url 'admin:jsi18n' as jsi18nurl %}
-<script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/'}}"></script>
-<!-- JQUERY 1.7.2 -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<!-- Prototype -->
-<!-- TEMP COMMENT OFF
-<script type="text/javascript" src="{{STATIC_RUL}}js/third_party/prototype-1.7.js"></script>
--->
-<!-- Scripts to enable Tab key in textarea -->
-<script type="text/javascript">//<![CDATA[ 
-	$(window).load(function(){
-		$("textarea").keydown(function(e) {
-			if (e.keyCode === 9) { // tab was pressed
-				// get caret position/selection
-				var start = this.selectionStart;
-				end = this.selectionEnd;
+		form textarea {
+			display: inline-block;
+		}
+		form select {
+			display: inline-block;
+		}
 
-				var $this = $(this);
+		#metadata-block {
+			width: 200px;
+			height: 24px;
+			display: block;
+			float: right;
+			margin-right: 5%;
+			margin-bottom: 5px;
+		}
+		
+		#prev-next-block{
+			width: 200px;
+			height: 24px;
+			display: block;
+			float: right;
+			margin-bottom: 15px;
+			margin-top: -15px;
+		}
+		
+		#id_upload_file{
+			width: 600px;
+		}
+		
+		.view-metadata-link {
+			padding-left:20px;
+			background:url({{ MEDIA_URL }}images/icon_metadata.gif) no-repeat left center;
+		}
+		
+		.add-metadata-link {
+			padding-left:20px;
+			background:url({{ MEDIA_URL }}images/icon_metadata_add.png) no-repeat left center;
+		}
+		
+		.prev-record-link {
+			padding-left:20px;
+			background:url({{ MEDIA_URL }}images/icon_prev.png) no-repeat left center;
+			background-size: 25% Auto;
+		}
+		
+		.next-record-link {
+			padding-right:20px;
+			background:url({{ MEDIA_URL }}images/icon_next.png) no-repeat right center;
+			background-size: 37% Auto;
+		}
+	</style>
+{% endblock %}
 
-				// set textarea value to: text before caret + tab + text after caret
-				$this.val($this.val().substring(0, start) + "\t" + $this.val().substring(end));
+{% block extrahead %}
+	{{ block.super }}
+	{% url 'admin:jsi18n' as jsi18nurl %}
+	<script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/'}}"></script>
+	<!-- JQUERY 1.7.2 -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!-- Scripts to enable Tab key in textarea -->
+	<script type="text/javascript">//<![CDATA[ 
+		$(window).load(function(){
+			$("textarea").keydown(function(e) {
+				if (e.keyCode === 9) { // tab was pressed
+					// get caret position/selection
+					var start = this.selectionStart;
+					end = this.selectionEnd;
 
-				// put caret at right position again
-				this.selectionStart = this.selectionEnd = start + 1;
+					var $this = $(this);
 
-				// prevent the focus lose
-				return false;
-			}
-		});
-	});//]]>  
-</script>
-<style type="text/css">
+					// set textarea value to: text before caret + tab + text after caret
+					$this.val($this.val().substring(0, start) + "\t" + $this.val().substring(end));
 
-	form textarea {
-		display: inline-block;
-	}
-	form select {
-		display: inline-block;
-	}
+					// put caret at right position again
+					this.selectionStart = this.selectionEnd = start + 1;
 
-	#metadata-block {
-		width: 200px;
-		height: 24px;
-		display: block;
-		float: right;
-		margin-right: 5%;
-		margin-bottom: 5px;
-	}
-	
-	#prev-next-block{
-		width: 200px;
-		height: 24px;
-		display: block;
-		float: right;
-		margin-bottom: 15px;
-		margin-top: -15px;
-	}
-	
-	#id_upload_file{
-		width: 600px;
-	}
-	
-	.view-metadata-link {
-		padding-left:20px;
-		background:url({{ MEDIA_URL }}images/icon_metadata.gif) no-repeat left center;
-	}
-	
-	.add-metadata-link {
-		padding-left:20px;
-		background:url({{ MEDIA_URL }}images/icon_metadata_add.png) no-repeat left center;
-	}
-	
-	.prev-record-link {
-		padding-left:20px;
-		background:url({{ MEDIA_URL }}images/icon_prev.png) no-repeat left center;
-		background-size: 25% Auto;
-	}
-	
-	.next-record-link {
-		padding-right:20px;
-		background:url({{ MEDIA_URL }}images/icon_next.png) no-repeat right center;
-		background-size: 37% Auto;
-	}
-</style>
-{{ media }}
+					// prevent the focus lose
+					return false;
+				}
+			});
+		});//]]>  
+	</script>
+	{{ media }}
 {% endblock %}
 
 {% block coltype %}{% if ordered_objects %}colMS{% else %}colM{% endif %}{% endblock %}
@@ -98,27 +93,29 @@
 {% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
 
 {% if not is_popup %}
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">App:{{ app_label|capfirst|escape }} Administration</a>
-&rsaquo; {% if has_change_permission %}<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}
-&rsaquo; {% if add %}{% trans 'Add' %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
-</div>
-<br/><hr><br/>
-{% if original.id %}
-<div id="prev-next-block">
-{% if original.get_previous_record_id != -1 and original.id > 0 %}
-<a class="prev-record-link" title="Privious" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_previous_record_id}}">Previous</a>
+	{% block breadcrumbs %}
+		&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">App:{{ app_label|capfirst|escape }} Administration</a>
+		&rsaquo; 
+		{% if has_change_permission %}
+			<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+		{% else %}
+			{{ opts.verbose_name_plural|capfirst }}
+		{% endif %}
+		&rsaquo; {% if add %}{% trans 'Add' %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+		{% if original.id %}
+			<div id="prev-next-block">
+			{% if original.get_previous_record_id != -1 and original.id > 0 %}
+			<a class="prev-record-link" title="Privious" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_previous_record_id}}">Previous</a>
+			{% endif %}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			{% if original.get_next_record_id != -1 and original.id > 0 %}
+			<a class="next-record-link" title="Next" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_next_record_id}}">Next</a>
+			{% endif %}
+			</div>
+		{% endif %}
+	{% endblock %}
 {% endif %}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{% if original.get_next_record_id != -1 and original.id > 0 %}
-<a class="next-record-link" title="Next" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_next_record_id}}">Next</a>
-{% endif %}
-</div>
-{% endif %}
-{% endblock %}
-{% endif %}
+
 {% block content %}
 {% url 'admin:index' as admin_url %}
 {% if original.id %}

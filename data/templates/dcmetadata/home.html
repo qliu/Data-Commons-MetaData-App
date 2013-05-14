@@ -1,49 +1,37 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static admin_modify %}
 {% load custom_tag %}
-
-{% block title %}Home | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
-
-{% block extrahead %}
+{% block current_title %}Home{% endblock %}
+{% block extrastyle %}
 	{{ block.super }}
-		<!-- CSS -->
-		<style type="text/css">
-		.home-block {
-			display: block;
-			border: 1px solid #ccc;
-			width: 60%;
-			margin: 30px;
-			background: white;
-		}
-		.home-block h2 {
-			font-size: 16px;
-			font-weigth: bold;
-			margin: 0;
-			padding: 2px 5px 3px 5px;
-			left-spacing: -1px;
-			text-align: left;
-			background: url({{ MEDIA_URL }}images/nav-bg.gif) top left repeat-x;
-			color: #666;
-		}
-		.home-block h3 {
-			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-			margin: 40px;
-		}
-		.home-block a {
-			text-decoration: none;
-		}
-		.home-block img {
-			margin-right: 20px;
-		}
-		</style>
+	<style type="text/css">
+	.home-block {
+		display: block;
+		border: 1px solid #ccc;
+		width: 60%;
+		margin: 30px;
+		background: white;
+	}
+	.home-block h2 {
+		font-size: 16px;
+		margin: 0;
+		padding: 2px 5px 3px 5px;
+		text-align: left;
+		background: url({{ MEDIA_URL }}images/nav-bg.gif) top left repeat-x;
+		color: #666;
+	}
+	.home-block h3 {
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		margin: 40px;
+	}
+	.home-block a {
+		text-decoration: none;
+	}
+	.home-block img {
+		margin-right: 20px;
+	}
+	</style>
 {% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-</div>
-<hr>
-{% endblock %}
 {% block content %}
 <div id="content-main">
 	<div class="home-block">
@@ -69,7 +57,7 @@
 {% if not user.is_staff %}
 <div id="content-related">
 	<div class="home-block">
-		<h2>Login</2>
+		<h2>Login</h2>
 	</div>
 </div>
 {% endif %}
