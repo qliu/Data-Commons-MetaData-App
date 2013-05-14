@@ -94,7 +94,7 @@ MEDIA_ROOT = os.path.join(ROOT_PATH, 'data/www')
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 # My Example: "http://localhost:8000/static/js/test/test_dajaxice_js.js"
 MEDIA_URL = 'http://%s/static/%s/' % (SERVER_URL, ROOT_URL)
-ADMIN_MEDIA_PREFIX = '/static//admin/'
+ADMIN_MEDIA_PREFIX = '/static/%s/admin/' % ROOT_URL
 
 # Dajaxice Media Prefix
 #DAJAXICE_MEDIA_PREFIX = "dajaxice"
