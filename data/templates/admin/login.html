@@ -1,26 +1,33 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static %}
-{% load url from future %}
+{% load i18n admin_static %}{% load url from future %}
 
 {% block extrastyle %}{{ block.super }}
-<link rel="stylesheet" type="text/css" "{{STATIC_RUL}}admin/css/login.css"/>
-<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
-<style type="text/css">
-	#login-form{
-		width:300px;
-	}
-	
-	.form-row{
-		width:200px;
-		border:0;
-		margin:auto;
-	}
-	
-	.submit-row{
-		border:0;
-	}
-	
-</style>
+	<link rel="stylesheet" type="text/css" "{{STATIC_RUL}}admin/css/login.css"/>
+	<script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/'}}"></script>
+	<style type="text/css">
+		label {
+			font-size: 15px;
+		}
+		.form-row{
+			width:300px;
+			border:0;
+			margin:auto;
+		}
+		.form-row input{
+			margin: 10px 0;
+		}
+		.submit-row{
+			width:300px;
+			border:0;
+			background: None;
+			margin: auto;
+			text-align: left;
+		}
+		.submit-row input{
+			margin: 0;
+			padding: 7px 15px;
+		}
+	</style>
 {% endblock %}
 {% block bodyclass %}login{% endblock %}
 
@@ -28,7 +35,9 @@
 
 {% block content_title %}{% endblock %}
 
-{% block breadcrumbs %}{% endblock %}
+{% block breadcrumbs %}
+	 &rsaquo; Sign in
+{% endblock %}
 
 {% block content %}
 {% if form.errors and not form.non_field_errors and not form.this_is_the_login_form.errors %}
@@ -64,7 +73,7 @@
   </div>
   {% endif %}
   <div class="submit-row">
-    <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}" />
+    <label>&nbsp;</label><input type="submit" value="{% trans 'Sign in' %}" />
   </div>
 </form>
 

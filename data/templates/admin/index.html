@@ -8,11 +8,7 @@
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block breadcrumbs %}
-    <div class="breadcrumbs">
-        <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-        {% if title %} &rsaquo; {{ title }}{% endif %}
-    </div>
-    <br/><hr><br/>
+	{% if title %} &rsaquo; {{ title }}{% endif %}
 {% endblock %}
 
 {% block content %}

@@ -441,11 +441,15 @@ input[type=text], input[type=password], textarea, select, .vTextField {
     color: black;
     border: 1px solid #bbb;
     border-color: #ddd #aaa #aaa #ddd;
+	cursor: pointer;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background-image: url(datacommons/../../../images/nav-bg_hover.gif);
 }
 
 .button:active, input[type=submit]:active, input[type=button]:active {
     background-image: url(datacommons/../../../images/nav-bg-reverse.gif);
-    background-position: top;
 }
 
 .button[disabled], input[type=submit][disabled], input[type=button][disabled] {
@@ -479,6 +483,7 @@ input[type=text], input[type=password], textarea, select, .vTextField {
 .module {
     border: 1px solid #ccc;
 	border-right-width: 3px;
+	border-bottom-width: 2px;
     margin-bottom: 5px;
     background: white;
 }

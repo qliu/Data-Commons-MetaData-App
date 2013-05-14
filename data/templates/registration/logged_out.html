@@ -1,14 +1,14 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n %}
-{% load url from future %}
-{% load custom_tag %}
+{% load i18n %}{% load url from future %}{% load custom_tag %}
 
-{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a></div>{% endblock %}
+{% block breadcrumbs %}
+	&rsaquo; Logout
+{% endblock %}
 
 {% block content %}
 
-<p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
+<p>You have been logged out.</p>
 
-<p><a href="{% url 'admin:index' %}">{% trans 'Log in again' %}</a></p>
+<p><b><a href="{% url 'admin:index' %}"><img src="{{ MEDIA_URL }}images/icon_login.png"> {% trans 'Log in again' %}</a></b></p>
 
 {% endblock %}

@@ -42,9 +42,9 @@
 								{% if docsroot %}
 									<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
 								{% endif %}
-								<a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+								<a href="{% url 'admin:password_change' %}"><img src="{{ MEDIA_URL }}images/icon_password.png">{% trans 'Change password' %}</a> /
 							{% endif %}
-							 <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+							 <a href="{% url 'admin:logout' %}"><img src="{{ MEDIA_URL }}images/icon_logout.png"> {% trans 'Log out' %}</a>
 						{% endblock %}
 					{% else %}
 					<!-- Visitor -->	

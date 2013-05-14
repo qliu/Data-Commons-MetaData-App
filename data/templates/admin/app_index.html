@@ -1,15 +1,10 @@
 {% extends "admin/index.html" %}
-{% load i18n %}
-{% load url from future %}
-{% load custom_tag %}
+{% load i18n %}{% load url from future %}{% load custom_tag %}
 
 {% if not is_popup %}
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-{% if title %} &rsaquo; {{ title }}{% endif %}
-</div>
-<br/><hr><br/>
-{% endblock %}
+	{% block breadcrumbs %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/">Site administration</a>
+		{% if title %} &rsaquo; App: {{ title }}{% endif %}
+	{% endblock %}
 {% endif %}
 {% block sidebar %}{% endblock %}
