@@ -255,7 +255,7 @@ span.clearable-file-input label {
 .calendarbox, .clockbox {
     margin: 5px auto;
     font-size: 11px;
-    width: 16em;
+    width: 235px;
     text-align: center;
     background: white;
     position: relative;
@@ -359,7 +359,7 @@ span.clearable-file-input label {
     font-weight: bold;
     font-size: 12px;
     background: #C9DBED url(../img/default-bg.gif) bottom left repeat-x;
-    padding: 1px 4px 2px 4px;
+    padding: 6px;
     color: white;
 }
 

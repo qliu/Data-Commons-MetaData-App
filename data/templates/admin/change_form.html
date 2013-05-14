@@ -1,5 +1,5 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static admin_modify %}{% load url from future %}{% load admin_urls %}{% load smart_if %}{% load custom_tag %}
+{% load adminmedia %}{% load i18n admin_static admin_modify %}{% load url from future %}{% load admin_urls %}{% load smart_if %}{% load custom_tag %}
 {% block extrastyle %}
 	<style type="text/css">
 
@@ -54,6 +54,10 @@
 			background-size: 37% Auto;
 		}
 	</style>
+	<!-- Extra JS for using Django admin date picker widget -->
+	<script type="text/javascript">
+		window.__admin_media_prefix__ = "{% filter escapejs %}{% admin_media_prefix %}{% endfilter %}";
+	</script>
 {% endblock %}
 
 {% block extrahead %}
@@ -102,28 +106,32 @@
 			{{ opts.verbose_name_plural|capfirst }}
 		{% endif %}
 		&rsaquo; {% if add %}{% trans 'Add' %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
-		{% if original.id %}
-			<div id="prev-next-block">
-			{% if original.get_previous_record_id != -1 and original.id > 0 %}
-			<a class="prev-record-link" title="Privious" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_previous_record_id}}">Previous</a>
+		{% if opts.verbose_name = 'source data inventory' or opts.verbose_name = 'dataset' %}
+			{% if original.id %}
+				<div id="prev-next-block">
+				{% if original.get_previous_record_id != -1 and original.id > 0 %}
+				<a class="prev-record-link" title="Privious" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_previous_record_id}}">Previous</a>
+				{% endif %}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				{% if original.get_next_record_id != -1 and original.id > 0 %}
+				<a class="next-record-link" title="Next" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_next_record_id}}">Next</a>
+				{% endif %}
+				</div>
 			{% endif %}
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			{% if original.get_next_record_id != -1 and original.id > 0 %}
-			<a class="next-record-link" title="Next" href="{{admin_url}}{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/{{opts.verbose_name|cut:" "}}/{{original.get_next_record_id}}">Next</a>
-			{% endif %}
-			</div>
 		{% endif %}
 	{% endblock %}
 {% endif %}
 
 {% block content %}
 {% url 'admin:index' as admin_url %}
-{% if original.id %}
-{% if original.metadata %}
-	<div id="metadata-block"><a class="view-metadata-link" title="View Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/">Metadata</a></div>
-{% else %}
-	<div id="metadata-block"><a class="add-metadata-link" title="Add Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/edit">Add Metadata</a></div>
-{% endif %}
+{% if opts.verbose_name = 'source data inventory' or opts.verbose_name = 'dataset' %}
+	{% if original.id %}
+		{% if original.metadata %}
+			<div id="metadata-block"><a class="view-metadata-link" title="View Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/">Metadata</a></div>
+		{% else %}
+			<div id="metadata-block"><a class="add-metadata-link" title="Add Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/edit">Add Metadata</a></div>
+		{% endif %}
+	{% endif %}
 {% endif %}
 <div id="content-main">
 {% block object-tools %}
@@ -131,7 +139,9 @@
   <ul class="object-tools">
     {% block object-tools-items %}
     <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
+	<!--
     {% if has_absolute_url %}<li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+	-->
     {% endblock %}
   </ul>
 {% endif %}{% endif %}
