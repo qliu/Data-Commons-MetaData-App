@@ -1,37 +1,32 @@
 {% extends "admin/admin_base_site.html" %}
-{% load i18n admin_static admin_modify %}
-{% load custom_tag %}
+{% load i18n admin_static admin_modify %}{% load custom_tag %}
 
-{% block title %}DB Upload Help Document | {% trans 'Data Commons Source Data Metadata Management' %}{% endblock %}
+{% block current_title %}DB Upload Help Document{% endblock %}
 
-{% block extrahead %}
+{% block extrastyle %}
 	{{ block.super }}
-		<!-- CSS -->
-		<style type="text/css">
-		h3 {
-			text-decoration: underline;
-		}
-		.help-block {
-			display: block;
-			margin-left: 5%;
-		}
-		.help-block li {
-			font-size: 13px;
-		}		
-		</style>
+	<style type="text/css">
+	h3 {
+		text-decoration: underline;
+	}
+	.help-block {
+		display: block;
+		margin-left: 5%;
+	}
+	.help-block li {
+		font-size: 13px;
+	}		
+	</style>
 {% endblock %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-&rsaquo; DB Upload Help Documents
-</div>
+	&rsaquo; DB Upload Help Documents
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-	<br/><hr><br/>
 	<h1>DB Upload Tool - Help Document</h1>
+	<br/><hr><br/>
 	<div class="help-block">
 		<h2>Content</h2>
 		<ul>
