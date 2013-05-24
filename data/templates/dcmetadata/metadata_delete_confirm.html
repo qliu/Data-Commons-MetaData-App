@@ -2,7 +2,9 @@
 {% load i18n admin_static admin_modify %}{% load custom_tag %}
 {% block current_title %}Are you sure?{% endblock %}
 {% block breadcrumbs %}
-	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% if user.is_superuser %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% endif %}
 	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
 	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
 	&rsaquo; Delete Confirm

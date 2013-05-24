@@ -33,7 +33,7 @@
 
 {% block nav-global %}{% endblock %}
 
-{% block content_title %}{% endblock %}
+{% block current_title %}Sign in{% endblock %}
 
 {% block breadcrumbs %}
 	 &rsaquo; Sign in
@@ -56,6 +56,9 @@
 
 <div id="content-main">
 <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+{% if error_msg %}
+	<p class="errornote">{{error_msg}}</p>
+{% endif %}
   <div class="form-row">
     {% if not form.this_is_the_login_form.errors %}{{ form.username.errors }}{% endif %}
     <label for="id_username" class="required">{% trans 'Username:' %}</label> {{ form.username }}
@@ -74,6 +77,7 @@
   {% endif %}
   <div class="submit-row">
     <label>&nbsp;</label><input type="submit" value="{% trans 'Sign in' %}" />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="sign_up_button" value="Sign up" onclick="window.location.href='../register'">
   </div>
 </form>
 

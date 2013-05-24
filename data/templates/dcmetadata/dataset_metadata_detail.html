@@ -108,7 +108,9 @@
 {% block current_title %}Dataset ID {{dataset_id}}{% endblock %}
 
 {% block breadcrumbs %}
-	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% if user.is_superuser %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% endif %}
 	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/">Datasets</a>
 	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset_id }}/">Dataset ID: {{dataset_id}}</a>
 	&rsaquo; Metadata
@@ -118,8 +120,12 @@
 <div id="content-main">
 	<h1>Dataset ID: {{dataset_id}}</h1>
 	<div id="metadata_tools">
-		<a class="edit-link" href="edit">Edit Dataset Metadata</a>
-		<a class="delete-link" href="delete_confirm">Delete Dataset Metadata</a>
+		{% if has_change_permission %}
+			<a class="edit-link" href="edit">Edit Dataset Metadata</a>
+		{% endif %}
+		{% if has_delete_permission %}
+			<a class="delete-link" href="delete_confirm">Delete Dataset Metadata</a>
+		{% endif %}
 	</div>
 	<br/><hr><br/>
 	<div class="metadata_detail">
@@ -156,8 +162,12 @@
 	</div>
 	<br/>
 	<div id="metadata_tools">
-		<a class="edit-link" href="edit">Edit Dataset Metadata</a>
-		<a class="delete-link" href="delete_confirm">Delete Dataset Metadata</a>
+		{% if has_change_permission %}
+			<a class="edit-link" href="edit">Edit Dataset Metadata</a>
+		{% endif %}
+		{% if has_delete_permission %}
+			<a class="delete-link" href="delete_confirm">Delete Dataset Metadata</a>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

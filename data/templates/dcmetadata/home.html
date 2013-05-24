@@ -37,17 +37,23 @@
 	<div class="home-block">
 		<h2>Source Data Inventory</2>
 		<a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">Source Data Inventory</h3></a>
-		<a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Source Data</h3></a>
+		{% if user.is_staff and 'dcmetadata.add_sourcedatainventory' in user.get_group_permissions %}
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Source Data</h3></a>
+		{% endif %}
 	</div>
 	<div class="home-block">
 		<h2>Dataset</2>
 		<a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">Dataset Inventory</h3></a>
-		<a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Dataset</h3></a>		
+		{% if user.is_staff and 'dcmetadata.add_dataset' in user.get_group_permissions %}
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Dataset</h3></a>
+		{% endif %}
 	</div>
-	<div class="home-block">
-		<h2>Site Administration</2>
-		<a href="{% setting 'APP_SERVER_URL' %}/admin/"><h3><img src="{{ MEDIA_URL }}images/home_icon_admin.png">Go to Site Administration (Admin login required)</h3></a>
-	</div>
+	{% if user.is_superuser %}
+		<div class="home-block">
+			<h2>Site Administration</2>
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/"><h3><img src="{{ MEDIA_URL }}images/home_icon_admin.png">Go to Site Administration (Admin login required)</h3></a>
+		</div>
+	{% endif %}
 	<div class="home-block">
 		<h2>DB Upload Tool</2>
 		<a href="{% setting 'APP_SERVER_URL' %}/db_upload_help_doc/"><h3><img src="{{ MEDIA_URL }}images/home_icon_help.png">DB Upload Tool Help Document</h3></a>

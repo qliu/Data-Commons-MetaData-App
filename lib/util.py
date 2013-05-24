@@ -146,3 +146,7 @@ def GetShapefileSize(file_path):
         if os.path.exists(file_full_path):
             file_size += os.path.getsize(file_full_path)
     return file_size
+
+# Check user permissions
+def HasPermission(user,app,perm,model):
+    return user.has_perm('%s.%s_%s' % (app,perm,model))

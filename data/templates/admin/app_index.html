@@ -3,8 +3,10 @@
 
 {% if not is_popup %}
 	{% block breadcrumbs %}
-		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/">Site administration</a>
-		{% if title %} &rsaquo; App: {{ title }}{% endif %}
+		{% if user.is_superuser %}
+			&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/">Site administration</a>
+			{% if title %} &rsaquo; App: {{ title }}{% endif %}
+		{% endif %}
 	{% endblock %}
 {% endif %}
 {% block sidebar %}{% endblock %}

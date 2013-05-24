@@ -59,6 +59,8 @@ APP_SERVER_URL = ''
 #APP_SERVER_URL = '/datacommons'
 ## <- use this for SERVER
 
+LOGIN_URL = '/dcmetadata/login/'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -203,7 +205,6 @@ LOGGING = {
         },
     }
 }
-
 
 # EMAIL SETTINGS
 EMAIL_USE_TLS = True

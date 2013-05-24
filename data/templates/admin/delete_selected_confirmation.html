@@ -5,12 +5,11 @@
 {% load custom_tag %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
-&rsaquo; <a href="{% url 'admin:app_list' app_label=app_label %}">App:{{ app_label|capfirst|escape }} Administration</a>
-&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
-&rsaquo; {% trans 'Delete multiple objects' %}
-</div>
+	{% if user.is_superuser %}
+		&rsaquo; <a href="{% url 'admin:app_list' app_label=app_label %}">App:{{ app_label|capfirst|escape }} Administration</a>
+	{% endif %}
+	&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+	&rsaquo; {% trans 'Delete multiple objects' %}
 {% endblock %}
 
 {% block content %}

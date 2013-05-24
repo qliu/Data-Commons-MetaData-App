@@ -814,13 +814,18 @@ table#change-history tbody th {
 }
 */
 #header a:link, #header a:visited {
-    color: #487909;
+	color: #0A470A;
+	font-weight: bold;
+	font-size: 20px;
+	text-decoration: none;
+	padding: 5px;
 }
 
 #header a:hover {
+	font-weight: bold;
     text-decoration: underline;
 }
-*/
+
 /*
 #branding h1 {
     padding: 0 10px;
@@ -871,4 +876,19 @@ table#change-history tbody th {
 	border: 1px solid #BBD2BC;
 	border-top-color: #D1EAD2;
 	border-radius: 5px;
+}
+
+/* Sign up button */
+.button.sign_up_button, input[type=button].sign_up_button {
+    background: white url(datacommons/../../../images/signupbutton-bg.gif) bottom repeat-x;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.button.sign_up_button:hover, input[type=button].sign_up_button:hover {
+    background-image: url(datacommons/../../../images/signupbutton-bg-hover.gif);
+}
+
+.button.sign_up_button:active, input[type=button].sign_up_button:active {
+    background-image: url(datacommons/../../../images/signupbutton-bg-active.gif);
 }

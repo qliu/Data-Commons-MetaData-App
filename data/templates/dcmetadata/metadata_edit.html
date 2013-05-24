@@ -84,45 +84,15 @@
 			padding: 10px;
 			margin: 20px;
 		}
-		
-		.errornote{
-			font-size: 12px !important;
-			display: block;
-			padding: 4px 5px 4px 25px;
-			margin: 0 0 3px 0;
-			border: 1px solid red;
-			color: red;
-			background: #FFC url({{ MEDIA_URL }}images/icon_error.png) 5px .3em no-repeat;
-			line-height: 14px;
-		}
-		
-		.errorlist li{
-			font-size: 12px !important;
-			display: block;
-			padding: 4px 5px 4px 25px;
-			margin: 0 0 3px 0;
-			border: 1px solid red;
-			color: white;
-			background: red url({{ MEDIA_URL }}images/icon_errormsg.png) 5px .3em no-repeat;
-			line-height: 14px;
-		}
-		
-		ul{
-			display: block;
-			-webkit-margin-before: 0px;
-			-webkit-margin-after: 0px;
-			-webkit-margin-start: 0px;
-			-webkit-margin-end: 0px;
-			-webkit-padding-start: 0px;
-			margin-top: -23px !important;
-		}
 	</style>
 {% endblock %}
 
 {% block current_title %}Metadata ID {{metadata_id}}{% endblock %}
 
 {% block breadcrumbs %}
-	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% if user.is_superuser %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% endif %}
 	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
 	{% if not is_add_new_metadata %}
 		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/metadata/{{ metadata_id }}/">Metadata ID: {{metadata_id}}</a>
@@ -146,9 +116,6 @@
 	{% endif %}
 	<br/><hr><br/>
 	<form id="myDynamicForm" method="post" action="">{% csrf_token %}
-		{% if form_has_errors %}
-			<p class="errornote">Please correct the errors below.</p>
-		{% endif %}
 		<div id="MetadataFieldsFormset">
 			<h2>Metadata - Fields</h2>
 			{% for form in field_metadata_formset.forms %}
@@ -211,7 +178,7 @@
 			</p>
 		</div>
 	</form>
-	{% if not is_add_new_metadata %}
+	{% if not is_add_new_metadata and has_delete_permission %}
 		<a class="delete-link" href="../delete_confirm">Delete Metadata</a>
 	{% endif %}
 </div>

@@ -96,44 +96,15 @@
 		fieldset table{
 			border-right: 0px solid;
 		}
-		
-		.errornote{
-			font-size: 12px !important;
-			display: block;
-			padding: 4px 5px 4px 25px;
-			margin: 0 0 3px 0;
-			border: 1px solid red;
-			color: red;
-			background: #FFC url({{ MEDIA_URL }}images/icon_error.png) 5px .3em no-repeat;
-			line-height: 14px;
-		}
-		
-		.errorlist li{
-			font-size: 12px !important;
-			display: block;
-			padding: 4px 5px 4px 25px;
-			margin: 0 0 3px 0;
-			border: 1px solid red;
-			color: white;
-			background: red url({{ MEDIA_URL }}images/icon_errormsg.png) 5px .3em no-repeat;
-			line-height: 14px;
-		}
-		
-		ul{
-			display: block;
-			-webkit-margin-before: 0px;
-			-webkit-margin-after: 0px;
-			-webkit-margin-start: 0px;
-			-webkit-margin-end: 0px;
-			-webkit-padding-start: 0px;
-		}
 	</style>
 {% endblock %}
 
 {% block current_title %}Dataset ID {{dataset_id}}{% endblock %}
 
 {% block breadcrumbs %}
-	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% if user.is_superuser %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% endif %}
 	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/">Datasets</a>
 	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset_id }}/">Dataset ID: {{dataset_id}}</a>
 	{% if is_add_new_metadata %}
@@ -148,63 +119,60 @@
 	<h1>Dataset ID: {{dataset_id}} - Metadata</h1>
 	<br/><br/>
 	<form id="myDynamicForm" method="post" action="">{% csrf_token %}
-	{% if form_has_errors %}
-		<p class="errornote">Please correct the errors below.</p>
-	{% endif %}
-	<fieldset class="module aligned">
-		<table class="form-container" border="0" cellpadding="0" cellspacing="5">
-			<tbody>
-				<tr>
-					<th scope="row">{{ dataset_metadata_form.fields.label }}</th>
-					<td>
-						<p> Use the arrow below or double click to select/deselect.<br/>Hold down "Control", or "Command" on a Mac, to select more than one.</p>
-						<p>{{ dataset_metadata_form.fields.errors }}</p>
-						{{ dataset_metadata_form.fields }}
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">{{ dataset_metadata_form.display_name.label }}</th>
-					<td>
-						<p>{{ dataset_metadata_form.display_name.errors }}</p>
-						{{ dataset_metadata_form.display_name }}
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">{{ dataset_metadata_form.pkey.label }}</th>
-					<td>
-						<p> Use the arrow below or double click to select/deselect.<br/>Hold down "Control", or "Command" on a Mac, to select more than one.</p>
-						<p>{{ dataset_metadata_form.pkey.errors }}</p>
-						{{ dataset_metadata_form.pkey }}
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">{{ dataset_metadata_form.gkey_main.label }}</th>
-					<td>
-						<p>{{ dataset_metadata_form.gkey_main.errors }}</p>
-						{{ dataset_metadata_form.gkey_main }}
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">{{ dataset_metadata_form.gkey_spatial.label }}</th>
-					<td>
-						<p>{{ dataset_metadata_form.gkey_spatial.errors }}</p>
-						{{ dataset_metadata_form.gkey_spatial }}
-					</td>
-				</tr>
-				{{ dataset_metadata_fkey_formset.management_form }}
-				{% for form in dataset_metadata_fkey_formset %}
+		<fieldset class="module aligned">
+			<table class="form-container" border="0" cellpadding="0" cellspacing="5">
+				<tbody>
 					<tr>
-						<th scope="row">{{ form.foreign_key.label }}</th>
-						<td>{{ form.foreign_key.errors }}{{ form.foreign_key }}</td>
+						<th scope="row">{{ dataset_metadata_form.fields.label }}</th>
+						<td>
+							<p> Use the arrow below or double click to select/deselect.<br/>Hold down "Control", or "Command" on a Mac, to select more than one.</p>
+							<p>{{ dataset_metadata_form.fields.errors }}</p>
+							{{ dataset_metadata_form.fields }}
+						</td>
 					</tr>
 					<tr>
-						<th scope="row">{{ form.reference_key.label }}</th>
-						<td>{{ form.reference_key.errors }}{{ form.reference_key }}</td>
+						<th scope="row">{{ dataset_metadata_form.display_name.label }}</th>
+						<td>
+							<p>{{ dataset_metadata_form.display_name.errors }}</p>
+							{{ dataset_metadata_form.display_name }}
+						</td>
 					</tr>
-				{% endfor %}				
-			</tbody>
-		</table>
-	</fieldset>
+					<tr>
+						<th scope="row">{{ dataset_metadata_form.pkey.label }}</th>
+						<td>
+							<p> Use the arrow below or double click to select/deselect.<br/>Hold down "Control", or "Command" on a Mac, to select more than one.</p>
+							<p>{{ dataset_metadata_form.pkey.errors }}</p>
+							{{ dataset_metadata_form.pkey }}
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">{{ dataset_metadata_form.gkey_main.label }}</th>
+						<td>
+							<p>{{ dataset_metadata_form.gkey_main.errors }}</p>
+							{{ dataset_metadata_form.gkey_main }}
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">{{ dataset_metadata_form.gkey_spatial.label }}</th>
+						<td>
+							<p>{{ dataset_metadata_form.gkey_spatial.errors }}</p>
+							{{ dataset_metadata_form.gkey_spatial }}
+						</td>
+					</tr>
+					{{ dataset_metadata_fkey_formset.management_form }}
+					{% for form in dataset_metadata_fkey_formset %}
+						<tr>
+							<th scope="row">{{ form.foreign_key.label }}</th>
+							<td>{{ form.foreign_key.errors }}{{ form.foreign_key }}</td>
+						</tr>
+						<tr>
+							<th scope="row">{{ form.reference_key.label }}</th>
+							<td>{{ form.reference_key.errors }}{{ form.reference_key }}</td>
+						</tr>
+					{% endfor %}				
+				</tbody>
+			</table>
+		</fieldset>
 	<div class="form-submit-buttons">
 		<p>
 			<input type="submit" name="save_continue" value="Save and continue editing" />
@@ -213,8 +181,8 @@
 	</div>
 	</form>
 	<br/>
-	{% if not is_add_new_metadata %}
-		<a class="delete-link" href="../delete_confirm">Delete Dataset</a>
+	{% if not is_add_new_metadata and has_delete_permission %}
+		<a class="delete-link" href="../delete_confirm">Delete Dataset Metadata</a>
 	{% endif %}
 </div>
 {% endblock %}

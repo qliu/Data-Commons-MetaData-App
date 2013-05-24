@@ -3,6 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.db import models
 from django.db.models.loading import get_model
+from django.contrib import messages
+from django.contrib.auth import authenticate,login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetPasswordForm
 
 # Import from general utilities
 from util import *
@@ -397,9 +402,87 @@ def db_upload_help_doc(request):
     return {}
 
 '''-----------------------
+User functions
+-----------------------'''
+# Login Page
+@render_to("admin/login.html")
+def user_login(request):
+    title = "Login"
+    if request.method == 'POST':
+        authform = AuthenticationForm(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username,password=password)
+        if user is not None:
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect('%s/dcmetadata/home/' % APP_SERVER_URL)
+        else:
+            error_msg = "Incorrect username or password."
+            return {'error_msg':error_msg,'form':authform,'title':title}
+    else:
+        authform = AuthenticationForm()
+        return {'form':authform,'title':title}
+    
+# Register
+@render_to("dcmetadata/register.html")
+def register(request):
+    if request.method == 'POST':
+        signup_form = UserCreationForm(request.POST)
+        if signup_form.is_valid():
+            new_user = signup_form.save()
+            user = authenticate(username=signup_form.cleaned_data["username"], password=signup_form.cleaned_data["password2"])
+            login(request, user)
+            return HttpResponseRedirect('%s/dcmetadata/user/profile/' % APP_SERVER_URL)
+        else:
+            error_msg = "Please check your register information."
+            return {'title':"Sign up",'error_msg':error_msg,'signup_form':signup_form}
+    else:
+        signup_form = UserCreationForm()
+    return {'title':"Sign up",'signup_form':signup_form}
+
+
+# User Profile
+@login_required
+@render_to("dcmetadata/user_profile.html")
+def user_profile(request):
+    user = request.user
+    if request.method == 'GET':
+        user_profile_form = UserProfileForm(instance=user)
+    elif request.method == 'POST':
+        user_profile_form = UserProfileForm(data=request.POST, instance=user)
+        if user_profile_form.is_valid():
+            user_profile_form.save()
+            messages.info(request, "User profile was changed successfully.")
+            if 'save' in request.POST:
+                return HttpResponseRedirect('%s/dcmetadata/home/' % APP_SERVER_URL)
+        else:
+            messages.error(request, "Please correct the errors below.")
+    return {'user_name':user.username,'user_profile_form':user_profile_form}
+
+# User Change Password
+@login_required
+@render_to("dcmetadata/user_password.html")
+def user_change_password(request):
+    user = request.user
+    if request.method == 'GET':
+        user_password_form = PasswordChangeForm(user)
+    elif request.method == 'POST':
+        user_password_form = PasswordChangeForm(user,request.POST)
+        if user_password_form.is_valid():
+            user_password_form.save()
+            messages.info(request, "User password was changed successfully.")
+            return HttpResponseRedirect('%s/dcmetadata/user/profile/' % APP_SERVER_URL)
+        else:
+            messages.error(request, "Please correct the errors below.")
+    return {'user_name':user.username,'user_password_form':user_password_form}
+
+
+'''-----------------------
 Home Page
 -----------------------'''
 # Home page
+@login_required
 @render_to("dcmetadata/home.html")
 def home(request):
     return {}
@@ -408,24 +491,32 @@ def home(request):
 Dataset
 ------------'''
 # Display Dataset Metadata
+@login_required
 @render_to("dcmetadata/dataset_metadata_detail.html")
 def dataset_metadata_detail(request,dataset_id):
     dataset = get_object_or_404(Dataset, id=dataset_id)
     dataset_metadata = get_object_or_404(DatasetMetadata, id=dataset_id)
     dataset_metadata_dict = dataset_metadata._get_metadata_dict()
+    user = request.user
+    has_change_permission = HasPermission(user,'dcmetadata','change','tablemetadata')
+    has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')    
     
     return {'dataset_id':dataset_id,
             'dataset':dataset,
             'dataset_metadata':dataset_metadata_dict,
+            'has_change_permission':has_change_permission,
+            'has_delete_permission':has_delete_permission,
             }
 
 # Add Dataset Metadata
+@login_required
 @render_to("dcmetadata/dataset_metadata_edit.html")
 def dataset_metadata_edit(request,dataset_id):
     # Initial vars
-    form_has_errors = False
     is_add_new_metadata = False
     tables = [] # list of dict storing table_id,table_name,table_fields for forms
+    user = request.user
+    has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')
     
     # Initial Dataset metadata
     dataset = get_object_or_404(Dataset, id=dataset_id)
@@ -548,16 +639,19 @@ def dataset_metadata_edit(request,dataset_id):
             if is_add_new_metadata:
                 dataset.metadata = dataset_metadata
                 dataset.save()
+                messages.info(request, "Dataset metadata was added successfully.")
+            else:
+                messages.info(request, "Dataset metadata was changed successfully.")
             
         else:
-            form_has_errors = True
+            messages.error(request, "Please correct the errors below.")
             return {'dataset_id':dataset_id,
                     'dataset_name':dataset_dict["name"],
                     'tables':tables,
                     'dataset_metadata_form':dataset_metadata_form,
                     'dataset_metadata_fkey_formset':dataset_metadata_fkey_formset,
-                    'form_has_errors':form_has_errors,
                     'is_add_new_metadata':is_add_new_metadata,
+                    'has_delete_permission':has_delete_permission,
                     }
     else:
         ## Initializing DatasetMetadataFKeyFormSet
@@ -618,12 +712,13 @@ def dataset_metadata_edit(request,dataset_id):
                 'tables':tables,
                 'dataset_metadata_form':dataset_metadata_form,
                 'dataset_metadata_fkey_formset':dataset_metadata_fkey_formset,
-                'form_has_errors':form_has_errors,
                 'is_add_new_metadata':is_add_new_metadata,
+                'has_delete_permission':has_delete_permission,
                 }
                 
 # Delete Dataset Metadata Entry
 ## Dataset Metadata entry delete confirm
+@login_required
 @render_to("dcmetadata/dataset_metadata_delete_confirm.html")
 def dataset_metadata_delete_confirm(request,dataset_id):
     dataset = get_object_or_404(Dataset, id=dataset_id)
@@ -634,6 +729,7 @@ def dataset_metadata_delete_confirm(request,dataset_id):
             }
 
 ## Delete Dataset Metadata entry
+@login_required
 def dataset_metadata_delete(request,dataset_id):
     dataset = get_object_or_404(Dataset, id=dataset_id)
     dataset_metadata = get_object_or_404(DatasetMetadata, id=dataset_id)
@@ -649,33 +745,40 @@ Metadata
 ------------'''
 
 # Display Metadata Entry
+@login_required
 @render_to("dcmetadata/metadata_detail.html")
 def metadata_detail(request,metadata_id):    
     table_metadata = TableMetadata.objects.get(id=metadata_id)
     metadata_json_dict = table_metadata._get_metadata_dict()
     table_tags_dict = metadata_json_dict["table_tags"]
-    field_metadata_dict_list = metadata_json_dict["field_metadata"]
-    
+    field_metadata_dict_list = metadata_json_dict["field_metadata"]    
     source_data = SourceDataInventory.objects.get(id=metadata_id)
     source_data_name = source_data.title
+    user = request.user
+    has_change_permission = HasPermission(user,'dcmetadata','change','tablemetadata')
+    has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')
 
     return {
             'metadata_id':metadata_id,
             'source_data_name':source_data_name,
             'table_tags_dict':table_tags_dict,
-            'field_metadata_dict_list':field_metadata_dict_list
+            'field_metadata_dict_list':field_metadata_dict_list,
+            'has_change_permission':has_change_permission,
+            'has_delete_permission':has_delete_permission,
             }
 
 # Edit Metadata Entry
+@login_required
 @render_to("dcmetadata/metadata_edit.html")
 def metadata_edit(request,metadata_id): 
     # Initial vars
-    form_has_errors = False # Form Validation Error flag
     is_add_new_metadata = False
     is_geography_table = False
     field_metadata_form_list = []
     upload_form = FileUploadForm()
     metadata_json = ""
+    user = request.user
+    has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')
     
     # Get SourceDataInventory instance
     source_data = SourceDataInventory.objects.get(id=metadata_id)
@@ -839,13 +942,13 @@ def metadata_edit(request,metadata_id):
                     'source_data_name':source_data_name,
                     'metadata_id':metadata_id,
                     'field_metadata_formset':field_metadata_formset,
-                    'form_has_errors':form_has_errors}           
+                    'has_delete_permission':has_delete_permission}           
         else:
             field_metadata_formset = FieldMetadataFormset(request.POST,prefix='metadata_fields_form')
             field_metadata_dict_list = []
             # If formset data cleaned
             if field_metadata_formset.is_valid():
-                form_data = field_metadata_formset.cleaned_data  
+                form_data = field_metadata_formset.cleaned_data 
                 for index,field in enumerate(form_data):
                     visualization_types = []
                     for v_types in field['visualization_types']:
@@ -879,9 +982,12 @@ def metadata_edit(request,metadata_id):
                 if is_add_new_metadata:
                     source_data.metadata = output_metadata
                     source_data.save()
+                    messages.info(request, "Metadata was added successfully.")
+                else:
+                    messages.info(request, "Metadata was changed successfully.")
             # If formset data NOT valid
             else:               
-                form_has_errors = True
+                messages.error(request, "Please correct the errors below.")
                 if 'save' in request.POST:
                     return {'file_form':upload_form,
                             'is_add_new_metadata':is_add_new_metadata,
@@ -889,7 +995,7 @@ def metadata_edit(request,metadata_id):
                             'source_data_name':source_data_name,
                             'metadata_id':metadata_id,
                             'field_metadata_formset':field_metadata_formset,
-                            'form_has_errors':form_has_errors}               
+                            'has_delete_permission':has_delete_permission}               
             
     else:
         field_metadata_formset = FieldMetadataFormset(initial=field_metadata_form_list,prefix='metadata_fields_form')  
@@ -919,10 +1025,11 @@ def metadata_edit(request,metadata_id):
                 'source_data_name':source_data_name,
                 'metadata_id':metadata_id,
                 'field_metadata_formset':field_metadata_formset,
-                'form_has_errors':form_has_errors}
+                'has_delete_permission':has_delete_permission}
 
 # Delete Metadata Entry
 ## Metadata entry delete confirm
+@login_required
 @render_to("dcmetadata/metadata_delete_confirm.html")
 def metadata_delete_confirm(request,metadata_id):
     source_data = SourceDataInventory.objects.get(id=metadata_id)
@@ -933,6 +1040,7 @@ def metadata_delete_confirm(request,metadata_id):
             }
 
 ## Delete Metadata entry
+@login_required
 def metadata_delete(request,metadata_id):
     try:
         metadata = TableMetadata.objects.get(id=metadata_id)

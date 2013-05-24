@@ -5,10 +5,13 @@
 	&rsaquo; Logout
 {% endblock %}
 
+{% block userlinks %}{% endblock %}
+
 {% block content %}
 
 <p>You have been logged out.</p>
 
-<p><b><a href="{% url 'admin:index' %}"><img src="{{ MEDIA_URL }}images/icon_login.png"> {% trans 'Log in again' %}</a></b></p>
+<p><b><a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/login/"><img src="{{ MEDIA_URL }}images/icon_login.png"> {% trans 'Log in again' %}</a> &nbsp;&nbsp;&nbsp;&nbsp;or &nbsp;&nbsp;&nbsp;&nbsp;  
+<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/register/"><img src="{{ MEDIA_URL }}images/icon_signup.png"> Sign up</a></b></p>
 
 {% endblock %}
