@@ -5,12 +5,15 @@ from django.contrib import admin
 # Import from general utilities
 from util import *
 
+# Import function from views.py
+from dcmetadata.views import wrap_csv_zip
+
 # Customized Admin Form for Look-up Table Model
 ## Macro Domain Admin
 class MacroDomainAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(MacroDomain, MacroDomainAdmin)
 
@@ -19,7 +22,7 @@ class SubjectMatterAdmin(admin.ModelAdmin):
     fields = ['name','macrodomain']
     list_display = ('id','name','macrodomain')
     list_filter = ['macrodomain']
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(SubjectMatter, SubjectMatterAdmin)
 
@@ -27,15 +30,15 @@ admin.site.register(SubjectMatter, SubjectMatterAdmin)
 class GeographyAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(Geography, GeographyAdmin)
 
 ## Coverage Admin
 class CoverageAdmin(admin.ModelAdmin):
-    fields = ['name']
-    list_display = ('id','name')
-    list_per_page = 10
+    fields = ['name','geotable']
+    list_display = ('id','name','geotable')
+    list_per_page = 15
     
 admin.site.register(Coverage, CoverageAdmin)
 
@@ -43,7 +46,7 @@ admin.site.register(Coverage, CoverageAdmin)
 class FormatAdmin(admin.ModelAdmin):
     fields = ['name','extension']
     list_display = ('id','name','extension')
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(Format, FormatAdmin)
 
@@ -51,7 +54,7 @@ admin.site.register(Format, FormatAdmin)
 class SourceAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(Source, SourceAdmin)
 
@@ -59,7 +62,7 @@ admin.site.register(Source, SourceAdmin)
 class VisualizationTypeAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(VisualizationType, VisualizationTypeAdmin)
 
@@ -67,7 +70,7 @@ admin.site.register(VisualizationType, VisualizationTypeAdmin)
 class SpatialTableAdmin(admin.ModelAdmin):
     fields = ['id','name']
     list_display = ('id','name')
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(SpatialTable, SpatialTableAdmin)
 
@@ -75,7 +78,7 @@ admin.site.register(SpatialTable, SpatialTableAdmin)
 class TagAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ('id','name')
-    list_per_page = 10
+    list_per_page = 15
     
 admin.site.register(Tag,TagAdmin)
 
@@ -83,12 +86,14 @@ admin.site.register(Tag,TagAdmin)
 class DataTableAdmin(admin.ModelAdmin):
     fields = ['id','table_name','db_table']
     list_display = ('id','table_name','db_table')
-    list_per_page = 10
+    search_fields = ['table_name']
+    list_per_page = 15
     
 admin.site.register(DataTable, DataTableAdmin)
 
 # Customized Admin Form for Source Data Inventory Model
 class SourceDataInventoryAdmin(admin.ModelAdmin):
+    actions = ['download_csv']
     fields = ['upload_file','file_name','format','title','macro_domain','subject_matter',
         'coverage','geography','year','source','source_website','location','geometry',
         'description','data_consideration','process_notes']    
@@ -110,6 +115,15 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
         if not obj: # obj is None, this is ADD page, then use the Add page form
             self.form = SourceDataInventoryAdminAddForm
         return super(SourceDataInventoryAdmin,self).get_form(request,obj,**kwargs)
+    
+    # Download as CSV
+    def download_csv(self,request,queryset):
+        sourcedata_ids = []
+        for s in queryset:
+            print s.id
+            sourcedata_ids.append(s.id)
+        return wrap_csv_zip(request,sourcedata_ids)
+    download_csv.short_description = "Download selected source data tables as CSV"
     
 admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)
 

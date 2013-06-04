@@ -59,7 +59,7 @@ APP_SERVER_URL = ''
 #APP_SERVER_URL = '/datacommons'
 ## <- use this for SERVER
 
-LOGIN_URL = '/dcmetadata/login/'
+LOGIN_URL = '%s/dcmetadata/login/' % APP_SERVER_URL
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

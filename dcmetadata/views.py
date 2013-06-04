@@ -479,6 +479,88 @@ def user_change_password(request):
 
 
 '''-----------------------
+Database functions
+-----------------------'''
+# Generate CSVs and Wrap for zip download_as_csv
+@login_required
+def wrap_csv_zip(request,sourcedata_ids):
+    # Initialize DB connection
+    dbcon_dc = psycopg2.connect(database = DL_DATABASE["DATABASE"],
+                                user = DL_DATABASE["USER"],
+                                host = DL_DATABASE["HOST"],
+                                port = DL_DATABASE["PORT"],
+                                password = DL_DATABASE["PASSWORD"])
+    
+    output_files = []
+    
+    for sourcedata_id in sourcedata_ids:
+        # Get source data
+        source_data = SourceDataInventory.objects.get(id=sourcedata_id)
+        table_name = source_data.file_name
+        # Get source data metadata
+        table_metadata = TableMetadata.objects.get(id=sourcedata_id)
+        metadata_json_dict = table_metadata._get_metadata_dict()
+        fields = metadata_json_dict["field_metadata"]
+        header = []
+        dl_metadata = [("Field Name","Verbose Name","Data Type","No Data Value")]
+        for field in fields:
+            header.append(field["field_name"])
+            dl_metadata.append((field["field_name"],field["verbose_name"],field["data_type"],field["no_data_value"]))
+        
+        # Create DB table
+        try:
+            cur_dc = dbcon_dc.cursor()
+            ## Check if talbe exists
+            exesql = "SELECT * FROM %s" % table_name
+            cur_dc.execute(exesql)
+            source_table = cur_dc.fetchall()
+        except Exception, e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            error_type = exc_type.__name__
+            error_info = exc_obj
+            if str(error_info).find('relation "%s" does not exist' % table_name) > -1:
+                user_error_msg = 'Table "<b>%s</b>" does not exist in the database.' % table_name
+            else:
+                user_error_msg = "- Debug Mode -"
+            error_msg = "<span style='color:red'><b>ERROR!</b></span><br/><br/><b>%s</b><br/><br/><br/><b>%s</b> : %s" % (user_error_msg,error_type,error_info)
+            return HttpResponse(error_msg)
+        
+        # Write Table to CSV
+        output_table = StringIO.StringIO()
+        writer = csv.writer(output_table)
+        writer.writerow(header)
+        for row in source_table:
+            writer.writerow(row)
+            
+        # Write Metadata to CSV
+        output_metadata = StringIO.StringIO()
+        writer = csv.writer(output_metadata)
+        for row in dl_metadata:
+            writer.writerow(row)
+            
+        output_file = (output_table,output_metadata,table_name)
+        output_files.append(output_file)
+            
+    # Zip CSVs up
+    zip_name = "SourceData_%s" % datetime.now().strftime('%Y%m%d_%H%M%S')
+    response = HttpResponse(mimetype='application/zip')
+    response['Content-Disposition'] = "attachment; filename=%s.zip" % zip_name
+    z = zipfile.ZipFile(response,'w')
+    for of in output_files:
+        z.writestr("%s.csv" % of[2], of[0].getvalue())
+        z.writestr("%s_metadata.csv" % of[2], of[1].getvalue())
+    
+    return response
+
+# Download source data as CSV
+@login_required
+def download_as_csv(request,sourcedata_id):
+    sourcedata_ids = [sourcedata_id]
+    response = wrap_csv_zip(request,sourcedata_ids)
+    return response
+    
+
+'''-----------------------
 Home Page
 -----------------------'''
 # Home page

@@ -11,9 +11,13 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
-import os
+import sys,os
+import StringIO
 import csv
+import zipfile
 import json
+
+from datetime import datetime
 
 # Import Settings attributes
 from datacommons.settings import SERVER_URL,ROOT_URL,APP_SERVER_URL
@@ -30,6 +34,9 @@ from xml.etree import ElementTree
 ## Import xlrd for reading XLS files with Python
 from xlrd import open_workbook
 
+## Import psycopg2 for PostgreSQL database connection
+import psycopg2
+
 
 # GLOBAL VARIABLES
 ## File size precision for human readable presentation of file size in bytes
@@ -41,6 +48,17 @@ NO_DATA_VALUE = "No Data"
 ## File extensions accociated with shaplefile
 SHAPEFILE_EXTENSION = ["shp","dbf","prj","sbn","sbx","shp.xml","shx"]
 
+# Source data download
+## DB connection parameters
+### Server "pitondc1" DB connection
+DL_DATABASE = {
+    'DATABASE':"data_initiative",
+    'USER':"Admin",
+    'PASSWORD':"Piton!",
+    'HOST':"pitondc1",
+    'PORT':"5432",
+    'SCHEMA':"public"
+}
 
 # Source Data Lookup Table CSV file path
 LOOKUP_TABLE_ROOT_PATH = 'C:/QLiu/ql_dj/apps/Data-Commons-MetaData-App/data/source_data/lookup_tables/'

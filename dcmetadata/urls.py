@@ -30,6 +30,10 @@ urlpatterns = patterns('dcmetadata.views',
 	url(r'^dataset/metadata/(?P<dataset_id>\d+)/delete_confirm/$','dataset_metadata_delete_confirm'),
 	url(r'^dataset/metadata/(?P<dataset_id>\d+)/delete/$','dataset_metadata_delete'),
 	
+	# Export Source Data
+	## export csv
+	url(r'^sourcedatainventory/(?P<sourcedata_id>\d+)/exportcsv/$','download_as_csv'),
+	
 	# Import Data from Metadata URLs
 	url(r'^import/dataset/','import_dataset'),
 	url(r'^import/sourcedata/','import_sourcedata'),
