@@ -481,9 +481,9 @@ def user_change_password(request):
 '''-----------------------
 Database functions
 -----------------------'''
-# Generate CSVs and Wrap for zip download_as_csv
+# Generate CSVs, Shapefiles, and Metadata(CSV), and Wrap for Download as Zip archive
 @login_required
-def wrap_csv_zip(request,sourcedata_ids):
+def down_as_zip(request,sourcedata_ids):
     # Initialize DB connection
     dbcon_dc = psycopg2.connect(database = DL_DATABASE["DATABASE"],
                                 user = DL_DATABASE["USER"],
@@ -506,59 +506,100 @@ def wrap_csv_zip(request,sourcedata_ids):
         for field in fields:
             header.append(field["field_name"])
             dl_metadata.append((field["field_name"],field["verbose_name"],field["data_type"],field["no_data_value"]))
-        
-        # Create DB table
-        try:
-            cur_dc = dbcon_dc.cursor()
-            ## Check if talbe exists
-            exesql = "SELECT * FROM %s" % table_name
-            cur_dc.execute(exesql)
-            source_table = cur_dc.fetchall()
-        except Exception, e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            error_type = exc_type.__name__
-            error_info = exc_obj
-            if str(error_info).find('relation "%s" does not exist' % table_name) > -1:
-                user_error_msg = 'Table "<b>%s</b>" does not exist in the database.' % table_name
-            else:
-                user_error_msg = "- Debug Mode -"
-            error_msg = "<span style='color:red'><b>ERROR!</b></span><br/><br/><b>%s</b><br/><br/><br/><b>%s</b> : %s" % (user_error_msg,error_type,error_info)
-            return HttpResponse(error_msg)
-        
-        # Write Table to CSV
-        output_table = StringIO.StringIO()
-        writer = csv.writer(output_table)
-        writer.writerow(header)
-        for row in source_table:
-            writer.writerow(row)
-            
         # Write Metadata to CSV
         output_metadata = StringIO.StringIO()
         writer = csv.writer(output_metadata)
         for row in dl_metadata:
-            writer.writerow(row)
+            writer.writerow(row)        
+        print source_data.macro_domain.name
+        if source_data.macro_domain.name == 'Geography':
+            print "shp"
+            # Download shapefile
+            file_location = source_data.location.replace(SOURCE_DATA_ROOT_PATH_LOCAL,SOURCE_DATA_ROOT_PATH_ORIGIN) # <- Localhost Use This Line
+#            file_location = source_data.location # <- Server Use This Line
+            shp_files = []
+            for f in os.listdir(file_location):
+                f_name,f_ext = os.path.splitext(f)
+                if (f_ext[1:] in SHAPEFILE_EXTENSION and f_name == source_data.file_name) or (f_ext == ".xml" and f_name == "%.shp" % source_data.file_name):
+                    shp_files.append(f)
             
-        output_file = (output_table,output_metadata,table_name)
+            output_file = (table_name,output_metadata,shp_files,"shp")            
+        else:
+            print "table"
+            # Download CSV from DB
+            ## Create DB table
+            try:
+                cur_dc = dbcon_dc.cursor()
+                ## Check if talbe exists
+                exesql = "SELECT * FROM %s" % table_name
+                cur_dc.execute(exesql)
+                source_table = cur_dc.fetchall()
+            except Exception, e:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                error_type = exc_type.__name__
+                error_info = exc_obj
+                if str(error_info).find('relation "%s" does not exist' % table_name) > -1:
+                    user_error_msg = 'Table "<b>%s</b>" does not exist in the database.' % table_name
+                else:
+                    user_error_msg = "- Debug Mode -"
+                error_msg = "<span style='color:red'><b>ERROR!</b></span><br/><br/><b>%s</b><br/><br/><br/><b>%s</b> : %s" % (user_error_msg,error_type,error_info)
+                return HttpResponse(error_msg)
+        
+            # Write Table to CSV
+            output_table = StringIO.StringIO()
+            writer = csv.writer(output_table)
+            writer.writerow(header)
+            for row in source_table:
+                writer.writerow(row)
+            output_file = (table_name,output_metadata,output_table,"table")
+            
         output_files.append(output_file)
             
     # Zip CSVs up
     zip_name = "SourceData_%s" % datetime.now().strftime('%Y%m%d_%H%M%S')
-    response = HttpResponse(mimetype='application/zip')
-    response['Content-Disposition'] = "attachment; filename=%s.zip" % zip_name
-    z = zipfile.ZipFile(response,'w')
+    temp = tempfile.TemporaryFile()
+    buffer = zipfile.ZipFile(temp,'w',zipfile.ZIP_DEFLATED)
     for of in output_files:
-        z.writestr("%s.csv" % of[2], of[0].getvalue())
-        z.writestr("%s_metadata.csv" % of[2], of[1].getvalue())
+        if of[3] == "shp":
+        ## Shape file
+            buffer.writestr("%s_shp/%s_metadata.csv" % (of[0],of[0]), of[1].getvalue())
+            for shp_f in of[2]:
+                full_path = "%s\%s" % (file_location,shp_f)
+                zip_path = "%s_shp/%s" % (of[0],shp_f)
+                buffer.write(full_path,zip_path)
+        elif of[3] == "table":
+        ## Non-geo table
+            buffer.writestr("%s_metadata.csv" % of[0], of[1].getvalue())
+            buffer.writestr("%s.csv" % of[0], of[2].getvalue())
+    buffer.close()
+    wrapper = FileWrapper(temp)  
+    response = HttpResponse(wrapper, content_type='application/zip')
+    response['Content-Disposition'] = "attachment; filename=%s.zip" % zip_name
+    response['Content-Legnth'] = temp.tell()
+    temp.seek(0)
     
     return response
 
-# Download source data as CSV
+# Download source data
 @login_required
-def download_as_csv(request,sourcedata_id):
+def download_sourcedata(request,sourcedata_id):
     sourcedata_ids = [sourcedata_id]
-    response = wrap_csv_zip(request,sourcedata_ids)
+    response = down_as_zip(request,sourcedata_ids)
     return response
-    
+
+# Show Instructions of Adding Query Layer in ArcGIS
+@login_required
+@render_to("dcmetadata/instruction_add_querylayer.html")
+def instruction_add_querylayer(request,sourcedata_id):
+    source_data = SourceDataInventory.objects.get(id=sourcedata_id)
+    table_title = source_data.title
+    table_name = source_data.file_name
+    query_txt = "SELECT * FROM %s.%s.%s" % (DL_DATABASE["DATABASE"],DL_DATABASE["SCHEMA"],table_name)
+
+    return {"sourcedata_id":sourcedata_id,
+            "table_title":table_title,
+            "query_txt":query_txt,
+            }
 
 '''-----------------------
 Home Page

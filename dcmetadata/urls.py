@@ -31,8 +31,10 @@ urlpatterns = patterns('dcmetadata.views',
 	url(r'^dataset/metadata/(?P<dataset_id>\d+)/delete/$','dataset_metadata_delete'),
 	
 	# Export Source Data
-	## export csv
-	url(r'^sourcedatainventory/(?P<sourcedata_id>\d+)/exportcsv/$','download_as_csv'),
+	## Download Source Data
+	url(r'^sourcedatainventory/(?P<sourcedata_id>\d+)/download/$','download_sourcedata'),
+	## Add Query Layer in ArcGIS
+	url(r'^sourcedatainventory/(?P<sourcedata_id>\d+)/add_querylayer/$','instruction_add_querylayer'),
 	
 	# Import Data from Metadata URLs
 	url(r'^import/dataset/','import_dataset'),

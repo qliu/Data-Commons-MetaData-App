@@ -1,0 +1,45 @@
+{% extends "admin/admin_base_site.html" %}
+{% load i18n admin_static admin_modify %}{% load custom_tag %}
+{% block current_title %}Add as Query Layer in ArcGIS{% endblock %}
+{% block breadcrumbs %}
+	{% if user.is_superuser %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/">App:Dcmetadata Administration</a>
+	{% endif %}
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/">Source Data Inventory</a>
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/{{ sourcedata_id }}/">{{table_title}}</a>
+	&rsaquo; Add as Query Layer in ArcGIS
+{% endblock %}
+
+{% block extrastyle %}
+	{{ block.super }}
+	<style type="text/css">
+	h4 {font-size:16px;
+		font-weight:normal;
+		}
+	input {margin: 10px;}
+	</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<h1>Add Source Data Table as Query Layer in ArcGIS</h1>
+	<hr>
+	<h2>Database Connection Properties:</h2>
+	<ul>
+		<li><h4><b>DBMS Client</b> : postgresql</h4></li>
+		<li><h4><b>Data Source</b> : pitondc1</h4></li>
+		<li><h4><b>Database</b> : data_initiative</h4></li>
+		<li><h4><b>Authentication</b> : Database Authentication</h4></li>
+		<li><h4><b>Username</b> : Admin</h4></li>
+		<li><h4><b>Password</b> : Piton!</h4></li>
+	</ul>
+		<h2>Query:</h2>
+		<textarea id="clipboard_textarea" rows="2" cols="150" readonly>{{query_txt}}</textarea><br/>
+</div>
+{% endblock %}
+
+{% block bottom_javascript %}
+	<script type="text/javascript">
+		document.getElementById('clipboard_textarea').select();
+	</script>
+{% endblock %}

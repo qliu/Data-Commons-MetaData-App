@@ -41,6 +41,7 @@
 		}
 		
 		.view-metadata-link {
+			margin-left:20px;
 			padding-left:20px;
 			background:url({{ MEDIA_URL }}images/icon_metadata.gif) no-repeat left center;
 		}
@@ -53,6 +54,12 @@
 		.download-link {
 			padding-left:20px;
 			background:url({{ MEDIA_URL }}images/icon_download.png) no-repeat left center;
+		}
+		
+		.querylayer-link {
+			margin-left:20px;
+			padding-left:20px;
+			background:url({{ MEDIA_URL }}images/icon_querylayer.png) no-repeat left center;
 		}
 		
 		.prev-record-link {
@@ -144,7 +151,12 @@
 		{% if original.metadata %}
 			<div id="metadata-block"><a class="view-metadata-link" title="View Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/">Metadata</a></div>
 			{% if opts.verbose_name = 'source data inventory' %}
-				<div id="download-block"><a class="download-link" title="Download Source Data" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata/sourcedatainventory/{{ original.id }}/exportcsv/">Download</a></div>
+				<div id="download-block">
+					<a class="download-link" title="Download Source Data" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata/sourcedatainventory/{{ original.id }}/download/">Download</a>
+					{% if original.macro_domain.name = 'Geography' %}
+						<a class="querylayer-link" title="Add as Query Layer in ArcGIS" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata/sourcedatainventory/{{ original.id }}/add_querylayer/">QueryLayer</a>
+					{% endif %}
+				</div>
 			{% endif %}
 		{% else %}
 			<div id="metadata-block"><a class="add-metadata-link" title="Add Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/edit">Add Metadata</a></div>

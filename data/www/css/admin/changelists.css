@@ -95,6 +95,10 @@
     padding: 1px 2px;
 }
 
+#searchbar{
+    width: 70%;
+}
+
 #changelist #toolbar form #searchbar {
     padding: 2px;
 }

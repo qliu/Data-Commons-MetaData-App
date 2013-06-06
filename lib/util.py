@@ -14,8 +14,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 import sys,os
 import StringIO
 import csv
-import zipfile
+import tempfile,zipfile
 import json
+
+# Wrap large files for zip download
+from django.core.servers.basehttp import FileWrapper
 
 from datetime import datetime
 

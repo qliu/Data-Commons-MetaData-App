@@ -6,7 +6,7 @@ from django.contrib import admin
 from util import *
 
 # Import function from views.py
-from dcmetadata.views import wrap_csv_zip
+from dcmetadata.views import down_as_zip
 
 # Customized Admin Form for Look-up Table Model
 ## Macro Domain Admin
@@ -93,7 +93,7 @@ admin.site.register(DataTable, DataTableAdmin)
 
 # Customized Admin Form for Source Data Inventory Model
 class SourceDataInventoryAdmin(admin.ModelAdmin):
-    actions = ['download_csv']
+    actions = ['download']
     fields = ['upload_file','file_name','format','title','macro_domain','subject_matter',
         'coverage','geography','year','source','source_website','location','geometry',
         'description','data_consideration','process_notes']    
@@ -107,6 +107,7 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
     list_filter = ['macro_domain','subject_matter','coverage','geography','source','year']    
 #    list_filter = ['macro_domain','subject_matter','coverage','geography',
 #    'format','source','begin_year','end_year']
+    search_fields = ['title']
     list_per_page = 10
     
     # By defualt use the Change page form
@@ -117,13 +118,12 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
         return super(SourceDataInventoryAdmin,self).get_form(request,obj,**kwargs)
     
     # Download as CSV
-    def download_csv(self,request,queryset):
+    def download(self,request,queryset):
         sourcedata_ids = []
         for s in queryset:
-            print s.id
             sourcedata_ids.append(s.id)
-        return wrap_csv_zip(request,sourcedata_ids)
-    download_csv.short_description = "Download selected source data tables as CSV"
+        return down_as_zip(request,sourcedata_ids)
+    download.short_description = "Download selected source data tables"
     
 admin.site.register(SourceDataInventory, SourceDataInventoryAdmin)
 
