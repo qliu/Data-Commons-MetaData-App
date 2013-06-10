@@ -215,3 +215,32 @@
 </div>
 </form></div>
 {% endblock %}
+
+{% if opts.verbose_name = 'source data inventory' %}
+	<!-- JS for populating Subdomain select options based on selected Domain -->
+	{% block bottom_javascript %}
+		<script type="text/javascript">
+			var originalOptions = $('#id_subject_matter > option');
+			var subjectmatterSelect = $('#id_subject_matter');
+			function changeSubjectmatter(selectMacrodomain) {
+
+				   subjectmatterSelect.empty();
+				   $(originalOptions).each(function(){
+						var newOption = $(this).clone();
+						if($(this).text().search(selectMacrodomain) == 0){
+							newOption.appendTo(subjectmatterSelect);
+						}
+				   });
+			};
+			$(document).ready(function (){
+				if ("{{original.subject_matter.macrodomain.name}}"){
+				changeSubjectmatter("{{original.subject_matter.macrodomain.name}}");
+				}
+			});
+			$('#id_macro_domain').change(function (){
+				var selectMacrodomain = $(this).find('option:selected').text();
+				changeSubjectmatter(selectMacrodomain);
+			});
+		</script>
+	{% endblock %}
+{% endif %}

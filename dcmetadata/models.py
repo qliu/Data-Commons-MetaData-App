@@ -81,7 +81,7 @@ class SubjectMatter(models.Model):
 		return next_id
 	
 	def __unicode__(self):
-		return "%s - %s" % (self.macrodomain.name,self.name)
+		return "%s | %s" % (self.macrodomain.name,self.name)
 		
 	class Meta:
 		db_table = u'inventory_subjectmatter'
@@ -339,16 +339,26 @@ def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
 	metadata_id = instance.id
 	is_add_new_table = False
 	data_status = ""
+	
+	# Save table name to DataTalbe lookup
+	try:
+		data_table = DataTable.objects.get(db_table=instance.file_name.lower())
+		if data_table.table_name != instance.title:
+			data_table.table_name = instance.title
+			data_table.db_table = instance.file_name.lower()
+			data_table.save()
+		else:
+			if data_table.db_table != instance.file_name.lower():
+				data_table.db_table = instance.file_name.lower()
+				data_table.save()
+	except:
+		data_table = DataTable(id=metadata_id,db_table=instance.file_name.lower(),table_name=instance.title)
+		data_table.save()	
+	
 	if len(TableMetadata.objects.filter(id=metadata_id)) == 0:
 		# If Add new table
 		is_add_new_table = True
 		json_field_metadata = []
-		# Add table name to DataTalbe lookup
-		try:
-			data_table = DataTable.objects.get(db_table=instance.file_name)
-		except:
-			data_table = DataTable(id=metadata_id,db_table=instance.file_name,table_name=instance.title)
-			data_table.save()
 	else:
 		try:
 			sourcedata = SourceDataInventory.objects.get(id=metadata_id)
@@ -385,14 +395,14 @@ def post_save_handler_add_tabletags(sender,instance=True,**kwargs):
 		email_content = {"subject":"[DataEngine_Metadata]",
 						 "message":"",
 						 "from": ADMIN_EMAIL_ADDRESS,
-						 "to": [TO_EMAIL_ADDRESS]
+						 "to": TO_EMAIL_ADDRESS
 						}
 		if is_add_new_table:
 			data_status = "Added"
 		else:
 			data_status = "Changed"
-		email_content["subject"] += "Source Data %s - %s (id:%d)" % (data_status,instance.title, instance.id)
-		email_content["message"] = "This is a notification that source data %s (id:%d) has been %s." % (instance.title,instance.id,data_status)
+		email_content["subject"] += "%sSource Data %s - %s (id:%d)" % ("New " if is_add_new_table else "",data_status,instance.title, instance.id)
+		email_content["message"] = 'This is a notification that %ssource data "%s" (id:%d) has been %s.' % ("new " if is_add_new_table else "",instance.title,instance.id,data_status)
 		send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])
 	except:
 		pass;
@@ -588,12 +598,13 @@ class TableMetadata(models.Model):
 
 # Handler After Dataset Model instance being saved
 def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
+	is_new_nid = False
 	metadata_id = instance.id
 	# Send admin email alert when source data added/changed
 	email_content = {"subject":"[DataEngine_Metadata]",
 					 "message":"",
 					 "from": ADMIN_EMAIL_ADDRESS,
-					 "to": [TO_EMAIL_ADDRESS]
+					 "to": TO_EMAIL_ADDRESS
 					}	
 	# If metadata not existed
 	if len(DatasetMetadata.objects.filter(id=metadata_id)) == 0:
@@ -619,8 +630,8 @@ def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
 		output_metadata.save()
 		# Send email notification
 		email_content["subject"] += "New Dataset Added - %s (id:%d)" % (instance.name, instance.id)
-		email_content["message"] = "This is a notification that new dataset %s (id:%d) has been added." % (instance.name,instance.id)
-		send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])
+		email_content["message"] = 'This is a notification that new dataset "%s" (id:%d) has been added.' % (instance.name,instance.id)
+		send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])			
 	else:
 		## If dataset already existed, update metadata
 		try:
@@ -628,12 +639,15 @@ def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
 			dataset_metadata = DatasetMetadata.objects.get(id=metadata_id)
 			metadata_json = dataset_metadata.metadata
 			json_metadata_dict = dataset_metadata._get_metadata_dict()
+			# If new node id assigned, send email notification
+			if instance.nid and instance.nid != json_metadata_dict["nid"]:
+				is_new_nid = True
 			json_metadata_dict["nid"] = instance.nid if instance.nid else ""
 			json_metadata_dict["name"] = instance.name
 			json_metadata_dict["tags"] = instance._get_str_tags().split(",")
 			json_metadata_dict["large_dataset"] = instance.large_dataset
 			# If tables changed, overwrite with new tables from instance, and reset all the fileds and keys values
-			if len(set(json_metadata_dict["tables"]) & set(map(int,instance._get_str_tables().split(",")))) != len(map(int,dataset._get_str_tables().split(","))):
+			if len((set(json_metadata_dict["tables"])) & set(map(int,instance._get_str_tables().split(",")))) != len(map(int,dataset._get_str_tables().split(","))):
 				json_metadata_dict["tables"] = map(int,instance._get_str_tables().split(","))			
 				json_metadata_dict["fields"] = []
 				json_metadata_dict["display_name"] = ""
@@ -644,9 +658,14 @@ def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
 			output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
 			output_metadata.save()
 			# Send email notification
-			email_content["subject"] += "Dataset Changed - %s (id:%d)" % (instance.name, instance.id)
-			email_content["message"] = "This is a notification that dataset %s (id:%d) has been changed." % (instance.name,instance.id)
-			send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])				
+			if is_new_nid:
+				email_content["subject"] += "New Dataset Added to DataEngine - %s (nid:%s)" % (instance.name, instance.nid)
+				email_content["message"] = 'This is a notification that new dataset "%s" (nid:%s) has been imported to DataEngine. Click the link to view this dataset: http://198.101.241.26/find/%s' % (instance.name,instance.nid,instance.name.strip().lower().replace(" ","-").replace("'","").replace("(","").replace(")","").replace(" by ","-").replace(" in ","-"))				
+				email_content["to"] = TO_DE_ADMIN_EMAIL_ADDRESS
+			else:
+				email_content["subject"] += "Dataset Changed - %s (id:%d)" % (instance.name, instance.id)
+				email_content["message"] = 'This is a notification that dataset "%s" (id:%d) has been changed.' % (instance.name,instance.id)
+			send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])			
 		## If metadata existed, but dataset NOT existed,
 		### which means this post_save signal was sent by importing dataset from metadata,
 		### Nothing should be done to metadata after new Dataset Model instance was created
@@ -761,7 +780,7 @@ class Dataset(models.Model):
 		db_table = u'dataset'
 		ordering = ['name']
 	
-# Add Table Tags to TableMetadata After Dataset Model instance being saved
+# Add Dataset Metadata After Dataset Model instance being saved
 post_save.connect(post_save_handler_add_datasetmetadataheader, sender=Dataset)
 # Delete Dataset Metadata after Dataset Model instance being deleted
 post_delete.connect(post_delete_handler_delete_datasetmetadata, sender=Dataset)
