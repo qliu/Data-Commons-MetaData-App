@@ -234,7 +234,7 @@
 			};
 			$(document).ready(function (){
 				if ("{{original.subject_matter.macrodomain.name}}"){
-				changeSubjectmatter("{{original.subject_matter.macrodomain.name}}");
+				changeSubjectmatter("{{original.subject_matter.macrodomain.name|safe}}");
 				}
 			});
 			$('#id_macro_domain').change(function (){
