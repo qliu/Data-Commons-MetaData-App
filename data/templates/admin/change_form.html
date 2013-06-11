@@ -223,11 +223,10 @@
 			var originalOptions = $('#id_subject_matter > option');
 			var subjectmatterSelect = $('#id_subject_matter');
 			function changeSubjectmatter(selectMacrodomain) {
-
 				   subjectmatterSelect.empty();
 				   $(originalOptions).each(function(){
 						var newOption = $(this).clone();
-						if($(this).text().search(selectMacrodomain) == 0){
+						if(escape($(this).text()).search(escape(selectMacrodomain)) == 0){
 							newOption.appendTo(subjectmatterSelect);
 						}
 				   });
