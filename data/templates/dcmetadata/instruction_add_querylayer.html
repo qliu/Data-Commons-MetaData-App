@@ -12,11 +12,33 @@
 
 {% block extrastyle %}
 	{{ block.super }}
+	<link rel="stylesheet" href="{{ MEDIA_URL }}js/third_party/nivo-slider/themes/light/light.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}js/third_party/nivo-slider/nivo-slider.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/third_party/nivo-slider/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/third_party/nivo-slider/jquery.nivo.slider.js"></script>
 	<style type="text/css">
-	h4 {font-size:16px;
-		font-weight:normal;
+		h4 {
+			font-size:16px;
+			font-weight:normal;
 		}
-	input {margin: 10px;}
+		input {
+			margin: 10px;
+		}
+		#clipboard_textarea {
+			width: 600px;
+		}
+		#my-slider-wrapper{
+			width:600px;
+			float:right;
+			margin-top: -100px;
+		}
+		.slider-wrapper { 
+			width: 600px; 
+			margin: 100px auto;
+		}
+		.clear {
+			clear:both;
+		}
 	</style>
 {% endblock %}
 
@@ -24,6 +46,20 @@
 <div id="content-main">
 	<h1>Add Source Data Table as Query Layer in ArcGIS</h1>
 	<hr>
+	<div id="my-slider-wrapper">
+        <div class="slider-wrapper theme-light">
+		<h2>Instructions:</h2>
+            <div id="slider" class="nivoSlider">
+                <img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_00.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_00.png" alt="" />
+				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_01.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_01.png" alt="" />
+				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_02.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_02.png" alt="" />
+				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_03.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_03.png" alt="" />
+				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_04.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_04.png" alt="" />
+				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_05.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_05.png" alt="" />
+				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_06.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_06.png" alt="" />
+            </div>
+        </div>
+    </div>
 	<h2>Database Connection Properties:</h2>
 	<ul>
 		<li><h4><b>DBMS Client</b> : postgresql</h4></li>
@@ -33,13 +69,19 @@
 		<li><h4><b>Username</b> : Admin</h4></li>
 		<li><h4><b>Password</b> : Piton!</h4></li>
 	</ul>
-		<h2>Query:</h2>
-		<textarea id="clipboard_textarea" rows="2" cols="150" readonly>{{query_txt}}</textarea><br/>
+	<h2>Query:</h2>
+	<textarea id="clipboard_textarea" rows="2" cols="150" readonly>{{query_txt}}</textarea><br/>
 </div>
 {% endblock %}
 
 {% block bottom_javascript %}
 	<script type="text/javascript">
 		document.getElementById('clipboard_textarea').select();
+		$(window).load(function() {
+			$('#slider').nivoSlider({
+				effect:'fade',
+			});
+			$('#slider').data('nivoslider').stop();
+		});
 	</script>
 {% endblock %}
