@@ -94,6 +94,13 @@
 			-webkit-padding-start: 0px;
 			margin-top: -23px !important;
 		}
+		
+		li{
+			font-size: 18px;
+			line-height: 20px;
+			margin-left: 50px;
+		}
+		
 		div#metadata_tools
 		{
 			float:right;
@@ -114,8 +121,8 @@
 {% block content %}
 <div id="content-main">
 	<h1>Metadata ID: {{metadata_id}}</h1>
-	<br/>
 	<h3>Source Data: &nbsp;" <a target="_blank" class="sourcedata-link" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/{{ metadata_id }}/">{{ source_data_name }}</a> "</h3>
+	<br/>
 	<div id="metadata_tools">
 		{% if has_change_permission %}
 			<a class="edit-link" href="edit">Edit Metadata</a>
@@ -124,8 +131,15 @@
 			<a class="delete-link" href="delete_confirm">Delete Metadata</a>
 		{% endif %}
 	</div>
-
-	<br/><hr><br/>
+	<br/><hr/>
+	{% if datasets %}
+		<h3>This source data is included in the following dataset(s):</h3>
+		{% for dataset in datasets %}
+			<li><a target="_blank" class="sourcedata-link" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset.id }}/">{{dataset.name}}</a></li>
+		{% endfor %}
+		<br/><hr><br/>
+	{% endif %}
+	
 	Metadata JSON:<br/><br/>
 	table_metadata = <br/>
 	{<br/>

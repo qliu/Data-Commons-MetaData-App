@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from django.core import serializers
-from django.db.models.signals import post_save,post_delete
+from django.db.models.signals import post_save,post_delete,m2m_changed
 from django.core.mail import send_mail
 
 # Import from general utilities
@@ -596,81 +596,69 @@ class TableMetadata(models.Model):
 	class Meta:
 		db_table = u'table_metadata'
 
-# Handler After Dataset Model instance being saved
-def post_save_handler_add_datasetmetadataheader(sender,instance=True,**kwargs):
-	is_new_nid = False
-	metadata_id = instance.id
-	# Send admin email alert when source data added/changed
-	email_content = {"subject":"[DataEngine_Metadata]",
-					 "message":"",
-					 "from": ADMIN_EMAIL_ADDRESS,
-					 "to": TO_EMAIL_ADDRESS
-					}	
-	# If metadata not existed
-	if len(DatasetMetadata.objects.filter(id=metadata_id)) == 0:
-## The code below doesn't work for ManyToMany model field 
-##  since the relations are cached before actually stored in the database 
-##  which happens after this post_save function.
-## The initialization of the dataset metadata dictionary 
-##  will be implemented in "dataset_edit()" in views.py.
-#		json_metadata_dict = {"nid":instance.nid,
-#							"name":instance.name,
-#							"tables":map(int,instance._get_str_tables().split(",")),
-#							"fields":[],
-#							"display_name":"",
-#							"pkey":[],
-#							"fkeys":[],
-#							"gkey":[],
-#							"tags":instance._get_str_tags().split(","),
-#							"large_dataset":instance.large_dataset
-#							}
-		json_metadata_dict = {}
-		json_metadata = json.dumps(json_metadata_dict)
-		output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
-		output_metadata.save()
-		# Send email notification
-		email_content["subject"] += "New Dataset Added - %s (id:%d)" % (instance.name, instance.id)
-		email_content["message"] = 'This is a notification that new dataset "%s" (id:%d) has been added.' % (instance.name,instance.id)
-		send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])			
-	else:
-		## If dataset already existed, update metadata
-		try:
-			dataset = Dataset.objects.get(id=instance.id)
-			dataset_metadata = DatasetMetadata.objects.get(id=metadata_id)
-			metadata_json = dataset_metadata.metadata
-			json_metadata_dict = dataset_metadata._get_metadata_dict()
-			# If new node id assigned, send email notification
-			if instance.nid and instance.nid != json_metadata_dict["nid"]:
-				is_new_nid = True
-			json_metadata_dict["nid"] = instance.nid if instance.nid else ""
-			json_metadata_dict["name"] = instance.name
-			json_metadata_dict["tags"] = instance._get_str_tags().split(",")
-			json_metadata_dict["large_dataset"] = instance.large_dataset
-			# If tables changed, overwrite with new tables from instance, and reset all the fileds and keys values
-			if len((set(json_metadata_dict["tables"])) & set(map(int,instance._get_str_tables().split(",")))) != len(map(int,dataset._get_str_tables().split(","))):
-				json_metadata_dict["tables"] = map(int,instance._get_str_tables().split(","))			
-				json_metadata_dict["fields"] = []
-				json_metadata_dict["display_name"] = ""
-				json_metadata_dict["pkey"] = []
-				json_metadata_dict["fkeys"] = []
-				json_metadata_dict["gkey"] = []
+# Handler to respond the signal sent by Dataset.tags when Dataset Object is changed
+# 	update JSON metadata according to changes made to Dataset
+# * This the 'post_add' signal and this handler are used
+#	because 'post_save' signal is sent by Dataset Object
+#	before the M2M fields 'tables' and 'tags' are saved in the database.
+#	Thus, 'm2m_changed' signal sent by M2M field 'tags' is used
+#	as 'tags' is the last M2M field sending signals after Dataset is saved.
+def post_save_m2m_tags_dataset(sender, instance, action, reverse, *args, **kwargs):
+	if action == 'post_add' and not reverse:
+		is_new_nid = False
+		metadata_id = instance.id
+		# Send admin email alert when source data added/changed
+		email_content = {"subject":"[DataEngine_Metadata]",
+						 "message":"",
+						 "from": ADMIN_EMAIL_ADDRESS,
+						 "to": TO_EMAIL_ADDRESS
+						}	
+		# If metadata not existed
+		if len(DatasetMetadata.objects.filter(id=metadata_id)) == 0:
+			json_metadata_dict = {}
 			json_metadata = json.dumps(json_metadata_dict)
 			output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
 			output_metadata.save()
 			# Send email notification
-			if is_new_nid:
-				email_content["subject"] += "New Dataset Added to DataEngine - %s (nid:%s)" % (instance.name, instance.nid)
-				email_content["message"] = 'This is a notification that new dataset "%s" (nid:%s) has been imported to DataEngine. Click the link to view this dataset: http://198.101.241.26/find/%s' % (instance.name,instance.nid,instance.name.strip().lower().replace(" ","-").replace("'","").replace("(","").replace(")","").replace(" by ","-").replace(" in ","-"))				
-				email_content["to"] = TO_DE_ADMIN_EMAIL_ADDRESS
-			else:
-				email_content["subject"] += "Dataset Changed - %s (id:%d)" % (instance.name, instance.id)
-				email_content["message"] = 'This is a notification that dataset "%s" (id:%d) has been changed.' % (instance.name,instance.id)
+			email_content["subject"] += "New Dataset Added - %s (id:%d)" % (instance.name, instance.id)
+			email_content["message"] = 'This is a notification that new dataset "%s" (id:%d) has been added.' % (instance.name,instance.id)
 			send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])			
-		## If metadata existed, but dataset NOT existed,
-		### which means this post_save signal was sent by importing dataset from metadata,
-		### Nothing should be done to metadata after new Dataset Model instance was created
-		except:
-			pass;
+		else:
+			## If dataset already existed, update metadata
+			try:
+				dataset = Dataset.objects.get(id=instance.id)
+				dataset_metadata = DatasetMetadata.objects.get(id=metadata_id)
+				metadata_json = dataset_metadata.metadata
+				json_metadata_dict = dataset_metadata._get_metadata_dict()
+				# If new node id assigned, send email notification
+				if instance.nid and instance.nid != json_metadata_dict["nid"]:
+					is_new_nid = True
+				json_metadata_dict["nid"] = instance.nid if instance.nid else ""
+				json_metadata_dict["name"] = instance.name
+				json_metadata_dict["tags"] = instance._get_str_tags().split(",")
+				json_metadata_dict["large_dataset"] = instance.large_dataset
+				# If tables changed, overwrite with new tables from instance, and reset all the fileds and keys values
+				if not all(map(operator.eq,map(int,instance._get_str_tables().split(",")),json_metadata_dict["tables"])):
+					json_metadata_dict["tables"] = map(int,instance._get_str_tables().split(","))			
+					json_metadata_dict["fields"] = []
+					json_metadata_dict["display_name"] = ""
+					json_metadata_dict["pkey"] = []
+					json_metadata_dict["fkeys"] = []
+					json_metadata_dict["gkey"] = []
+				json_metadata = json.dumps(json_metadata_dict)
+				output_metadata = DatasetMetadata(id=metadata_id,metadata=json_metadata)
+				output_metadata.save()
+				# Send email notification
+				if is_new_nid:
+					email_content["subject"] += "New Dataset Added to DataEngine - %s (nid:%s)" % (instance.name, instance.nid)
+					email_content["message"] = 'This is a notification that new dataset "%s" (nid:%s) has been imported to DataEngine. Click the link to view this dataset: http://codataengine.org/find/%s' % (instance.name,instance.nid,instance.name.strip().lower().replace(" by ","-").replace(" in ","-").replace("'","").replace("(","").replace(")","").replace(" ","-"))				
+				else:
+					email_content["subject"] += "Dataset Changed - %s (id:%d)" % (instance.name, instance.id)
+					email_content["message"] = 'This is a notification that dataset "%s" (id:%d) has been changed.' % (instance.name,instance.id)
+				email_content["to"] = TO_DE_ADMIN_EMAIL_ADDRESS
+				send_mail(email_content['subject'],email_content['message'],email_content['from'],email_content['to'])			
+			except:
+				pass;		
 	
 # Delete Dataset Metadata after Dataset instance being deleted
 def post_delete_handler_delete_datasetmetadata(sender,instance=True,**kwargs):
@@ -779,9 +767,10 @@ class Dataset(models.Model):
 	class Meta:
 		db_table = u'dataset'
 		ordering = ['name']
-	
-# Add Dataset Metadata After Dataset Model instance being saved
-post_save.connect(post_save_handler_add_datasetmetadataheader, sender=Dataset)
+
+# Add tags after Dataset M2M field tags being changed
+m2m_changed.connect(post_save_m2m_tags_dataset,sender=Dataset.tags.through)
+
 # Delete Dataset Metadata after Dataset Model instance being deleted
 post_delete.connect(post_delete_handler_delete_datasetmetadata, sender=Dataset)
 

@@ -86,7 +86,7 @@ admin.site.register(Tag,TagAdmin)
 class DataTableAdmin(admin.ModelAdmin):
     fields = ['id','table_name','db_table']
     list_display = ('id','table_name','db_table')
-    search_fields = ['table_name']
+    search_fields = ['table_name','db_table']
     list_per_page = 15
     
 admin.site.register(DataTable, DataTableAdmin)

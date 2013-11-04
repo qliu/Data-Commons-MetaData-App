@@ -30,14 +30,37 @@
 		#my-slider-wrapper{
 			width:600px;
 			float:right;
-			margin-top: -100px;
+			margin-top: -75px;
+			border:1px solid #484848;
+			border-width: 0px 0px 0px 1px;
 		}
 		.slider-wrapper { 
 			width: 600px; 
-			margin: 100px auto;
 		}
 		.clear {
 			clear:both;
+		}
+		.play {
+			display: block;
+			width: 24px;
+			height: 24px;
+			margin-left: 300px;
+			background: url("{{ MEDIA_URL }}images/nivoslider_button_pause.png") center top no-repeat;
+			text-indent: -9999px;
+		}
+		.play:hover {
+			background: url("{{ MEDIA_URL }}images/nivoslider_button_pause_hover.png") center top no-repeat;
+		}
+		.pause {
+			display: block;
+			width: 24px;
+			height: 24px;
+			margin-left: 300px;
+			background: url("{{ MEDIA_URL }}images/nivoslider_button_play.png") center top no-repeat;
+			text-indent: -9999px;
+		}
+		.pause:hover {
+			background: url("{{ MEDIA_URL }}images/nivoslider_button_play_hover.png") center top no-repeat;
 		}
 	</style>
 {% endblock %}
@@ -58,6 +81,7 @@
 				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_05.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_05.png" alt="" />
 				<img src="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_06.png" data-thumb="{{ MEDIA_URL }}images/screenshots_addquerylayer/addquerylayer_06.png" alt="" />
             </div>
+			<a id="playPauseButton" href="#play" class="play">Pause</a>
         </div>
     </div>
 	<h2>Database Connection Properties:</h2>
@@ -78,10 +102,29 @@
 	<script type="text/javascript">
 		document.getElementById('clipboard_textarea').select();
 		$(window).load(function() {
+			var $slider = $('#slider');
+			$("#playPauseButton").click(function (e) {
+				e.preventDefault();
+				var $button = $(this);
+				if ($button.hasClass("play")) {
+					$slider.data('nivoslider').stop();
+					$button.toggleClass("play", false);
+					$button.toggleClass("pause", true);
+					$button.text("Play");
+				}
+				else {
+					$slider.data('nivoslider').start();
+					$button.toggleClass("pause", false);
+					$button.toggleClass("play", true);
+					$button.text("Pause");
+				}
+			});
 			$('#slider').nivoSlider({
 				effect:'fade',
+				pauseTime: 3000,
+				controlNav: true,
 			});
-			$('#slider').data('nivoslider').stop();
+			//$('#slider').data('nivoslider').stop();
 		});
 	</script>
 {% endblock %}

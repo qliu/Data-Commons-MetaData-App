@@ -511,9 +511,7 @@ def down_as_zip(request,sourcedata_ids):
         writer = csv.writer(output_metadata)
         for row in dl_metadata:
             writer.writerow(row)        
-        print source_data.macro_domain.name
         if source_data.macro_domain.name == 'Geography':
-            print "shp"
             # Download shapefile
             file_location = source_data.location.replace(SOURCE_DATA_ROOT_PATH_LOCAL,SOURCE_DATA_ROOT_PATH_ORIGIN) # <- Localhost Use This Line
 #            file_location = source_data.location # <- Server Use This Line
@@ -525,7 +523,6 @@ def down_as_zip(request,sourcedata_ids):
             
             output_file = (table_name,output_metadata,shp_files,"shp")            
         else:
-            print "table"
             # Download CSV from DB
             ## Create DB table
             try:
@@ -642,7 +639,7 @@ def dataset_metadata_edit(request,dataset_id):
     has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')
     
     # Initial Dataset metadata
-    dataset = get_object_or_404(Dataset, id=dataset_id)
+    dataset = get_object_or_404(Dataset, id=dataset_id)  
     dataset_metadata = get_object_or_404(DatasetMetadata,id=dataset_id)
     ## If dataset metadata NOT exsit, initial dataset metadata dictionary with
     ##  dataset attributes.
@@ -877,6 +874,13 @@ def metadata_detail(request,metadata_id):
     field_metadata_dict_list = metadata_json_dict["field_metadata"]    
     source_data = SourceDataInventory.objects.get(id=metadata_id)
     source_data_name = source_data.title
+    datasets = source_data.dataset_set.all()
+    list_datasets = []
+    for dataset in datasets:
+        ds = {"name":dataset.name,
+              "id":dataset.id,   
+             }
+        list_datasets.append(ds)
     user = request.user
     has_change_permission = HasPermission(user,'dcmetadata','change','tablemetadata')
     has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')
@@ -884,6 +888,7 @@ def metadata_detail(request,metadata_id):
     return {
             'metadata_id':metadata_id,
             'source_data_name':source_data_name,
+            'datasets':list_datasets,
             'table_tags_dict':table_tags_dict,
             'field_metadata_dict_list':field_metadata_dict_list,
             'has_change_permission':has_change_permission,
