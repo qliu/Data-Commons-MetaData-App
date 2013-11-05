@@ -139,7 +139,7 @@ admin.site.register(TableMetadata,TableMetadataAdmin)
 class DatasetAdmin(admin.ModelAdmin):
     fields = ['id','nid','name','tables','tags','large_dataset']
     list_display = ('id','nid','name','_get_str_tables','_get_str_tags','_is_large_dataset','_get_metadata_link')
-    list_filter = ['tags','tables']
+    list_filter = ['tags','tables','tables__macro_domain','tables__subject_matter','tables__source','tables__coverage','tables__geography','tables__year']
     list_per_page = 10
     filter_horizontal = ['tables','tags']
     
