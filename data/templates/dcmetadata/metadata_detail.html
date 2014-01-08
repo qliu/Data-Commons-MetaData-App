@@ -4,6 +4,23 @@
 {% block extrastyle %}
 	{{ block.super }}
 	<style type="text/css">
+		table {
+			border: 1px solid #ddd !important;
+			border-collapse:collapse;
+		}
+		
+		td {
+			font-size: 14px;
+			border: 1px solid #ddd;
+			padding: 10px 20px;
+		}
+		
+		thead th {
+			font-size: 14px;
+			border: 1px solid #ddd;
+			padding: 5px 10px;
+		}
+	
 		.delete-link {
 			float:left;
 			padding-left:18px;
@@ -105,7 +122,27 @@
 		{
 			float:right;
 		}
+		
+		.read-more-toggle {
+			margin: 0;
+		}
+		
+		.read-more-toggle h3 {
+			margin-left: 0;
+			text-decoration: underline;
+			color: #487909;
+			font-size: 16px;
+		}
+		
+		.hide {
+			display: none;
+		}
 	</style>
+{% endblock %}
+
+{% block extrahead %}
+	<!-- JQUERY 1.7.2 -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 {% endblock %}
 
 {% block current_title %}Metadata ID {{metadata_id}}{% endblock %}
@@ -140,43 +177,29 @@
 		<br/><hr><br/>
 	{% endif %}
 	
-	Metadata JSON:<br/><br/>
-	table_metadata = <br/>
-	{<br/>
-	"table_tags":<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
-	{% for key,value in table_tags_dict.items %}
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		"{{key}}":"{{ value }}",
-	{% endfor %}
-	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
-	
-	"field_metadata":<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<br/>
-	{% for field_metadata_dict in field_metadata_dict_list %}
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		"Field Name":"{{field_metadata_dict.field_name}}",
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		"Data Type":"{{field_metadata_dict.data_type}}",
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		"Verbose Name":"{{field_metadata_dict.verbose_name}}",
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		"No Data Value":"{{field_metadata_dict.no_data_value}}",
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		"tags":"{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			{% for key,value in field_metadata_dict.tags.items %}
-				"{{key}}":"{{ value }}",<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			{% endfor %}
-		}"<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		},<br/>
-	{% endfor %}
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br/>
-	}
-	<br/><br/><hr>
-	
 	<h1>Table Metadata</h1>
-	<hr>
+	<br/><hr>
+	<h2>Table Fields</h2>
+	<table>
+		<thead>
+			<tr>
+				<th scope="col" class="sortable">Field Name</th>
+				<th scope="col" class="sortable">Description</th>
+				<th scope="col" class="sortable">Data Type</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for field_metadata_dict in field_metadata_dict_list %}
+				<tr>
+					<td>{{field_metadata_dict.field_name}}</td>
+					<td>{{field_metadata_dict.verbose_name}}</td>
+					<td>{{field_metadata_dict.data_type}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<!--
+	<br/><br/><hr>
 	<h2>Table Tags</h2>
 	<br/>
 	<div class="metadata_detail">
@@ -212,6 +235,49 @@
 			<br/><br/><hr>
 		{% endfor %}
 	</div>
+	-->
+	<br/><br/><hr>
+	<div class="read-more-toggle">
+		<h3>Click to show Metadata JSON</h3>
+	</div>
+	<div class="read-more-content">
+		<br/><br/><hr>
+		<h2>Metadata JSON:</h2>
+		<br/><br/>
+		table_metadata = <br/>
+		{<br/>
+		"table_tags":<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+		{% for key,value in table_tags_dict.items %}
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			"{{key}}":"{{ value }}",
+		{% endfor %}
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+		
+		"field_metadata":<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<br/>
+		{% for field_metadata_dict in field_metadata_dict_list %}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			"Field Name":"{{field_metadata_dict.field_name}}",
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			"Data Type":"{{field_metadata_dict.data_type}}",
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			"Verbose Name":"{{field_metadata_dict.verbose_name}}",
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			"No Data Value":"{{field_metadata_dict.no_data_value}}",
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			"tags":"{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				{% for key,value in field_metadata_dict.tags.items %}
+					"{{key}}":"{{ value }}",<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				{% endfor %}
+			}"<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			},<br/>
+		{% endfor %}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br/>
+		}
+		<br/><br/><hr>
+	</div>
 	<br/><br/>
 	<div id="metadata_tools">
 		{% if has_change_permission %}
@@ -223,3 +289,14 @@
 	</div>
 </div>
 {% endblock %}
+
+{% block bottom_javascript %}
+<script type="text/javascript">
+	$('.read-more-content').addClass('hide');
+	$('.read-more-toggle').css('cursor','pointer');
+	$('.read-more-toggle').click(function(){
+		$(this).next('.read-more-content').toggleClass('hide');
+		$(this).html('<h3>Click to hide Metadata JSON</h3>');
+	});
+</script>
+{% endblock bottom_javascript %}
