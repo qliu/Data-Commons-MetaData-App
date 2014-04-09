@@ -974,7 +974,7 @@ def metadata_edit(request,metadata_id):
     if source_data.metadata == None and len(field_metadata_dict_list)==0:
         is_add_new_metadata = True
         # Initialize field_metadata_dict structure
-        filed_tags_dict = {
+        field_tags_dict = {
                            "geography":table_geography,
                            "geographic_level":table_geographic_level,
                            "domain":table_domain,
@@ -987,7 +987,7 @@ def metadata_edit(request,metadata_id):
                                      "data_type":"",
                                      "verbose_name":"",
                                      "no_data_value":"",
-                                     "tags":filed_tags_dict
+                                     "tags":field_tags_dict
                                     }]
         # Initialize field_metadata_form_list
         field_metadata_form_list = [{"field_name":"",
@@ -1039,7 +1039,7 @@ def metadata_edit(request,metadata_id):
             # Initialize field_metadata_dict_list
             field_metadata_dict_list = []
             # Initialize field_tags_dict
-            filed_tags_dict = {"geography":table_geography,
+            field_tags_dict = {"geography":table_geography,
                                "geographic_level":table_geographic_level,
                                "domain":table_domain,
                                "subdomain":table_subdomain,
@@ -1068,7 +1068,7 @@ def metadata_edit(request,metadata_id):
                                                      "data_type":xls_dataypes[i],
                                                      "verbose_name":xls_verbosenames[i],
                                                      "no_data_value":"",
-                                                     "tags":filed_tags_dict
+                                                     "tags":field_tags_dict
                                                     })
                     field_metadata_form_list.append({"field_name":header,
                                                      "data_type":xls_dataypes[i],
@@ -1104,7 +1104,7 @@ def metadata_edit(request,metadata_id):
                     for v_types in field['visualization_types']:
                         visualization_types.append(v_types.id)
                     if len(field) > 0:
-                        filed_tags_dict = {"geography":field['geography'].id if field['geography'] != None else None,
+                        field_tags_dict = {"geography":field['geography'].id if field['geography'] != None else None,
                                            "geographic_level":field['geographic_level'].id if field['geographic_level'] != None else None,
                                            "domain":field['domain'].id if field['domain'] != None else None,
                                            "subdomain":field['subdomain'].id if field['subdomain'] != None else None,
@@ -1116,7 +1116,7 @@ def metadata_edit(request,metadata_id):
                                                "data_type":field['data_type'] if field['data_type'] != None else "",
                                                "verbose_name":field['verbose_name'] if field['verbose_name'] != None else "",
                                                "no_data_value":field['no_data_value'] if field['no_data_value'] != None else "",
-                                               "tags":filed_tags_dict
+                                               "tags":field_tags_dict
                                                }
                         field_metadata_dict_list.append(field_metadata_dict)
                     else:
