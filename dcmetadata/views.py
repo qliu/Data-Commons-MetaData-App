@@ -321,6 +321,24 @@ def tagsname2id(request):
         print e
         return HttpResponse("\"Tags\" Key name to id - Conversion Failed!")
 
+# Add and Initialize "update_date" key in dataset metadata
+def addupdatedate(request):
+    metadata_json = ""
+    try:
+        dataset_metadata = DatasetMetadata.objects.all()
+        for dm in dataset_metadata:
+            metadata_id = dm.id
+            metadata_json_dict = dm._get_metadata_dict()
+            metadata_json_dict["update_date"] = datetime.date.today().strftime("%Y-%m-%d")
+            metadata_json = json.dumps(metadata_json_dict)
+            output_metadata = DatasetMetadata(id=metadata_id,metadata=metadata_json)
+            output_metadata.save()
+        return HttpResponse("Add and Initialzie \"update_date\" Key - Succeed!")
+    except Exception as e:
+        print e.args
+        print e
+        return HttpResponse("Add and Initialzie \"update_date\" Key - Failed!")
+            
 
 '''-----------------------
 Import data from metadata
@@ -676,7 +694,8 @@ def dataset_metadata_edit(request,dataset_id):
                         "fkeys":[],
                         "gkey":[],
                         "tags":map(int,dataset._get_str_tags().split(",")),
-                        "large_dataset":dataset.large_dataset
+                        "large_dataset":dataset.large_dataset,
+                        "update_date":dataset.update_date.strftime("%Y-%m-%d")
                         }
     ## If dataset metadata esixts, read the dictionary from database.
     else:

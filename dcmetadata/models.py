@@ -637,6 +637,7 @@ def post_save_m2m_tags_dataset(sender, instance, action, reverse, *args, **kwarg
 				json_metadata_dict["name"] = instance.name
 				json_metadata_dict["tags"] = map(int,instance._get_str_tags().split(","))
 				json_metadata_dict["large_dataset"] = instance.large_dataset
+				json_metadata_dict["update_date"] = instance.update_date.strftime("%Y-%m-%d")
 				# If tables changed, overwrite with new tables from instance, and reset all the fileds and keys values
 				if not all(map(operator.eq,map(int,instance._get_str_tables().split(",")),json_metadata_dict["tables"])):
 					json_metadata_dict["tables"] = map(int,instance._get_str_tables().split(","))			
@@ -681,6 +682,7 @@ class Dataset(models.Model):
 	tags = models.ManyToManyField('Tag',null=True,blank=True)
 	large_dataset = models.IntegerField(choices=BOOL_CHOICES,default=0)
 	metadata = models.ForeignKey('DatasetMetadata',null=True,blank=True)
+	update_date = models.DateField(auto_now_add=True,auto_now=True)
 	
 	def __unicode__(self):
 		'''
@@ -813,7 +815,8 @@ class DatasetMetadata(models.Model):
 			"fkeys":[["table_id.field_name","reference_table_id.field_name"]],
 			"gkey":["table_id.field_name","spatial_table_id.field_name"],
 			"tags":[tag ids],
-			"large_dataset":1/0
+			"large_dataset":1/0,
+			"update_date":"update date"
 		}
 		'''
 		if self.metadata != "":
