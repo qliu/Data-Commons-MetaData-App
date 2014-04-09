@@ -55,6 +55,7 @@ urlpatterns = patterns('dcmetadata.views',
 	
 	# Test URLs:
 	url(r'^test/$','test'),
+	url(r'^test/tagsname2id/$','tagsname2id'),
 	
 	# test Dajaxice URLs
 	url(r'^test/test_dajaxice/$','test_dajaxice'),

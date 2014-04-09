@@ -300,6 +300,28 @@ def fkeyid2name(request):
 def test_dajaxice(request):
     return {}
 
+
+# Convert tag name to tag id for "tags" key in dataset metadata
+def tagsname2id(request):
+    metadata_json = ""
+    try:
+        dataset_metadata = DatasetMetadata.objects.all()
+        for dm in dataset_metadata:
+            metadata_id = dm.id
+            dataset = Dataset.objects.get(id=metadata_id)
+            metadata_json_dict = dm._get_metadata_dict()
+            metadata_json_dict["tags"] = map(int,dataset._get_str_tags().split(","))
+            print dataset._get_str_tags()
+            metadata_json = json.dumps(metadata_json_dict)
+            output_metadata = DatasetMetadata(id=metadata_id,metadata=metadata_json)
+            output_metadata.save()
+        return HttpResponse("\"Tags\" Key name to id - Conversion complete!")
+    except Exception as e:
+        print e.args
+        print e
+        return HttpResponse("\"Tags\" Key name to id - Conversion Failed!")
+
+
 '''-----------------------
 Import data from metadata
 -----------------------'''
@@ -322,9 +344,9 @@ def import_dataset(request):
             for table_id in dm_dict["tables"]:
                 table = SourceDataInventory.objects.get(id=table_id)
                 dataset.tables.add(table)
-            for tag_name in dm_dict["tags"]:
+            for tag_id in dm_dict["tags"]:
                 # If tag NOT existed, create new tag
-                return_tag = Tag.objects.get_or_create(name=tag_name)
+                return_tag = Tag.objects.get_or_create(id=tag_id)
                 tag = return_tag[0]
                 dataset.tags.add(tag)
             dataset.save()
@@ -653,7 +675,7 @@ def dataset_metadata_edit(request,dataset_id):
                         "pkey":[],
                         "fkeys":[],
                         "gkey":[],
-                        "tags":dataset._get_str_tags().split(","),
+                        "tags":map(int,dataset._get_str_tags().split(",")),
                         "large_dataset":dataset.large_dataset
                         }
     ## If dataset metadata esixts, read the dictionary from database.
