@@ -588,7 +588,7 @@ def down_as_zip(request,sourcedata_ids):
         output_files.append(output_file)
             
     # Zip CSVs up
-    zip_name = "SourceData_%s" % datetime.now().strftime('%Y%m%d_%H%M%S')
+    zip_name = "SourceData_%s" % datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     temp = tempfile.TemporaryFile()
     buffer = zipfile.ZipFile(temp,'w',zipfile.ZIP_DEFLATED)
     for of in output_files:
