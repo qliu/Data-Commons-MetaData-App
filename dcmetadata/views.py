@@ -332,8 +332,6 @@ def addupdatedate(request):
             output_metadata.save()
         return HttpResponse("Add and Initialzie \"update_date\" Key - Succeed!")
     except Exception as e:
-        print e.args
-        print e
         return HttpResponse("Add and Initialzie \"update_date\" Key - Failed!")
             
 
