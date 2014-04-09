@@ -909,7 +909,7 @@ def metadata_detail(request,metadata_id):
     table_tags_dict = metadata_json_dict["table_tags"]
     field_metadata_dict_list = metadata_json_dict["field_metadata"]    
     source_data = SourceDataInventory.objects.get(id=metadata_id)
-    source_data_name = source_data.title
+#    source_data_name = source_data.title
     datasets = source_data.dataset_set.all()
     list_datasets = []
     for dataset in datasets:
@@ -923,7 +923,8 @@ def metadata_detail(request,metadata_id):
 
     return {
             'metadata_id':metadata_id,
-            'source_data_name':source_data_name,
+#            'source_data_name':source_data_name,
+            'source_data':source_data,
             'datasets':list_datasets,
             'table_tags_dict':table_tags_dict,
             'field_metadata_dict_list':field_metadata_dict_list,
