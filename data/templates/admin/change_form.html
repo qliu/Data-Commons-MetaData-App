@@ -227,6 +227,7 @@
 				   $(originalOptions).each(function(){
 						var newOption = $(this).clone();
 						if(escape($(this).text()).search(escape(selectMacrodomain)) == 0){
+							newOption.text($(this).text().replace(escape(selectMacrodomain),"").replace(" | ",""));
 							newOption.appendTo(subjectmatterSelect);
 						}
 				   });

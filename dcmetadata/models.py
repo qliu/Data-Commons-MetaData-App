@@ -80,7 +80,16 @@ class SubjectMatter(models.Model):
 			next_id = -1
 		return next_id
 	
+	def get_subjectmatter_name(self):
+		'''
+		Return the subject domain name
+		'''
+		return self.name
+	
 	def __unicode__(self):
+		'''
+		This is a workaround to select sub-domain when parent domain changes
+		'''
 		return "%s | %s" % (self.macrodomain.name,self.name)
 		
 	class Meta:
