@@ -162,20 +162,14 @@
 
 {% block content %}
 <div id="content-main">
-	<h1>Dataset ID: {{dataset_id}}</h1>
-	<h3>Title: &nbsp;" <a target="_blank" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset_id }}/">{{ dataset.name }}</a> "</h3>
-	<br/>
-	
+	<h1><a target="_blank" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset_id }}/">{{ dataset.name }}</a></h1>
 	<div id="metadata_tools">
 		{% if has_change_permission %}
 			<a class="edit-link" href="edit">Edit Dataset Metadata</a>
 		{% endif %}
-		{% if has_delete_permission %}
-			<a class="delete-link" href="delete_confirm">Delete Dataset Metadata</a>
-		{% endif %}
 	</div>
-	<br/><hr/>
-	
+	<br/><hr>
+	<h3>Dataset ID: {{dataset_id}}</h3>
 	{% if tables %}
 		<h3>Table(s) in this dataset:</h3>
 		{% for table in tables %}
@@ -203,9 +197,9 @@
 	<table>
 		<thead>
 			<tr>
-				<th scope="col" class="sortable">Field Name</th>
-				<th scope="col" class="sortable">Description</th>
-				<th scope="col" class="sortable">Data Type</th>
+				<th scope="col">Field Name</th>
+				<th scope="col">Description</th>
+				<th scope="col">Data Type</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -243,9 +237,6 @@
 	<div id="metadata_tools">
 		{% if has_change_permission %}
 			<a class="edit-link" href="edit">Edit Dataset Metadata</a>
-		{% endif %}
-		{% if has_delete_permission %}
-			<a class="delete-link" href="delete_confirm">Delete Dataset Metadata</a>
 		{% endif %}
 	</div>
 </div>
