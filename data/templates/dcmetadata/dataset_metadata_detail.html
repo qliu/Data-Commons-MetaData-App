@@ -1,8 +1,36 @@
 {% extends "admin/admin_base_site.html" %}
 {% load i18n admin_static admin_modify %}{% load custom_filter %}{% load custom_tag %}
+
 {% block extrastyle %}
 	{{ block.super }}
 	<style type="text/css">
+		table {
+			border: 1px solid #ddd !important;
+			border-collapse:collapse;
+			padding: 10px;
+			margin: 20px;
+		}
+		
+		td {
+			font-size: 14px;
+			border: 1px solid #ddd;
+			padding: 10px 20px;
+		}
+		
+		thead th {
+			font-size: 14px;
+			border: 1px solid #ddd;
+			padding: 5px 10px;
+		}
+		
+		tbody tr th{
+			font-size: 14px;
+			font-weight: bold;
+			border: 1px solid #ddd;
+			vertical-align: middle;
+			background: #eee;
+		}
+	
 		.delete-link {
 			float:left;
 			padding-left:18px;
@@ -55,13 +83,6 @@
 			border:0;
 		}
 		
-		table{
-			border: 0px solid;
-			border-bottom-width: 1px;
-			padding: 10px;
-			margin: 20px;
-		}
-		
 		.errornote{
 			font-size: 12px !important;
 			display: block;
@@ -93,6 +114,13 @@
 			-webkit-padding-start: 0px;
 			margin-top: -23px !important;
 		}
+		
+		li{
+			font-size: 18px;
+			line-height: 20px;
+			margin-left: 50px;
+		}
+		
 		div#metadata_tools
 		{
 			float:right;
@@ -102,7 +130,23 @@
 			display: block;
 			margin-left: 30px;
 		}
+		
+		.read-more-toggle h3 {
+			margin-left: 0;
+			text-decoration: underline;
+			color: #487909;
+			font-size: 16px;
+		}
+		
+		.hide {
+			display: none;
+		}
 	</style>
+{% endblock %}
+
+{% block extrahead %}
+	<!-- JQUERY 1.7.2 -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 {% endblock %}
 
 {% block current_title %}Dataset ID {{dataset_id}}{% endblock %}
@@ -119,6 +163,9 @@
 {% block content %}
 <div id="content-main">
 	<h1>Dataset ID: {{dataset_id}}</h1>
+	<h3>Title: &nbsp;" <a target="_blank" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/dataset/{{ dataset_id }}/">{{ dataset.name }}</a> "</h3>
+	<br/>
+	
 	<div id="metadata_tools">
 		{% if has_change_permission %}
 			<a class="edit-link" href="edit">Edit Dataset Metadata</a>
@@ -127,38 +174,70 @@
 			<a class="delete-link" href="delete_confirm">Delete Dataset Metadata</a>
 		{% endif %}
 	</div>
-	<br/><hr><br/>
-	<div class="metadata_detail">
-		<p><b>Title:</b> {{dataset.name}}</p>
-		<p><b>NID:</b> {{dataset.nid}}</p>
-		<p>
-		<b>Tables:</b> 
-		{% for t in dataset.tables.all %}
-			{% if forloop.counter > 1 %}, {% endif %}<a target="_blank" class="sourcedata-link" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/{{ t.id }}/">{{ t }}</a>
+	<br/><hr/>
+	
+	{% if tables %}
+		<h3>Table(s) in this dataset:</h3>
+		{% for table in tables %}
+			<li><a target="_blank" href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/{{ table.id }}/">{{table.title}}</a></li>
 		{% endfor %}
-		</p>
-		<p>
-		<b>Tags:</b> 
-		{% for t in dataset.tags.all%}
-			{% if forloop.counter > 1 %}, {% endif %}{{ t }}
-		{% endfor %}
-		</p>
-		<p><b>IS Large Dataset? :</b> {% if dataset.large_dataset == 0 %} No {% else %} Yes {% endif %}<br/></p>
-	</div>
-	<br/><hr><br/>
-	<h1>Metadata JSON</h1>
-	<div id="metadata_json">
-		dataset_metadata = <br/>
-		{
-		<div id="metadata_json_content">
-			{% for key,value in dataset_metadata.items %}
-				<p>
-				"{{key}}":"{{ value }}",
-				</p>
-			{% endfor %}	
+		<br/><hr><br/>
+	{% endif %}
+	
+	<h1>Dataset Metadata</h1>
+	<table>
+		<tbody>
+			<tr><th>Domain</th><td>{{tables.0.macro_domain}}</td></tr>
+			<tr><th>Subdomain</th><td>{{tables.0.subject_matter}}</td></tr>
+			<tr><th>Geography</th><td>{{tables.0.coverage}}</td></tr>
+			<tr><th>Geographic Level</th><td>{{tables.0.geography}}</td></tr>
+			<tr><th>Year</th><td>{{tables.0.year}}</td></tr>
+			<tr><th>Source</th><td>{{tables.0.source}}</td></tr>
+			<tr><th>Tags</th><td>{% for t in dataset.tags.all%}{% if forloop.counter > 1 %}, {% endif %}{{ t }}{% endfor %}</td></tr>
+			<tr><th>Is large dataset?</th><td>{% if dataset.large_dataset == 0 %} No {% else %} Yes {% endif %}</td></tr>
+		</tbody>
+	</table>
+	<br/><hr>
+	
+	<h2>Dataset Fields</h2>
+	<table>
+		<thead>
+			<tr>
+				<th scope="col" class="sortable">Field Name</th>
+				<th scope="col" class="sortable">Description</th>
+				<th scope="col" class="sortable">Data Type</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for field_metadata_dict in field_metadata_dict_list %}
+				<tr>
+					<td>{{field_metadata_dict.field_name}}</td>
+					<td>{{field_metadata_dict.verbose_name}}</td>
+					<td>{{field_metadata_dict.data_type}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<br/><br/><hr>
+	<div class="read-more-content">
+		<h1>Metadata JSON</h1>
+		<div id="metadata_json">
+			dataset_metadata = <br/>
+			{
+			<div id="metadata_json_content">
+				{% for key,value in dataset_metadata.items %}
+					<p>
+					"{{key}}":"{{ value }}",
+					</p>
+				{% endfor %}	
+			</div>
+			}
+			<br/><br/><hr>
 		</div>
-		}
-		<br/><br/><hr>
+	</div>
+	<div class="read-more-toggle">
+		<h3>Show Metadata JSON</h3>
+		<h3 style="display:none">Hide Metadata JSON</h3>
 	</div>
 	<br/>
 	<div id="metadata_tools">
@@ -171,3 +250,14 @@
 	</div>
 </div>
 {% endblock %}
+
+{% block bottom_javascript %}
+<script>
+	$('.read-more-content').addClass('hide');
+	$('.read-more-toggle').css('cursor','pointer');
+	$('.read-more-toggle').click(function(){
+		$(this).find('h3').toggle();
+		$('.read-more-content').toggle('slow');
+	});
+</script>
+{% endblock bottom_javascript %}

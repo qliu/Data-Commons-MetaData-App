@@ -650,15 +650,41 @@ Dataset
 @render_to("dcmetadata/dataset_metadata_detail.html")
 def dataset_metadata_detail(request,dataset_id):
     dataset = get_object_or_404(Dataset, id=dataset_id)
+    tables = dataset.tables.all()
     dataset_metadata = get_object_or_404(DatasetMetadata, id=dataset_id)
     dataset_metadata_dict = dataset_metadata._get_metadata_dict()
     user = request.user
     has_change_permission = HasPermission(user,'dcmetadata','change','tablemetadata')
-    has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')    
+    has_delete_permission = HasPermission(user,'dcmetadata','delete','tablemetadata')
+    
+    # Construct a dictionary to hold table fields in the dataset
+    dataset_table_metadata_fields = {}
+    for table in tables:
+        dataset_table_metadata_fields[table.id] = {}
+    for table in tables:
+        table_metadata = TableMetadata.objects.get(id=table.id)
+        field_metadata_dict_list = table_metadata._get_metadata_dict()["field_metadata"]
+        for table_field in field_metadata_dict_list:
+            dataset_table_metadata_fields[table.id][table_field["field_name"].lower()] = [table_field["verbose_name"],table_field["data_type"]]
+    
+    # Retrieve field metadata
+    dataset_fields = dataset_metadata_dict["fields"]
+    dataset_fields_metadata = []
+    for dataset_field in dataset_fields:
+        dataset_field_str_list = dataset_field.split(".")
+        table_id = int(dataset_field_str_list[0])
+        field_name = dataset_field_str_list[1]
+        field_metadata = {"field_name":field_name,
+                          "verbose_name":dataset_table_metadata_fields[table_id][field_name][0],
+                          "data_type":dataset_table_metadata_fields[table_id][field_name][1]
+                         }
+        dataset_fields_metadata.append(field_metadata)
     
     return {'dataset_id':dataset_id,
             'dataset':dataset,
+            'tables':tables,
             'dataset_metadata':dataset_metadata_dict,
+            'field_metadata_dict_list':dataset_fields_metadata,
             'has_change_permission':has_change_permission,
             'has_delete_permission':has_delete_permission,
             }
