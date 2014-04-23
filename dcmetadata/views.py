@@ -333,7 +333,32 @@ def addupdatedate(request):
         return HttpResponse("Add and Initialzie \"update_date\" Key - Succeed!")
     except Exception as e:
         return HttpResponse("Add and Initialzie \"update_date\" Key - Failed!")
-            
+
+# Pull all the tags and the domain/subdomain of the datset associated with it
+@render_to("test/pull_tags.html")
+def pull_tags(request):
+    tags = Tag.objects.all()
+    tag_dict_list = []
+    for tag in tags:
+        tag_dict = {"tag_name":tag.name,"domain":[],"subdomain":[]}
+        datasets = Dataset.objects.filter(tags=tag.id)
+        domain_list = []
+        subdomain_list = []        
+        for dataset in datasets:
+            tables = dataset.tables.all()
+            for table in tables:
+                if table.subject_matter.get_subjectmatter_name() != "Geography":
+                    domain_list.append(table.macro_domain.name.encode('utf8'))
+                    subdomain_list.append(table.subject_matter.get_subjectmatter_name().encode('utf8'))
+        if domain_list and subdomain_list:
+            domain_list_distinct = list(set(domain_list))
+            for domain in domain_list_distinct:
+                tag_dict["domain"].append((domain,domain_list.count(domain)))
+            subdomain_list_distinct = list(set(subdomain_list))
+            for subdomain in subdomain_list_distinct:
+                tag_dict["subdomain"].append((subdomain,subdomain_list.count(subdomain)))
+            tag_dict_list.append(tag_dict)
+    return {"tags":tag_dict_list}
 
 '''-----------------------
 Import data from metadata
