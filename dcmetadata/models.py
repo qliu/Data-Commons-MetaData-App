@@ -489,7 +489,7 @@ class SourceDataInventory(models.Model):
 
 	class Meta:
 		db_table = u'source_data_inventory'
-		ordering = ['title']
+#		ordering = ['title']
 
 # Add Table Tags to TableMetadata After SourceDataInventory Model instance being saved
 post_save.connect(post_save_handler_add_tabletags, sender=SourceDataInventory)

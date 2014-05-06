@@ -96,7 +96,8 @@ class SourceDataInventoryAdmin(admin.ModelAdmin):
     actions = ['download']
     fields = ['upload_file','file_name','format','title','macro_domain','subject_matter',
         'coverage','geography','year','source','source_website','location','geometry',
-        'description','data_consideration','process_notes']    
+        'description','data_consideration','process_notes']
+    ordering = ['title']
 #    fields = ['upload_file','file_name','format','description','macro_domain','subject_matter',
 #    'coverage','geography','begin_year','end_year','source','location','cleaning_notes']
     readonly_fields = ['file_name','format']

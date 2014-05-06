@@ -151,6 +151,7 @@ class FileUploadForm(forms.Form):
 class DatasetForm(forms.ModelForm):
 #    id = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'size':'10'}),required=True)
 #    nid = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'size':'10'}),required=True)
+    tables = forms.ModelMultipleChoiceField(queryset=SourceDataInventory.objects.order_by('title'))
 
     class Meta:
         model = Dataset
