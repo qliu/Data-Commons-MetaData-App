@@ -1,0 +1,59 @@
+{% extends "admin/admin_base_site_oasm.html" %}
+{% load adminmedia %}{% load i18n admin_static admin_modify %}{% load url from future %}{% load admin_urls %}{% load smart_if %}{% load custom_tag %}
+
+{% block current_title %}User Profile{% endblock %}
+
+{% block breadcrumbs %}
+		&rsaquo; User Profile
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<h1>User Profile</h1>
+	<form id="user_form" method="post" action="">{% csrf_token %}
+		<fieldset class="module aligned">
+			<div class="form-row field-username">
+				<p>{{user_profile_form.username.errors}}</p>
+				<label for="id_username" class="required">{{user_profile_form.username.label}}:</label>
+				{{user_profile_form.username}}
+				<p class="help">{{user_profile_form.username.help_text}}</p>
+			</div>
+			<div class="form-row field-password">
+				<p>{{user_profile_form.password.errors}}</p>
+				<label for="id_password">{{user_profile_form.password.label}}:</label>
+				<div id="id_password">
+					<img src="{{ MEDIA_URL }}images/icon_password.png"><a href="../password/"><b>Change Password</b></a>
+					<p class="help">Raw passwords are not stored, so there is no way to see the user's password. You can change the password using the link above.</p>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset class="module aligned">
+			<h2>Personal Info</h2>
+			<div class="form-row">
+				<p>{{user_profile_form.first_name.errors}}</p>
+				<label for="id_first_name">{{user_profile_form.first_name.label}}:</label>
+				{{user_profile_form.first_name}}
+				<p class="help">{{user_profile_form.first_name.help_text}}</p>
+			</div>
+			<div class="form-row">
+				<p>{{user_profile_form.last_name.errors}}</p>
+				<label for="id_last_name">{{user_profile_form.last_name.label}}:</label>
+				{{user_profile_form.last_name}}
+				<p class="help">{{user_profile_form.last_name.help_text}}</p>
+			</div>
+			<div class="form-row">
+				<p>{{user_profile_form.email.errors}}</p>
+				<label for="id_email">{{user_profile_form.email.label}}:</label>
+				{{user_profile_form.email}}
+				<p class="help">{{user_profile_form.email.help_text}}</p>
+			</div>
+		</fieldset>
+		<div class="form-submit-buttons">
+			<p>
+				<input type="submit" name="save_continue" value="Save and continue editing" />
+				<input type="submit" name="save" id="save-button" value="Save">
+			</p>
+		</div>
+	</form>
+</div>
+{% endblock %}
