@@ -51,8 +51,8 @@ class ThreeYearGoalAdmin(admin.ModelAdmin):
 admin.site.register(ThreeYearGoal,ThreeYearGoalAdmin)
 
 class StrategyAdmin(admin.ModelAdmin):
-    fields = ['id','description','rationale','outcome_20','outcome_10_19','three_year_goal','last_edit']
-    readonly_fields = ['id','last_edit']
+    fields = ['id','str_id','description','rationale','outcome_20','outcome_10_19','three_year_goal','last_edit']
+    readonly_fields = ['id','str_id','last_edit']
     list_display = ('_get_str_id','description','three_year_goal')
     list_filter = ['outcome_20','outcome_10_19','three_year_goal']
     search_fields = ['description','rationale']
@@ -62,8 +62,8 @@ admin.site.register(Strategy,StrategyAdmin)
 class ActivityAdmin(admin.ModelAdmin):
     fields = ['id','description','rationale','strategy','last_edit']
     readonly_fields = ['id','last_edit']
-    list_display = ('description','rationale','strategy','last_edit')
-    list_filter = ['strategy__outcome_20','strategy__outcome_10_19','strategy__three_year_goal','strategy']
+    list_display = ('description','rationale','strategy')
+    list_filter = ['strategy__outcome_20','strategy__outcome_10_19','strategy__three_year_goal','strategy__str_id']
     search_field = ['description','rationale']
     list_per_page = 15
 admin.site.register(Activity,ActivityAdmin)
@@ -72,7 +72,18 @@ class BudgetAdmin(admin.ModelAdmin):
     fields = ['id','activity','capital_type','fiscal_year','amount']
     readonly_fields = ['id']
     list_display = ('id','activity','amount','capital_type','fiscal_year')
-    list_filter = ['activity','capital_type','fiscal_year']
+    list_filter = ['capital_type__entity__name','capital_type__name','fiscal_year__name']
     search_field = ['activity__name']
     list_per_page = 15
+    
+    def add_view(self,request,form_url='',extra_context=None):
+        activity_id = request.GET.get("activity",None)
+        if activity_id != None:
+            activity = Activity.objects.get(id=activity_id)
+            data = request.GET.copy()
+            data.update({
+                'activity_id':activity_id
+            })
+            request.GET = data
+        return super(BudgetAdmin,self).add_view(request,form_url,extra_context)    
 admin.site.register(Budget,BudgetAdmin)

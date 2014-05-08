@@ -162,6 +162,16 @@
 			<div id="metadata-block"><a class="add-metadata-link" title="Add Metadata" target="_blank" href="{{ admin_url|cut:'/admin/' }}/dcmetadata{% if opts.verbose_name = 'dataset' %}/dataset{% endif %}/metadata/{{ original.id }}/edit">Add Metadata</a></div>
 		{% endif %}
 	{% endif %}
+{% else %}
+	{% if opts.verbose_name = 'activity' %}
+		{% if original.id %}
+			<div id="metadata-block">
+				<img src="{{ MEDIA_URL }}admin/img/icon_addlink.gif"> <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/budget/add/?activity={{original.id}}">Add Budget</a>
+				<img src="{{ MEDIA_URL }}images/icon_metadata.gif"> <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/budget/?activity__id={{original.id}}">View Budgets</a>
+			</div>
+		{% endif %}
+
+	{% endif %}
 {% endif %}
 <div id="content-main">
 {% block object-tools %}
@@ -193,11 +203,7 @@
 {% endfor %}
 {% endblock %}
 
-{% block after_field_sets %}
-	{% if opts.verbose_name = 'activity' %}
-		<a href="#">Add Budget</a>
-	{% endif %}
-{% endblock %}
+{% block after_field_sets %}{% endblock %}
 
 {% block inline_field_sets %}
 {% for inline_admin_formset in inline_admin_formsets %}

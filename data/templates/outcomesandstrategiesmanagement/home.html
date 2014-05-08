@@ -36,10 +36,10 @@
 <div id="content-main">
 	{% if user.is_superuser %}
 		<div class="home-block">
-			<h2>Outcomes and Goals</2>
-			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/outcome10to19/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All the Outcomes and Goals</h3></a>
-			{% if user.is_staff and 'outcomesandstrategiesmanagement.add_threeyeargoal' in user.get_group_permissions %}
-				<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New 3-Year Goal</h3></a>
+			<h2>Activities</2>
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All the Activities</h3></a>
+			{% if user.is_staff and 'outcomesandstrategiesmanagement.add_activity' in user.get_group_permissions %}
+				<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Activity</h3></a>
 			{% endif %}
 		</div>
 		<div class="home-block">
@@ -50,12 +50,12 @@
 			{% endif %}
 		</div>
 		<div class="home-block">
-			<h2>Activities</2>
-			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All the Activities</h3></a>
-			{% if user.is_staff and 'outcomesandstrategiesmanagement.add_activity' in user.get_group_permissions %}
-				<a href="{% setting 'APP_SERVER_URL' %}/admin/dcmetadata/sourcedatainventory/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Activity</h3></a>
+			<h2>Outcomes and Goals</2>
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All the Outcomes and Goals</h3></a>
+			{% if user.is_staff and 'outcomesandstrategiesmanagement.add_threeyeargoal' in user.get_group_permissions %}
+				<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New 3-Year Goal (Admin Login Required)</h3></a>
 			{% endif %}
-		</div>		
+		</div>
 		<div class="home-block">
 			<h2>Site Administration</2>
 			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/"><h3><img src="{{ MEDIA_URL }}images/home_icon_admin.png">Go to Site Administration (Admin login required)</h3></a>

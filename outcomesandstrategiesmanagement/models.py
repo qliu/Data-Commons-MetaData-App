@@ -15,7 +15,7 @@ class Entity(models.Model):
     Store entity for capital type
     """
 #    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,verbose_name="Entity")
     
     def __unicode__(self):
         return self.name
@@ -28,7 +28,7 @@ class CapitalType(models.Model):
     Store capital type for Activity Budge
     """
 #    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,verbose_name="Capital Type")
     entity = models.ForeignKey('Entity')
     
     def __unicode__(self):
@@ -43,7 +43,7 @@ class FiscalYear(models.Model):
     Store Fiscal Year for Activity Budget
     """
 #    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,verbose_name="Fiscal Year")
     
     def __unicode__(self):
         return self.name
@@ -146,12 +146,23 @@ class ThreeYearGoal(models.Model):
         ordering = ['outcome_20','outcome_10_19','id']        
         
 
+# Handler After Strategy Model instance being saved
+def post_save_handler_set_strid(sender,instance=True,**kwargs):
+    try:
+        strategy = Strategy.objects.get(id=instance.id)
+        strategy.str_id = strategy._get_str_id()
+        strategy.save()
+    except:
+		pass;
+
+
 # Strategy Model
 class Strategy(models.Model):
     """
     Strategies
     """
 #    id = models.IntegerField(primary_key=True)
+    str_id = models.CharField(max_length=10,null=True,blank=True,verbose_name='Strategy ID')
     description = models.CharField(max_length=500,null=True,blank=True)
     rationale = models.CharField(max_length=1000,null=True,blank=True)
     outcome_20 = models.ForeignKey('Outcome20',verbose_name='20-Year Outcome')
@@ -207,6 +218,9 @@ class Strategy(models.Model):
 		db_table = u'strategy'
 		ordering = ['outcome_20','outcome_10_19','three_year_goal','id']
 
+# Add Table Tags to TableMetadata After SourceDataInventory Model instance being saved
+post_save.connect(post_save_handler_set_strid, sender=Strategy)
+
 # Activity Model
 class Activity(models.Model):
     """
@@ -248,7 +262,7 @@ class Activity(models.Model):
             
     class Meta:
 		db_table = u'activity'
-		ordering = ['strategy','description']
+		ordering = ['strategy__str_id','description']
 
 # Budget Model
 class Budget(models.Model):
@@ -260,9 +274,6 @@ class Budget(models.Model):
     capital_type = models.ForeignKey('CapitalType',verbose_name='Capital Type')
     fiscal_year = models.ForeignKey('FiscalYear',verbose_name='Fiscal Year')
     amount = models.FloatField(default=0,null=True, blank=True)
-    
-    def __unicode__(self):
-        return self.amount
     
     class Meta:
         db_table = u'budget'
