@@ -60,7 +60,7 @@
 			<div id="page">
 				<!-- Breadcrumbs -->
 				<div class="breadcrumbs">
-					<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/home/">{% trans 'Home' %}</a>
+					<a href="{% setting 'APP_SERVER_URL' %}/{{app_label}}/home/">{% trans 'Home' %}</a>
 					{% block breadcrumbs %}{% endblock %}
 					<!--
 					{% if title %} &rsaquo; {{ title }}{% endif %}

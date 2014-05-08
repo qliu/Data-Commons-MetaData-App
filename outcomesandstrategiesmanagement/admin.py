@@ -67,3 +67,12 @@ class ActivityAdmin(admin.ModelAdmin):
     search_field = ['description','rationale']
     list_per_page = 15
 admin.site.register(Activity,ActivityAdmin)
+
+class BudgetAdmin(admin.ModelAdmin):
+    fields = ['id','activity','capital_type','fiscal_year','amount']
+    readonly_fields = ['id']
+    list_display = ('id','activity','amount','capital_type','fiscal_year')
+    list_filter = ['activity','capital_type','fiscal_year']
+    search_field = ['activity__name']
+    list_per_page = 15
+admin.site.register(Budget,BudgetAdmin)

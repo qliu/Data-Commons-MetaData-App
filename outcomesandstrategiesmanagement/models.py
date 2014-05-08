@@ -207,23 +207,6 @@ class Strategy(models.Model):
 		db_table = u'strategy'
 		ordering = ['outcome_20','outcome_10_19','three_year_goal','id']
 
-# Budget Model
-class Budget(models.Model):
-    """
-    Budgets
-    """
-#    id = models.IntegerField(primary_key=True)
-    capital_type = models.ForeignKey('CapitalType',verbose_name='Capital Type')
-    fiscal_year = models.ForeignKey('FiscalYear',verbose_name='Fiscal Year')
-    amount = models.FloatField(default=0,null=True, blank=True)
-    
-    def __unicode__(self):
-        return self.amount
-    
-    class Meta:
-    		db_table = u'budget'
-    		ordering = ['fiscal_year']
-
 # Activity Model
 class Activity(models.Model):
     """
@@ -266,3 +249,21 @@ class Activity(models.Model):
     class Meta:
 		db_table = u'activity'
 		ordering = ['strategy','description']
+
+# Budget Model
+class Budget(models.Model):
+    """
+    Budgets
+    """
+#    id = models.IntegerField(primary_key=True)
+    activity = models.ForeignKey('Activity',verbose_name='Activity')
+    capital_type = models.ForeignKey('CapitalType',verbose_name='Capital Type')
+    fiscal_year = models.ForeignKey('FiscalYear',verbose_name='Fiscal Year')
+    amount = models.FloatField(default=0,null=True, blank=True)
+    
+    def __unicode__(self):
+        return self.amount
+    
+    class Meta:
+        db_table = u'budget'
+        ordering = ['fiscal_year']
