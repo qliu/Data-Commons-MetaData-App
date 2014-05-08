@@ -14,6 +14,28 @@ MANAGERS = ADMINS
 
 DATABASES = {
 
+#    # Local Database
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#        'NAME': 'datacommons',                      # Or path to database file if using sqlite3.
+#        'USER': 'qliu',                      # Not used with sqlite3.
+#        'PASSWORD': 'postgres',                  # Not used with sqlite3.
+#        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+#        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+#    }
+### changes for server ->
+##    # Pitondc1
+##    'default': {
+##        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+##        'NAME': 'data_engine_metadata_admin',                      # Or path to database file if using sqlite3.
+##        'USER': 'Admin',                      # Not used with sqlite3.
+##        'PASSWORD': 'Piton!',                  # Not used with sqlite3.
+##        'HOST': 'pitondc1',                      # Set to empty string for localhost. Not used with sqlite3.
+##        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+##    }
+### <- changes for server
+
+# Experimental for multiple database
     # Local Database
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -22,7 +44,15 @@ DATABASES = {
         'PASSWORD': 'postgres',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
+    },
+    'outcomesandstrategiesmanagement_db': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'outcomes_strategies_management',                      # Or path to database file if using sqlite3.
+        'USER': 'qliu',                      # Not used with sqlite3.
+        'PASSWORD': 'postgres',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }    
 ## changes for server ->
 #    # Pitondc1
 #    'default': {
@@ -32,10 +62,20 @@ DATABASES = {
 #        'PASSWORD': 'Piton!',                  # Not used with sqlite3.
 #        'HOST': 'pitondc1',                      # Set to empty string for localhost. Not used with sqlite3.
 #        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+#    },
+#    # Pitondc1
+#    'outcomesandstrategiesmanagement_db': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#        'NAME': 'outcomes_strategies_management',                      # Or path to database file if using sqlite3.
+#        'USER': 'Admin',                      # Not used with sqlite3.
+#        'PASSWORD': 'Piton!',                  # Not used with sqlite3.
+#        'HOST': 'pitondc1',                      # Set to empty string for localhost. Not used with sqlite3.
+#        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
 #    }
 ## <- changes for server
 }
 
+DATABASE_ROUTERS = ['outcomesandstrategiesmanagement.router.OASMRouter']
 
 # Path Of Data Commons App folder
 current_path = os.path.dirname(__file__)
@@ -167,6 +207,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'dcmetadata',
+    'outcomesandstrategiesmanagement',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

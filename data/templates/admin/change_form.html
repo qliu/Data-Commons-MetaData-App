@@ -193,7 +193,11 @@
 {% endfor %}
 {% endblock %}
 
-{% block after_field_sets %}{% endblock %}
+{% block after_field_sets %}
+	{% if opts.verbose_name = 'activity' %}
+		<a href="#">Add Budget</a>
+	{% endif %}
+{% endblock %}
 
 {% block inline_field_sets %}
 {% for inline_admin_formset in inline_admin_formsets %}
@@ -216,31 +220,120 @@
 </form></div>
 {% endblock %}
 
+{% block bottom_javascript %}
 {% if opts.verbose_name = 'source data inventory' %}
 	<!-- JS for populating Subdomain select options based on selected Domain -->
-	{% block bottom_javascript %}
-		<script type="text/javascript">
-			var originalOptions = $('#id_subject_matter > option');
-			var subjectmatterSelect = $('#id_subject_matter');
-			function changeSubjectmatter(selectMacrodomain) {
-				   subjectmatterSelect.empty();
-				   $(originalOptions).each(function(){
+	<script type="text/javascript">
+		var originalOptions = $('#id_subject_matter > option');
+		var subjectmatterSelect = $('#id_subject_matter');
+		function changeSubjectmatter(selectMacrodomain) {
+			   subjectmatterSelect.empty();
+			   $(originalOptions).each(function(){
+					var newOption = $(this).clone();
+					if(escape($(this).text()).search(escape(selectMacrodomain)) == 0){
+						newOption.text($(this).text().replace(escape(selectMacrodomain),"").replace(" | ",""));
+						newOption.appendTo(subjectmatterSelect);
+					}
+			   });
+		};
+		$(document).ready(function (){
+			if ("{{original.subject_matter.macrodomain.name}}"){
+			changeSubjectmatter("{{original.subject_matter.macrodomain.name|safe}}");
+			}
+		});
+		$('#id_macro_domain').change(function (){
+			var selectMacrodomain = $(this).find('option:selected').text();
+			changeSubjectmatter(selectMacrodomain);
+		});
+	</script>
+{% else %}
+	{% if opts.verbose_name = 'strategy' %}
+		<!-- JS for populating outcomes and goals select options based on selected outcome -->
+		<script type="text/javascript">	
+			// Change 10-19Year Outcome selections based on selected 20-Year Outcome
+			var originalOptionsOC1019 = $('#id_outcome_10_19 > option');
+			var OC1019Select = $('#id_outcome_10_19');
+			function changeOC1019(selectOC20) {
+				   OC1019Select.empty();
+				   $(originalOptionsOC1019).each(function(){
 						var newOption = $(this).clone();
-						if(escape($(this).text()).search(escape(selectMacrodomain)) == 0){
-							newOption.text($(this).text().replace(escape(selectMacrodomain),"").replace(" | ",""));
-							newOption.appendTo(subjectmatterSelect);
+						if(escape($(this).text()).search(escape(selectOC20)) == 0){
+							newOption.text($(this).text().replace(selectOC20,"").replace(" | ",""));
+							newOption.appendTo(OC1019Select);
 						}
 				   });
 			};
+
+			// Change 3-Year Goal selections based on selected 10-19 Year Outcome
+			var originalOptionsThreeYearGoal = $('#id_three_year_goal > option');
+			var ThreeYearGoalSelect = $('#id_three_year_goal');
+			function changeThreeYearGoal(selectOC1019) {
+				   ThreeYearGoalSelect.empty();
+				   $(originalOptionsThreeYearGoal).each(function(){
+						var newOption = $(this).clone();
+						if(escape($(this).text()).search(escape(selectOC1019)) == 0){
+							newOption.text($(this).text());
+							newOption.appendTo(ThreeYearGoalSelect);
+						}
+				   });
+			};	
+
 			$(document).ready(function (){
-				if ("{{original.subject_matter.macrodomain.name}}"){
-				changeSubjectmatter("{{original.subject_matter.macrodomain.name|safe}}");
+				if ("{{original.outcome_20.id}}"){
+					var outcomeStrID = "Outcome #"+"{{original.outcome_20.id}}"
+					changeOC1019(outcomeStrID);
 				}
+				if ("{{original.outcome_10_19.id}}"){
+					var OutcomeStrID = "O"+ "{{original.outcome_20.id}}";
+					var selectOC1019 = $('#id_outcome_10_19').find('option:selected').val();
+					var selectOC1019Str = "O" + selectOC20 + "." + selectOC1019;
+					changeThreeYearGoal(selectOC1019Str);
+				}											
 			});
-			$('#id_macro_domain').change(function (){
-				var selectMacrodomain = $(this).find('option:selected').text();
-				changeSubjectmatter(selectMacrodomain);
+
+			$('#id_outcome_20').change(function (){
+				var selectOC20 = $(this).find('option:selected').text().substring(8,18);
+				changeOC1019(selectOC20);
+				$('#id_outcome_10_19').trigger("change");
+			});
+			$('#id_outcome_10_19').change(function (){
+				var selectOC20 = $('#id_outcome_20').find('option:selected').text().substring(17,18);
+				var selectOC1019 = $(this).find('option:selected').val();
+				var selectOC1019Str = "O" + selectOC20 + "." + selectOC1019;
+				changeThreeYearGoal(selectOC1019Str);
 			});
 		</script>
-	{% endblock %}
+		{% else %}
+			{% if opts.verbose_name = 'three year goal' %}
+				<!-- JS for populating 10-19Year Outcome select options based on selected 20-Year Outcome -->
+				<script type="text/javascript">	
+					var originalOptionsOC1019 = $('#id_outcome_10_19 > option');
+					var OC1019Select = $('#id_outcome_10_19');
+					function changeOC1019(selectOC20) {
+						   OC1019Select.empty();
+						   $(originalOptionsOC1019).each(function(){
+								var newOption = $(this).clone();
+								if(escape($(this).text()).search(escape(selectOC20)) == 0){
+									newOption.text($(this).text().replace(selectOC20,"").replace(" | ",""));
+									newOption.appendTo(OC1019Select);
+								}
+						   });
+					};
+				
+					$(document).ready(function (){
+						if ("{{original.outcome_20.id}}"){
+							var outcomeStrID = "Outcome #"+"{{original.outcome_20.id}}"
+							changeOC1019(outcomeStrID);
+						}											
+					});
+				
+					$('#id_outcome_20').change(function (){
+						var selectOC20 = $(this).find('option:selected').text().substring(8,18);
+						changeOC1019(selectOC20);
+						$('#id_outcome_10_19').trigger("change");
+					});
+				</script>			
+			{% endif %}
+	{% endif %}
 {% endif %}
+{% endblock %}
