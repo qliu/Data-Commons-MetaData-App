@@ -29,7 +29,6 @@ class CapitalType(models.Model):
     """
 #    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50,verbose_name="Capital Type")
-    entity = models.ForeignKey('Entity')
     
     def __unicode__(self):
         return self.name
@@ -103,7 +102,14 @@ class Outcome10to19(models.Model):
         outcome_ids.sort()
         outcome_10_19_id = outcome_ids.index(self.id)+1 
         return "O%d.%d" % (outcome_20_id,outcome_10_19_id)
-    _get_str_id.short_description = "10-19 Year Outcome ID"    
+    _get_str_id.short_description = "ID"
+    
+    def outcome_20_name(self):
+        '''
+        Return 20-Year Outcome description
+        '''
+        return self.outcome_20.description
+    outcome_20_name.short_description = "20 Year Outcome"
     
     class Meta:
         db_table = u'outcome_10_19'
@@ -115,7 +121,7 @@ class ThreeYearGoal(models.Model):
     3 Year Goal
     """
 #    id = models.IntegerField(primary_key=True)
-    description = models.CharField(max_length=500, null=True, blank=True)
+    description = models.TextField(max_length=500, null=True, blank=True)
     outcome_20 = models.ForeignKey('Outcome20',verbose_name='20-Year Outcome')
     outcome_10_19 = models.ForeignKey('Outcome10to19',verbose_name='10-19 Year Outcome')
     
@@ -139,7 +145,7 @@ class ThreeYearGoal(models.Model):
         goal_ids.sort()
         threeyeargoal_id = goal_ids.index(self.id)+1
         return "%s.%d" % (self.outcome_10_19._get_str_id(),threeyeargoal_id)
-    _get_str_id.short_description = "3-Year Goal ID"    
+    _get_str_id.short_description = "ID"    
     
     class Meta:
         db_table = u'three_year_goal'
@@ -163,8 +169,8 @@ class Strategy(models.Model):
     """
 #    id = models.IntegerField(primary_key=True)
     str_id = models.CharField(max_length=10,null=True,blank=True,verbose_name='Strategy ID')
-    description = models.CharField(max_length=500,null=True,blank=True)
-    rationale = models.CharField(max_length=1000,null=True,blank=True)
+    description = models.TextField(max_length=500,null=True,blank=True)
+    rationale = models.TextField(max_length=1000,null=True,blank=True)
     outcome_20 = models.ForeignKey('Outcome20',verbose_name='20-Year Outcome')
     outcome_10_19 = models.ForeignKey('Outcome10to19',verbose_name='10-19 Year Outcome')
     three_year_goal = models.ForeignKey('ThreeYearGoal',verbose_name='3 Year Goal')
@@ -227,10 +233,11 @@ class Activity(models.Model):
     Activities
     """
 #    id = models.IntegerField(primary_key=True)
-    description = models.CharField(max_length=500, null=True, blank=True)
-    rationale = models.CharField(max_length=1000, null=True, blank=True)
+    description = models.TextField(max_length=500, null=True, blank=True)
+    rationale = models.TextField(max_length=1000, null=True, blank=True)
     strategy = models.ForeignKey('Strategy',verbose_name='Strategy')
 #    budgets = models.ManyToManyField('Budget',null=True,blank=True)
+    entity =  models.ForeignKey('Entity',verbose_name='Entity')
     last_edit = models.DateTimeField(auto_now_add=True,auto_now=True)
     is_active = models.BooleanField(default=True)
         

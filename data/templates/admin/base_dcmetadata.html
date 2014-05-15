@@ -34,7 +34,7 @@
 					<!-- Logged-in User -->
 						Hello,
 						<!-- User Account -->
-						<a href="{% setting 'APP_SERVER_URL' %}/outcomesandstrategiesmanagement/user/profile/" title="User Profile"><strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %} </strong></a> /  
+						<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/user/profile/" title="User Profile"><strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %} </strong></a> /  
 						{% block userlinks %}
 							{% if user.is_staff %}
 							<!-- Staff -->
@@ -44,12 +44,12 @@
 								{% endif %}
 								<!-- <a href="{% url 'admin:password_change' %}"><img src="{{ MEDIA_URL }}images/icon_password.png">{% trans 'Change password' %}</a> / -->
 							{% endif %}
-							 <a class="signoutlink" href="{% setting 'APP_SERVER_URL' %}/outcomesandstrategiesmanagement/logout/"> Sign out</a>
+							 <a class="signoutlink" href="{% setting 'APP_SERVER_URL' %}/dcmetadata/logout/"> Sign out</a>
 						{% endblock %}
 					{% else %}
 					<!-- Visitor -->
 						{% if title != 'Logged out' and title != 'Login' and title != 'Sign up' %}
-							<strong><a href="{% setting 'APP_SERVER_URL' %}/outcomesandstrategiesmanagement/login/"><img src="{{ MEDIA_URL }}images/icon_login.png"> Sign in</a> / <a href="{% setting 'APP_SERVER_URL' %}/outcomesandstrategiesmanagement/register/"><img src="{{ MEDIA_URL }}images/icon_signup.png"> Sign up</a></strong>
+							<strong><a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/login/"><img src="{{ MEDIA_URL }}images/icon_login.png"> Sign in</a> / <a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/register/"><img src="{{ MEDIA_URL }}images/icon_signup.png"> Sign up</a></strong>
 						{% endif %}
 					{% endif %}
 				</div>
@@ -60,7 +60,7 @@
 			<div id="page">
 				<!-- Breadcrumbs -->
 				<div class="breadcrumbs">
-					<a href="{% setting 'APP_SERVER_URL' %}/outcomesandstrategiesmanagement/home/">{% trans 'Home' %}</a>
+					<a href="{% setting 'APP_SERVER_URL' %}/{{appname}}/home/">{% trans 'Home' %}</a>
 					{% block breadcrumbs %}{% endblock %}
 					<!--
 					{% if title %} &rsaquo; {{ title }}{% endif %}

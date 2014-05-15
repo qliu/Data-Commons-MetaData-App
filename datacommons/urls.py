@@ -41,8 +41,12 @@ urlpatterns = patterns('',
 	# Outcomes and Strategies Management App URLs
 	url(r'^outcomesandstrategiesmanagement/',include('outcomesandstrategiesmanagement.urls')),
 	
+	# Export Admin List View
+	## Download as CSV
+	url(r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/download_(?P<format>[\d\w]+)/','outcomesandstrategiesmanagement.views.download_admin_list_view'),
+	
 	# Help Document page of PyQt4 GUI tool for uploading Excel table to database
-	url(r'^db_upload_help_doc/$','dcmetadata.views.db_upload_help_doc'),	
+	url(r'^db_upload_help_doc/$','dcmetadata.views.db_upload_help_doc'),
 
     # Examples:
     # url(r'^$', 'datacommons.views.home', name='home'),
@@ -53,6 +57,10 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+	# User Auth URLs
+	url(r'^login/$','dcmetadata.views.user_login'),
+	url(r'^register/$','dcmetadata.views.register'),
 	
 #	# URLs for Dajaxice
 #	url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),

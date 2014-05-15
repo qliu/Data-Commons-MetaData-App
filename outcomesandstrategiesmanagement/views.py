@@ -30,7 +30,20 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login(request,user)
-                return HttpResponseRedirect('%s/outcomesandstrategiesmanagement/home/' % APP_SERVER_URL)
+                if "next" in request.GET:
+                    app_name = request.GET["next"].replace(APP_SERVER_URL,"").partition("/")[2].partition("/")[0]
+                    return HttpResponseRedirect(request.GET["next"])
+                else:
+                    url = request.META["HTTP_REFERER"]
+                    if url.partition("/?next=/")[1] == "":
+                        if APP_SERVER_URL == "":
+                            # a trick for localhost
+                            app_name = url.partition("http://")[2].replace(SERVER_URL,"").partition("/")[2].partition("/")[0]
+                        else:
+                            app_name = url.partition("http://")[2].replace(SERVER_URL,"").replace(APP_SERVER_URL,"").partition("/")[2].partition("/")[0]
+                    else:
+                        app_name = url.partition("/?next=/")[2].partition("/")[0]
+                    return HttpResponseRedirect('%s/%s/home/' % (APP_SERVER_URL,app_name))                
         else:
             error_msg = "Incorrect username or password."
             return {'error_msg':error_msg,'form':authform,'title':title}
@@ -47,7 +60,21 @@ def register(request):
             new_user = signup_form.save()
             user = authenticate(username=signup_form.cleaned_data["username"], password=signup_form.cleaned_data["password2"])
             login(request, user)
-            return HttpResponseRedirect('%s/outcomesandstrategiesmanagement/user/profile/' % APP_SERVER_URL)
+            if "next" in request.GET:
+                app_name = request.GET["next"].replace(APP_SERVER_URL,"").partition("/")[2].partition("/")[0]
+                return HttpResponseRedirect(request.GET["next"])
+            else:
+                url = request.META["HTTP_REFERER"]
+                print url
+                if url.partition("/?next=/")[1] == "":
+                    if APP_SERVER_URL == "":
+                        # a trick for localhost
+                        app_name = url.partition("http://")[2].replace(SERVER_URL,"").partition("/")[2].partition("/")[0]
+                    else:
+                        app_name = url.partition("http://")[2].replace(SERVER_URL,"").replace(APP_SERVER_URL,"").partition("/")[2].partition("/")[0]
+                else:
+                    app_name = url.partition("/?next=/")[2].partition("/")[0]
+                return HttpResponseRedirect('%s/%s/home/' % (APP_SERVER_URL,app_name))            
         else:
             error_msg = "Please check your register information."
             return {'title':"Sign up",'error_msg':error_msg,'signup_form':signup_form}
@@ -69,7 +96,20 @@ def user_profile(request):
             user_profile_form.save()
             messages.info(request, "User profile was changed successfully.")
             if 'save' in request.POST:
-                return HttpResponseRedirect('%s/outcomesandstrategiesmanagement/home/' % APP_SERVER_URL)
+                if "next" in request.GET:
+                    app_name = request.GET["next"].replace(APP_SERVER_URL,"").partition("/")[2].partition("/")[0]
+                    return HttpResponseRedirect(request.GET["next"])
+                else:
+                    url = request.META["HTTP_REFERER"]
+                    if url.partition("/?next=/")[1] == "":
+                        if APP_SERVER_URL == "":
+                            # a trick for localhost
+                            app_name = url.partition("http://")[2].replace(SERVER_URL,"").partition("/")[2].partition("/")[0]
+                        else:
+                            app_name = url.partition("http://")[2].replace(SERVER_URL,"").replace(APP_SERVER_URL,"").partition("/")[2].partition("/")[0]
+                    else:
+                        app_name = url.partition("/?next=/")[2].partition("/")[0]
+                    return HttpResponseRedirect('%s/%s/home/' % (APP_SERVER_URL,app_name))                                
         else:
             messages.error(request, "Please correct the errors below.")
     return {'user_name':user.username,'user_profile_form':user_profile_form}
@@ -99,3 +139,62 @@ Home Page
 @render_to("outcomesandstrategiesmanagement/home.html")
 def home(request):
     return {}
+
+
+'''----------------------
+Download Admin List View
+----------------------'''
+# Export as CSV
+def export_csv(queryset,fields=None):
+    model = queryset.model
+    
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="%s.csv"' % slugify(model.__name__)
+    writer = csv.writer(response)
+    
+    # write headers
+    if fields:
+        headers = fields
+    else:
+        headers = []
+        for field in model._meta.fields:
+            headers.append(field.name)
+    writer.writerow(headers)
+    
+    # write rows
+    for obj in queryset:
+        row = []
+        for field in headers:
+            if field in headers:
+                val = getattr(obj,field)
+                if type(val) == unicode:
+                    val = val.encode("utf-8")
+                row.append(val)
+        writer.writerow(row)
+    return response
+        
+# Download Admin List View
+@login_required
+def download_admin_list_view(request,app_label,model_name,format,queryset=None,fields=None,list_display=True):   
+    if not request.user.is_staff:
+        return HttpResponseForbidden()
+    else:
+        if not queryset:
+            model = get_model(app_label,model_name)
+            queryset = model.objects.all()
+            filters = dict()
+            for key,value in request.GET.items():
+                if key not in ('ot','o'):
+                    filters[str(key)] = str(value)
+            if len(filters):
+                queryset = queryset.filter(**filters)
+        if not fields and list_display:
+            list_display = admin.site._registry[queryset.model].list_display
+            if list_display and len(list_display) > 0:
+                fields = list_display
+            else:
+                fields = None
+            if format == "csv":
+                return export_csv(queryset,fields)
+            else:
+                return HttpResponseForbidden()

@@ -1,4 +1,4 @@
-{% extends "admin/admin_base_site.html" %}
+{% extends "admin/admin_base_site_"|add:appname|add:".html" %}
 {% load custom_tag %}
 {% block current_title %}Home{% endblock %}
 {% block extrastyle %}

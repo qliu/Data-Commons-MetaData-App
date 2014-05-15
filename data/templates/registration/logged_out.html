@@ -1,4 +1,4 @@
-{% extends "admin/admin_base_site.html" %}
+{% extends "admin/admin_base_site_"|add:appname|add:".html" %}
 {% load i18n %}{% load url from future %}{% load custom_tag %}
 
 {% block breadcrumbs %}
@@ -11,7 +11,7 @@
 
 <p>You have been logged out.</p>
 
-<p><b><a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/login/"><img src="{{ MEDIA_URL }}images/icon_login.png"> {% trans 'Log in again' %}</a> &nbsp;&nbsp;&nbsp;&nbsp;or &nbsp;&nbsp;&nbsp;&nbsp;  
-<a href="{% setting 'APP_SERVER_URL' %}/dcmetadata/register/"><img src="{{ MEDIA_URL }}images/icon_signup.png"> Sign up</a></b></p>
+<p><b><a href="{% setting 'APP_SERVER_URL' %}/{{appname}}/login/"><img src="{{ MEDIA_URL }}images/icon_login.png"> {% trans 'Log in again' %}</a> &nbsp;&nbsp;&nbsp;&nbsp;or &nbsp;&nbsp;&nbsp;&nbsp;  
+<a href="{% setting 'APP_SERVER_URL' %}/{{appname}}/register/"><img src="{{ MEDIA_URL }}images/icon_signup.png"> Sign up</a></b></p>
 
 {% endblock %}

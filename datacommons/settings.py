@@ -99,7 +99,7 @@ APP_SERVER_URL = ''
 #APP_SERVER_URL = '/datacommons'
 ## <- use this for SERVER
 
-LOGIN_URL = '%s/dcmetadata/login/' % APP_SERVER_URL
+LOGIN_URL = '%s/login/' % APP_SERVER_URL
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -253,3 +253,19 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'dataenginemetadata@gmail.com'
 EMAIL_HOST_PASSWORD = 'demetadatapiton'
+
+# Callables used to populate the context in RquestContext
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # default
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+#    "django.contrib.messages.context_processors.messages"
+    # request
+    "django.core.context_processors.request",
+    # custom
+    "datacommons.contexts.appname",
+)

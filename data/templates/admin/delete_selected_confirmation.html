@@ -1,4 +1,4 @@
-{% extends "admin/admin_base_site.html" %}
+{% extends "admin/admin_base_site_"|add:appname|add:".html" %}
 {% load i18n l10n %}
 {% load url from future %}
 {% load admin_urls %}

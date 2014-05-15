@@ -18,32 +18,6 @@ urlpatterns = patterns('outcomesandstrategiesmanagement.views',
 	url(r'^user/password/$','user_change_password'),
 #	url(r'^logout/$',logout,{'template_name': 'registration/logged_out.html', 'next_page':'../login/'}),
 
-#	# Table Metadata URLs
-#	url(r'^metadata/(?P<metadata_id>\d+)/$','metadata_detail'),
-#	url(r'^metadata/(?P<metadata_id>\d+)/edit/$','metadata_edit'),
-#	url(r'^metadata/(?P<metadata_id>\d+)/delete_confirm/$','metadata_delete_confirm'),
-#	url(r'^metadata/(?P<metadata_id>\d+)/delete/$','metadata_delete'),
-#	
-#	# Dataset URLs
-#	url(r'^dataset/metadata/(?P<dataset_id>\d+)/$','dataset_metadata_detail'),
-#	url(r'^dataset/metadata/(?P<dataset_id>\d+)/edit/$','dataset_metadata_edit'),
-#	url(r'^dataset/metadata/(?P<dataset_id>\d+)/delete_confirm/$','dataset_metadata_delete_confirm'),
-#	url(r'^dataset/metadata/(?P<dataset_id>\d+)/delete/$','dataset_metadata_delete'),
-#	
-#	# Export Source Data
-#	## Download Source Data
-#	url(r'^sourcedatainventory/(?P<sourcedata_id>\d+)/download/$','download_sourcedata'),
-#	## Add Query Layer in ArcGIS
-#	url(r'^sourcedatainventory/(?P<sourcedata_id>\d+)/add_querylayer/$','instruction_add_querylayer'),
-#	
-#	# Import Data from Metadata URLs
-#	url(r'^import/dataset/','import_dataset'),
-#	url(r'^import/sourcedata/','import_sourcedata'),
-	
-    # Examples:
-    # url(r'^$', 'datacommons.views.home', name='home'),
-    # url(r'^datacommons/', include('datacommons.foo.urls')),
-
     # Uncomment the admin/doc line below to enable admin documentation:
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

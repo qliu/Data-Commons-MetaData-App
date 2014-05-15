@@ -1,4 +1,4 @@
-{% extends "admin/admin_base_site.html" %}
+{% extends "admin/admin_base_site_"|add:appname|add:".html" %}
 {% load i18n admin_static admin_modify %}{% load custom_tag %}
 
 {% block extrastyle %}

@@ -1,0 +1,10 @@
+{% extends "admin/base_"|add:appname|add:".html" %}
+{% load i18n %}
+<!-- Title -->
+{% block title %}{% block current_title %}{{ title }}{% endblock %} | {% trans 'Activities and Strategies Management' %}{% endblock %}
+<!-- Branding -->
+{% block branding %}
+	<h1 id="site-2-name">{% trans 'Activities and Strategies Management' %}</h1>
+{% endblock %}
+<!-- Nav -->
+{% block nav-global %}{% endblock %}

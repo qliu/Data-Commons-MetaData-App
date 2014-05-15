@@ -1,4 +1,4 @@
-{% extends "admin/admin_base_site.html" %}
+{% extends "admin/admin_base_site_"|add:appname|add:".html" %}
 {% load adminmedia %}{% load i18n admin_static admin_modify %}{% load url from future %}{% load admin_urls %}{% load smart_if %}{% load custom_tag %}
 {% block extrastyle %}
 	<style type="text/css">
@@ -213,7 +213,15 @@
 
 {% block after_related_objects %}{% endblock %}
 
-{% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
+{% block submit_buttons_bottom %}
+	{% if appname = "outcomesandstrategiesmanagement" and opts.verboser_name = "three year goal" %}
+		{% if user.is_superuser %}
+			{% submit_row %}
+		{% endif %}
+	{% else %}
+		{% submit_row %}
+	{% endif %}
+{% endblock %}
 
 {% if adminform and add %}
    <script type="text/javascript">document.getElementById("{{ adminform.first_field.id_for_label }}").focus();</script>

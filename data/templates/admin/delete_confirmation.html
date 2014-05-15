@@ -1,4 +1,4 @@
-{% extends "admin/admin_base_site.html" %}
+{% extends "admin/admin_base_site_"|add:appname|add:".html" %}
 {% load i18n %}{% load url from future %}{% load admin_urls %}{% load custom_tag %}
 {% block breadcrumbs %}
 	{% if user.is_superuser %}

@@ -23,10 +23,13 @@ import tempfile,zipfile
 # ---------------
 from django.conf import settings
 from django.core.servers.basehttp import FileWrapper # Wrap large files for zip download
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.utils import simplejson
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.db.models.loading import get_model
+from django.template.defaultfilters import slugify
+from django.contrib import admin
 
 # --------------------
 # Application Imports

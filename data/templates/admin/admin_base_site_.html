@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+<!-- Title -->
+{% block title %}{% block current_title %}{{ title }}{% endblock %} | DataEngine {% trans 'Metadata Administration' %}{% endblock %}
+<!-- Branding -->
+{% block branding %}
+	<h1 id="site-name"><a href="http://codataengine.org/" target="_blank"><img src="{{ MEDIA_URL }}images/DE_logo.png"></a> {% trans 'Metadata Administration' %}</h1>
+{% endblock %}
+<!-- Nav -->
+{% block nav-global %}{% endblock %}
