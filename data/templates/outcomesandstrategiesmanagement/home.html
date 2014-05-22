@@ -35,14 +35,10 @@
 {% block content %}
 <div id="content-main">
 	<div class="home-block">
-		<h2>Outcomes and Goals</2>
-		<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/outcome10to19/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All 10 to 19 Year Outcomes</h3></a>
-		{% if user.is_staff and 'outcomesandstrategiesmanagement.add_outcome10to19' in user.get_group_permissions %}
-			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/outcome10to19/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New 10 to 19 Year Outcome (Admin Login Required)</h3></a>
-		{% endif %}
-		<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All 3-Year Goals</h3></a>
-		{% if user.is_staff and 'outcomesandstrategiesmanagement.add_threeyeargoal' in user.get_group_permissions %}
-			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New 3-Year Goal (Admin Login Required)</h3></a>
+		<h2>Activities</2>
+		<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All the Activities</h3></a>
+		{% if user.is_staff and 'outcomesandstrategiesmanagement.add_activity' in user.get_group_permissions %}
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Activity</h3></a>
 		{% endif %}
 	</div>
 	<div class="home-block">
@@ -53,10 +49,14 @@
 		{% endif %}
 	</div>
 	<div class="home-block">
-		<h2>Activities</2>
-		<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All the Activities</h3></a>
-		{% if user.is_staff and 'outcomesandstrategiesmanagement.add_activity' in user.get_group_permissions %}
-			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New Activity</h3></a>
+		<h2>Outcomes and Goals</2>
+		<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/outcome10to19/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All 10 to 19 Year Outcomes</h3></a>
+		{% if user.is_staff and 'outcomesandstrategiesmanagement.add_outcome10to19' in user.get_group_permissions %}
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/outcome10to19/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New 10 to 19 Year Outcome (Admin Login Required)</h3></a>
+		{% endif %}
+		<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/"><h3><img src="{{ MEDIA_URL }}images/home_icon_inventory.png">View All 3-Year Goals</h3></a>
+		{% if user.is_staff and 'outcomesandstrategiesmanagement.add_threeyeargoal' in user.get_group_permissions %}
+			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New 3-Year Goal (Admin Login Required)</h3></a>
 		{% endif %}
 	</div>
 	{% if user.is_superuser %}

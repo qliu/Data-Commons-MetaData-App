@@ -1,0 +1,239 @@
+{% extends "admin/admin_base_site_"|add:appname|add:".html" %}
+{% load i18n admin_static admin_modify %}{% load custom_filter %}{% load custom_tag %}
+
+{% block extrastyle %}
+	{{ block.super }}
+	<style type="text/css">
+		table {
+			border: 1px solid #ddd !important;
+			border-collapse:collapse;
+			padding: 10px;
+			margin: 20px;
+		}
+		
+		td {
+			font-size: 14px;
+			border: 1px solid #ddd;
+			padding: 10px 20px;
+		}
+		
+		thead th {
+			font-size: 14px;
+			border: 1px solid #ddd;
+			padding: 5px 10px;
+		}
+		
+		tbody tr th{
+			font-size: 14px;
+			font-weight: bold;
+			border: 1px solid #ddd;
+			vertical-align: middle;
+			background: #eee;
+		}
+	
+		.delete-link {
+			float:left;
+			padding-left:18px;
+			margin-left:100px;
+			background:url({{ MEDIA_URL }}images/icon_delete.gif) no-repeat left center;
+		}
+		.edit-link {
+			float:left;
+			padding-left:18px;
+			background:url({{ MEDIA_URL }}images/icon_edit.gif) no-repeat left center;
+		}
+		.delete-row {
+			float:right;
+			display:block;
+			margin-left:4px;
+			padding-left:18px;
+			background:url({{ MEDIA_URL }}images/delete.png) no-repeat left center;
+		}
+		
+		.metadata_detail{
+			display:block;
+			margin-left:30px;
+		}
+		
+		.metadata_detail hr{
+			width:90%;
+			float:left;
+		}
+		
+		.metadata_detail_sub_tags{
+			display:block;
+			margin-left:20px;
+		}
+		
+		.dynamic-fields-form th {
+			text-align:right;
+			font-weight:bold;
+		}
+		.dynamic-fields-form td span img {
+			vertical-align:middle;
+			border:0;
+		}
+		
+		.dynamic-other-form th {
+			text-align:right;
+			font-weight:bold;
+		}
+		.dynamic-other-form td span img {
+			vertical-align:middle;
+			border:0;
+		}
+		
+		.errornote{
+			font-size: 12px !important;
+			display: block;
+			padding: 4px 5px 4px 25px;
+			margin: 0 0 3px 0;
+			border: 1px solid red;
+			color: red;
+			background: #FFC url({{ MEDIA_URL }}images/icon_error.png) 5px .3em no-repeat;
+			line-height: 14px;
+		}
+		
+		.errorlist li{
+			font-size: 12px !important;
+			display: block;
+			padding: 4px 5px 4px 25px;
+			margin: 0 0 3px 0;
+			border: 1px solid red;
+			color: white;
+			background: red url({{ MEDIA_URL }}images/icon_errormsg.png) 5px .3em no-repeat;
+			line-height: 14px;
+		}
+		
+		ul{
+			display: block;
+			-webkit-margin-before: 0px;
+			-webkit-margin-after: 0px;
+			-webkit-margin-start: 0px;
+			-webkit-margin-end: 0px;
+			-webkit-padding-start: 0px;
+			margin-top: -23px !important;
+		}
+		
+		li{
+			font-size: 18px;
+			line-height: 20px;
+			margin-left: 50px;
+		}
+		
+		div#metadata_tools
+		{
+			float:right;
+		}
+		div#metadata_json_content
+		{
+			display: block;
+			margin-left: 30px;
+		}
+		
+		.read-more-toggle h3 {
+			margin-left: 0;
+			text-decoration: underline;
+			color: #487909;
+			font-size: 16px;
+		}
+		
+		.hide {
+			display: none;
+		}
+	</style>
+{% endblock %}
+
+{% block extrahead %}
+	<!-- JQUERY 1.7.2 -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+{% endblock %}
+
+{% block current_title %}Budget List - Activity ID {{activity_id}}{% endblock %}
+
+{% block breadcrumbs %}
+	{% if user.is_superuser %}
+		&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/">App:Outcomesandstrategiesmanagement Administration</a>
+	{% endif %}
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/">Activity</a>
+	&rsaquo; <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/{{ activity_id }}/">Activity ID: {{activity_id}}</a>
+	&rsaquo; Budget
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<h1><a target="_blank" href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/activity/{{ activity_id }}/">Activity ID: {{ activity.id }}</a></h1>
+	<div id="metadata_tools">
+<!--
+		{% if has_change_permission %}
+			<a class="edit-link" href="edit">Edit Dataset Metadata</a>
+		{% endif %}
+-->
+	</div>
+	<h3>{{activity.description}}</h3>
+	<br/><hr>
+	{% if activity.rationale %}
+		<p><b>Rationale</b></p>
+		<p>{{activity.rationale}}</p>
+		<hr>
+	{% endif %}
+	{% if budgets %}
+		<table>
+			<tbody>
+				<tr><th>Strategy ID</th><td>{{activity.strategy.str_id}}</td></tr>
+				<tr><th>Entity</th><td>{{activity.entity.name}}</td></tr>
+				<tr><th>Status</th><td>
+					{% if activity.status = 1 %}
+						Vetted
+					{% else %}
+						Non-vetted
+					{% endif %}
+				</td></tr>
+				<tr><th>Total Budget</th><td>{{total_budget}}</td></tr>
+				<tr><th>Lead</th><td>{{activity.lead.first_name}} {{activity.lead.last_name}}</td></tr>
+				<tr><th>Last edit</th><td>{{activity.last_edit}}</td></tr>
+			</tbody>
+		</table>
+		<br/><hr>
+		
+		<h2>Budgets</h2>
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Capital Type</th>
+					<th scope="col">Fiscal Year</th>
+					<th scope="col">Amount</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for budget in budgets %}
+					<tr>
+						<td>{{budget.capital_type.name}}</td>
+						<td>{{budget.fiscal_year.name}}</td>
+						<td>{{budget.amount}}</td>
+						<td><a target="_blank" href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/budget/{{ budget.id }}/">Edit</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<br/><hr><br/>
+		<img src="{{ MEDIA_URL }}admin/img/icon_addlink.gif"> <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/budget/add/?activity={{activity_id}}">Add Budget</a>		
+	{% else %}
+		<br/><hr><br/>
+		<p><b>There is currently no budget attached to this activity.</b></p>
+		<img src="{{ MEDIA_URL }}admin/img/icon_addlink.gif"> <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/budget/add/?activity={{activity_id}}">Add Budget</a>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block bottom_javascript %}
+<script>
+	$('.read-more-content').addClass('hide');
+	$('.read-more-toggle').css('cursor','pointer');
+	$('.read-more-toggle').click(function(){
+		$(this).find('h3').toggle();
+		$('.read-more-content').toggle('slow');
+	});
+</script>
+{% endblock bottom_javascript %}

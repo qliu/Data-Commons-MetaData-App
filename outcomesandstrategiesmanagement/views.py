@@ -140,12 +140,27 @@ Home Page
 def home(request):
     return {}
 
+'''-----------------------
+Content Views
+-----------------------'''
+@login_required
+@render_to("outcomesandstrategiesmanagement/activity_budget_list.html")
+def activity_budget_list(quest,activity_id):
+    activity = Activity.objects.get(id=activity_id)
+    budgets = Budget.objects.filter(activity=activity_id)
+    total_budget = activity._get_total_budget
+    return {
+            "activity_id":activity_id,
+            "activity":activity,
+            "total_budget":total_budget,
+            "budgets":budgets,
+    }
 
 '''----------------------
 Download Admin List View
 ----------------------'''
 # Export as CSV
-def export_csv(queryset,fields=None):
+def export_csv(queryset,fields=None,field_names=None):
     model = queryset.model
     
     response = HttpResponse(mimetype='text/csv')
@@ -153,20 +168,28 @@ def export_csv(queryset,fields=None):
     writer = csv.writer(response)
     
     # write headers
-    if fields:
+    if field_names:
         headers = fields
+        header_names = field_names
     else:
         headers = []
+        header_names = []
         for field in model._meta.fields:
             headers.append(field.name)
-    writer.writerow(headers)
+            header_names.append(field.name)
+    writer.writerow(header_names)
     
     # write rows
     for obj in queryset:
         row = []
         for field in headers:
             if field in headers:
-                val = getattr(obj,field)
+                if field.startswith("_"):
+                    # object method
+                    val = getattr(obj,field)()
+                else:
+                    # object property
+                    val = getattr(obj,field)
                 if type(val) == unicode:
                     val = val.encode("utf-8")
                 row.append(val)
@@ -183,18 +206,21 @@ def download_admin_list_view(request,app_label,model_name,format,queryset=None,f
             model = get_model(app_label,model_name)
             queryset = model.objects.all()
             filters = dict()
-            for key,value in request.GET.items():
-                if key not in ('ot','o'):
-                    filters[str(key)] = str(value)
+            url_query_str = request.META["HTTP_REFERER"].partition("/?")[2]
+            filter_str_list = url_query_str.split("&")
+            for filter_str in filter_str_list:
+                f = filter_str.split("=")
+                filters[f[0]]=f[1]
             if len(filters):
                 queryset = queryset.filter(**filters)
         if not fields and list_display:
             list_display = admin.site._registry[queryset.model].list_display
             if list_display and len(list_display) > 0:
                 fields = list_display
+                field_names = admin.site._registry[queryset.model].list_display_field_names
             else:
                 fields = None
             if format == "csv":
-                return export_csv(queryset,fields)
+                return export_csv(queryset,fields,field_names)
             else:
                 return HttpResponseForbidden()

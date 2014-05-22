@@ -167,7 +167,7 @@
 		{% if original.id %}
 			<div id="metadata-block">
 				<img src="{{ MEDIA_URL }}admin/img/icon_addlink.gif"> <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/budget/add/?activity={{original.id}}">Add Budget</a>
-				<img src="{{ MEDIA_URL }}images/icon_metadata.gif"> <a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/budget/?activity__id={{original.id}}">View Budgets</a>
+				<img src="{{ MEDIA_URL }}images/icon_metadata.gif"> <a href="{% setting 'APP_SERVER_URL' %}/outcomesandstrategiesmanagement/activity/{{original.id}}/budget_list/">View Budgets</a>
 			</div>
 		{% endif %}
 
@@ -214,9 +214,25 @@
 {% block after_related_objects %}{% endblock %}
 
 {% block submit_buttons_bottom %}
-	{% if appname = "outcomesandstrategiesmanagement" and opts.verboser_name = "three year goal" %}
-		{% if user.is_superuser %}
-			{% submit_row %}
+	{% if appname = "outcomesandstrategiesmanagement" %}
+		{% if opts.verbose_name = "three year goal" or opts.verbose_name = "outcome10to19" %}
+			{% if user.is_superuser %}
+				{% submit_row %}
+			{% endif %}
+		{% else %}
+			{% if opts.verbose_name = 'activity' %}
+				{% if not original.id %}
+					{% submit_row_activity %}
+				{% else %}
+					{% submit_row %}
+				{% endif %}
+			{% else %}
+				{% if opts.verbose_name = 'budget' %}
+					{% submit_row_budget %}
+				{% else %}
+					{% submit_row %}
+				{% endif %}
+			{% endif %}		
 		{% endif %}
 	{% else %}
 		{% submit_row %}
@@ -266,6 +282,26 @@
 		<script type="text/javascript">	
 			// Change 10-19Year Outcome selections based on selected 20-Year Outcome
 			var originalOptionsOC1019 = $('#id_outcome_10_19 > option');
+			var tmp_OC20 = "";
+			var counter = 0;
+			var OC1019_counter_list = [];
+			originalOptionsOC1019.each(function(i){
+				OC20 = $(this).text().split(" | ")[0];
+				if (OC20 != "---------"){
+					if (tmp_OC20 == ""){
+						tmp_OC20 = OC20;
+					}
+					if (OC20 != tmp_OC20 || i== originalOptionsOC1019.length-1){
+						OC1019_counter_list.push(counter);
+						if (i== originalOptionsOC1019.length-1){
+							OC1019_counter_list.push(counter+1);
+						}
+					}
+					counter += 1;
+					tmp_OC20 = OC20;
+				}
+			});
+			
 			var OC1019Select = $('#id_outcome_10_19');
 			function changeOC1019(selectOC20) {
 				   OC1019Select.empty();
@@ -313,6 +349,10 @@
 			$('#id_outcome_10_19').change(function (){
 				var selectOC20 = $('#id_outcome_20').find('option:selected').text().substring(17,18);
 				var selectOC1019 = $(this).find('option:selected').val();
+				if (selectOC20>1){
+					count = OC1019_counter_list[selectOC20-2];
+					selectOC1019 = selectOC1019 - count;
+				}
 				var selectOC1019Str = "O" + selectOC20 + "." + selectOC1019;
 				changeThreeYearGoal(selectOC1019Str);
 			});

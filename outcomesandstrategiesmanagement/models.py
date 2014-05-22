@@ -3,9 +3,13 @@ from django.contrib import admin
 from django.core import serializers
 from django.db.models.signals import post_save,post_delete,m2m_changed
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 # Import from general utilities
 from util import *
+
+# Choices
+VETTED_CHOICES = ((1,"Vetted"),(0,"Non-vetted"))
 
 #=================
 # Look-up tables
@@ -104,12 +108,12 @@ class Outcome10to19(models.Model):
         return "O%d.%d" % (outcome_20_id,outcome_10_19_id)
     _get_str_id.short_description = "ID"
     
-    def outcome_20_name(self):
+    def _outcome_20_name(self):
         '''
         Return 20-Year Outcome description
         '''
         return self.outcome_20.description
-    outcome_20_name.short_description = "20 Year Outcome"
+    _outcome_20_name.short_description = "20 Year Outcome"
     
     class Meta:
         db_table = u'outcome_10_19'
@@ -145,7 +149,21 @@ class ThreeYearGoal(models.Model):
         goal_ids.sort()
         threeyeargoal_id = goal_ids.index(self.id)+1
         return "%s.%d" % (self.outcome_10_19._get_str_id(),threeyeargoal_id)
-    _get_str_id.short_description = "ID"    
+    _get_str_id.short_description = "ID"
+    
+    def _outcome_10_19_name(self):
+        '''
+        Return 10-19 Year Outcome description
+        '''
+        return self.outcome_10_19.description
+    _outcome_10_19_name.short_description = "10-19 Year Outcome"
+    
+    def _outcome_20_name(self):
+        '''
+        Return 20 Year Outcome description
+        '''
+        return self.outcome_10_19.outcome_20.description
+    _outcome_20_name.short_description = "20 Year Outcome" 
     
     class Meta:
         db_table = u'three_year_goal'
@@ -219,6 +237,20 @@ class Strategy(models.Model):
         strategy_id_chr = chr(strategy_id+ord("a")-1)
         return "%s%c" % (self.three_year_goal._get_str_id(),strategy_id_chr)
     _get_str_id.short_description = "Strategy ID"
+
+    def _outcome_10_19_name(self):
+        '''
+        Return 10-19 Year Outcome description
+        '''
+        return self.three_year_goal.outcome_10_19.description
+    _outcome_10_19_name.short_description = "10-19 Year Outcome"
+
+    def _three_year_goal_name(self):
+        '''
+        Return 3-Year Goal description
+        '''
+        return self.three_year_goal.description
+    _three_year_goal_name.short_description = "3-Year Goal"
             
     class Meta:
 		db_table = u'strategy'
@@ -238,6 +270,8 @@ class Activity(models.Model):
     strategy = models.ForeignKey('Strategy',verbose_name='Strategy')
 #    budgets = models.ManyToManyField('Budget',null=True,blank=True)
     entity =  models.ForeignKey('Entity',verbose_name='Entity')
+    status = models.IntegerField(choices=VETTED_CHOICES,default=1)
+    lead = models.ForeignKey(User)
     last_edit = models.DateTimeField(auto_now_add=True,auto_now=True)
     is_active = models.BooleanField(default=True)
         
@@ -266,6 +300,32 @@ class Activity(models.Model):
 		else:
 			next_id = -1
 		return next_id
+
+    def _strategy_id(self):
+        '''
+        Return Strategy ID
+        '''
+        return self.strategy.str_id
+    _strategy_id.short_description = "Strategy ID"
+    
+    def _get_lead_full_name(self):
+        '''
+        Return User full name
+        '''
+        print self.lead.first_name
+        return "%s %s" % (self.lead.first_name,self.lead.last_name) if (self.lead.first_name and self.lead.last_name) else self.lead.username
+    _get_lead_full_name.short_description = "Lead"
+    
+    def _get_total_budget(self):
+        '''
+        Return total budget amount
+        '''
+        budgets = Budget.objects.filter(activity=self.id)
+        total_budget = 0
+        for budget in budgets:
+            total_budget += budget.amount
+        return total_budget
+    _get_total_budget.short_description = "Total Budget"
             
     class Meta:
 		db_table = u'activity'

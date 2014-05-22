@@ -9,7 +9,7 @@ from util import *
 
 # Choices
 year_choices_list = [(None,"---------"),(0,"No Data")]
-for i in range (1980,2013):
+for i in range (1980,2014):
 	year_choices_list.append((i,str(i)))
 YEAR_CHOICES = tuple(year_choices_list)
 

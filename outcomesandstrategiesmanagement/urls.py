@@ -18,6 +18,9 @@ urlpatterns = patterns('outcomesandstrategiesmanagement.views',
 	url(r'^user/password/$','user_change_password'),
 #	url(r'^logout/$',logout,{'template_name': 'registration/logged_out.html', 'next_page':'../login/'}),
 
+	# Budget
+	url(r'activity/(?P<activity_id>\d+)/budget_list/$','activity_budget_list'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
