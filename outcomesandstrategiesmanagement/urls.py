@@ -21,6 +21,9 @@ urlpatterns = patterns('outcomesandstrategiesmanagement.views',
 	# Budget
 	url(r'activity/(?P<activity_id>\d+)/budget_list/$','activity_budget_list'),
 
+	# Master Download
+	url(r'masterdownload/csv/$','masterdownload_csv'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

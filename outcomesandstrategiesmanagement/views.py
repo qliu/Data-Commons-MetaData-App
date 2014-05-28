@@ -159,6 +159,86 @@ def activity_budget_list(quest,activity_id):
 '''----------------------
 Download Admin List View
 ----------------------'''
+# Master Download as CSV
+def masterdownload_csv(request):
+  # headers
+  headers = ["20-Year Outcome","10 To 19 Year Outcome","3-Year Goal",
+             "Strategy","Strategy Rationale","Activity","Activity Rationale",
+             "Entity","Status","Lead","Total Budget",
+             "Budget 2014","Capital Type","Budget 2015","Capital Type","Budget 2016","Capital Type"]
+  
+  # get all activities
+  activities = Activity.objects.all()
+  download_data = []
+  strategy_list_exist = []
+  for activity in activities:
+      budgets = Budget.objects.filter(activity=activity.id)
+      activity_budgets = {"2014":(0,""),"2015":(0,""),"2016":(0,"")}
+      total_budget = 0
+      for budget in budgets:
+          activity_budgets[budget.fiscal_year.name]=(budget.amount,budget.capital_type.name)
+          total_budget += budget.amount
+      row_data = ("Outcome #%d: %s" % (activity.strategy.outcome_20.id,activity.strategy.outcome_20.description),
+                  activity.strategy.outcome_10_19.description,
+                  activity.strategy.three_year_goal.description,
+                  "%s. %s" % (activity.strategy._get_str_id(),activity.strategy.description),
+                  activity.strategy.rationale,
+                  activity.description,
+                  activity.rationale,
+                  activity.entity.name,
+                  "Vetted" if activity.status == 1 else "Non-vetted",
+                  activity._get_lead_full_name(),
+                  total_budget,
+                  activity_budgets["2014"][0],
+                  activity_budgets["2014"][1],
+                  activity_budgets["2015"][0],
+                  activity_budgets["2015"][1],
+                  activity_budgets["2016"][0],
+                  activity_budgets["2016"][1],
+      )
+      download_data.append(row_data)
+      strategy_list_exist.append(activity.strategy._get_str_id())
+  
+  # add any strategy that is NOT tied to any activity to the download data
+  strategies = Strategy.objects.all()
+  strategy_list = []
+  for strategy in strategies:
+      if strategy._get_str_id() not in strategy_list_exist:
+          row_data = ("Outcome #%d: %s" % (strategy.outcome_20.id,strategy.outcome_20.description),
+                      strategy.outcome_10_19.description,
+                      strategy.three_year_goal.description,
+                      "%s. %s" % (strategy._get_str_id(),strategy.description),
+                      strategy.rationale,
+                      "",
+                      "",
+                      "",
+                      "",
+                      "",
+                      0,
+                      0,
+                      "",
+                      0,
+                      "",
+                      0,
+                      "",
+          )
+          download_data.append(row_data) 
+  
+  # sort download content by strategy ID
+  download_data.sort(key=lambda row:row[3])
+  
+  # export as CSV
+  file_name = "Strategic_Planning_MasterDownload_%s" % datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+  response = HttpResponse(mimetype='text/csv')
+  response['Content-Disposition'] = 'attachment; filename="%s.csv"' % file_name
+  writer = csv.writer(response)
+  # write headers
+  writer.writerow(headers)
+  # write rows
+  for row in download_data:
+      writer.writerow([unicode(field).encode("utf-8") for field in row])
+  return response  
+
 # Export as CSV
 def export_csv(queryset,fields=None,field_names=None):
     model = queryset.model
@@ -210,7 +290,8 @@ def download_admin_list_view(request,app_label,model_name,format,queryset=None,f
             filter_str_list = url_query_str.split("&")
             for filter_str in filter_str_list:
                 f = filter_str.split("=")
-                filters[f[0]]=f[1]
+                if f[0] != "all":
+                    filters[f[0]]=f[1]  
             if len(filters):
                 queryset = queryset.filter(**filters)
         if not fields and list_display:

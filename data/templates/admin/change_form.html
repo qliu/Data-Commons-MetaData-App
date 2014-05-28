@@ -216,7 +216,7 @@
 {% block submit_buttons_bottom %}
 	{% if appname = "outcomesandstrategiesmanagement" %}
 		{% if opts.verbose_name = "three year goal" or opts.verbose_name = "outcome10to19" %}
-			{% if user.is_superuser %}
+			{% if user.is_staff and 'outcomesandstrategiesmanagement.add_threeyeargoal' in user.get_group_permissions %}
 				{% submit_row %}
 			{% endif %}
 		{% else %}

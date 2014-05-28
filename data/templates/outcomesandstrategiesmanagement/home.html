@@ -59,6 +59,12 @@
 			<a href="{% setting 'APP_SERVER_URL' %}/admin/outcomesandstrategiesmanagement/threeyeargoal/add/"><h3><img src="{{ MEDIA_URL }}images/home_icon_add_file.png">Add New 3-Year Goal (Admin Login Required)</h3></a>
 		{% endif %}
 	</div>
+	{% if user.is_staff and 'outcomesandstrategiesmanagement.add_outcome20' in user.get_group_permissions %}
+		<div class="home-block">
+			<h2>Master Download</2>
+			<a href="{% setting 'APP_SERVER_URL' %}/outcomesandstrategiesmanagement/masterdownload/csv/"><h3><img src="{{ MEDIA_URL }}images/home_icon_download.png">Master Download (Admin login required)</h3></a>
+		</div>
+	{% endif %}
 	{% if user.is_superuser %}
 		<div class="home-block">
 			<h2>Site Administration</2>

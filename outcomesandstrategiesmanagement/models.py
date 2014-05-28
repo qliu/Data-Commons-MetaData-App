@@ -187,7 +187,7 @@ class Strategy(models.Model):
     """
 #    id = models.IntegerField(primary_key=True)
     str_id = models.CharField(max_length=10,null=True,blank=True,verbose_name='Strategy ID')
-    description = models.TextField(max_length=500,null=True,blank=True)
+    description = models.TextField(max_length=1000,null=True,blank=True)
     rationale = models.TextField(max_length=1000,null=True,blank=True)
     outcome_20 = models.ForeignKey('Outcome20',verbose_name='20-Year Outcome')
     outcome_10_19 = models.ForeignKey('Outcome10to19',verbose_name='10-19 Year Outcome')
@@ -265,7 +265,7 @@ class Activity(models.Model):
     Activities
     """
 #    id = models.IntegerField(primary_key=True)
-    description = models.TextField(max_length=500, null=True, blank=True)
+    description = models.TextField(max_length=1000, null=True, blank=True)
     rationale = models.TextField(max_length=1000, null=True, blank=True)
     strategy = models.ForeignKey('Strategy',verbose_name='Strategy')
 #    budgets = models.ManyToManyField('Budget',null=True,blank=True)
